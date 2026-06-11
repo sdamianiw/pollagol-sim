@@ -254,3 +254,18 @@ STABLE-CONTRARIAN (ΔE>2·SE + stable + R9) | INDETERMINATE (|ΔE|≤2·SE or σ
 **Rule:** `fit_lambdas`/`optimizer` are FROZEN → any near-even guard or ρ-fit is a SEPARATE GO with a Gate-7 RED
 test FIRST, bundled with H4 into ONE post-lock engine-maintenance GO. Never let Track-B remediation compete
 with the irreversible Jun-10 PM podium lock (the absolute priority).
+
+## L20 — Plan→execute handoff: ground EVERY contract constant in as-built code; never trust a planned path/number/threshold (caught 2026-06-11, matchday-1 GO P0)
+**Pattern:** The matchday-1 contract (planned by one model, executed by another) baked constants that the
+as-built code contradicted: (a) "load the Jun-9 KOR-CZE snapshot" — no per-fixture snapshots existed (the raw
+events lived inside `probe_lines_2026-06-06…json`); (b) "append L18/L19" — both numbers were ALREADY taken, and
+the proposed "PYTHONHASHSEED" lesson was VERBATIM the existing L18 (a blind append would have collided/duplicated);
+(c) "confirm cache dedupe" — `ingest.fetch_live` has NO cache (every `--live` is a fresh hit); (d) "write
+`predictions/<date>/`" and "`review.sh`" — neither writer/script exists (`run_matchday` prints to stdout;
+reviewer is `predictions/review.ps1`). Each was caught by reading the code BEFORE building, then corrected in the
+plan as an explicit push-back (and the inversion was reproduced to 4 decimals on the real Jun-6 data first).
+**Rule:** generalises L16 across a model/agent handoff — the executor must VERIFY every contract constant
+(file path, lesson number, interface, threshold, "it caches/writes/exists") against the repo before acting on it.
+Treat a planning contract as a *hypothesis about the code*, never as ground truth. A planned constant that the
+code contradicts is a push-back to surface, not an instruction to follow. (Sibling of L18's lesson: a fixed seed/
+contract is necessary but not sufficient — the substrate it runs on must actually match.)
