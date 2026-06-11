@@ -1,0 +1,28 @@
+{
+  "award": "top_scorer",
+  "as_of": "2026-06-05",
+  "candidates": ["Kylian Mbappe", "Harry Kane", "Erling Haaland", "Lionel Messi", "Mikel Oyarzabal", "Lamine Yamal"],
+  "note": "5 isolated lenses via Agent tool (web), independent-then-aggregate (R7). DRAFT/GATED, never a lock.",
+  "lenses": [
+    {"lens": "market", "top": "Kylian Mbappe",
+     "probs": {"Kylian Mbappe": 0.297, "Harry Kane": 0.246, "Erling Haaland": 0.129, "Lionel Messi": 0.118, "Mikel Oyarzabal": 0.114, "Lamine Yamal": 0.097},
+     "rationale": "Mbappe solo leader (+600) across FanDuel/RotoWire/Kalshi; Kane clear 2nd (+700); ~75pt gap stable Jun 1-3.",
+     "sources": ["https://www.foxsports.com/stories/soccer/...golden-boot (2026-06-02)", "https://www.rotowire.com/soccer/article/2026-world-cup-golden-boot-odds... (2026-06-01)"]},
+    {"lens": "form", "top": "Kylian Mbappe",
+     "probs": {"Kylian Mbappe": 0.22, "Harry Kane": 0.20, "Erling Haaland": 0.12, "Lionel Messi": 0.06, "Mikel Oyarzabal": 0.08, "Lamine Yamal": 0.10},
+     "rationale": "Mbappe 42 G in 44 RM games; Kane 36 Bundesliga G (3rd straight top-scorer); Haaland capped by Norway's shallow run; Messi 38/fatigue.",
+     "sources": ["https://www.sofascore.com/news/kylian-mbappe-2025-26-season... (2026-05-30)", "https://www.bundesliga.com/en/bundesliga/news/harry-kane-top-scorer-2025-26 (2026-05-30)"]},
+    {"lens": "tactical", "top": "Kylian Mbappe",
+     "probs": {"Kylian Mbappe": 0.22, "Harry Kane": 0.16, "Erling Haaland": 0.09, "Lionel Messi": 0.06, "Mikel Oyarzabal": 0.08, "Lamine Yamal": 0.05},
+     "rationale": "Mbappe lone striker+captain+penalties for deep-run France (highest-leverage role); Kane same but harder bracket; Oyarzabal fewer box touches.",
+     "sources": ["https://www.foxsports.com/stories/soccer/...golden-boot (2026-06-02)", "https://www.rotowire.com/soccer/article/...penalty-corner-free-kick-takers (2026-05-31)"]},
+    {"lens": "baserate", "top": "Kylian Mbappe",
+     "probs": {"Kylian Mbappe": 0.14, "Harry Kane": 0.13, "Erling Haaland": 0.08, "Lionel Messi": 0.05, "Mikel Oyarzabal": 0.09, "Lamine Yamal": 0.04},
+     "rationale": "No GB winner since 1978 from a pre-QF team; 73% from SF+ teams. Mbappe/Kane deep runners + prior winners; Yamal a winger (history weights against).",
+     "sources": ["https://www.aljazeera.com/sports/2026/5/18/world-cup-golden-boot-top-scorers (2026-05-18)", "https://www.aljazeera.com/sports/2026/6/4/world-cup-golden-boot-favourites (2026-06-04)"]},
+    {"lens": "contrarian", "top": "Mikel Oyarzabal",
+     "probs": {"Kylian Mbappe": 0.14, "Harry Kane": 0.12, "Erling Haaland": 0.07, "Lionel Messi": 0.05, "Mikel Oyarzabal": 0.10, "Lamine Yamal": 0.03},
+     "rationale": "Mbappe consensus over-owned; Oyarzabal the blind spot: Spain's de-facto striker+penalties, Yamal injured first 2 games, +1800 vs xG case far better; ~no one picks him in a LatAm pool.",
+     "sources": ["https://www.aljazeera.com/sports/2026/6/4/world-cup-golden-boot-favourites (2026-06-04)", "https://www.beinsports.com/en-us/soccer/...lamine-yamal-could-miss-spain-debut (2026-05-18)"]}
+  ]
+}

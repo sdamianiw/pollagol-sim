@@ -1,0 +1,41 @@
+{
+  "award": "best_gk",
+  "as_of": "2026-06-02",
+  "fetched_utc": "2026-06-04",
+  "note": "WC-2026 Golden Glove (best goalkeeper) futures. American moneyline. Names ASCII-normalized. Primary = DraftKings (11 names): top 5 confirmed as DraftKings via CBS Sports; ranks 6-11 from the FOX Sports board, whose lines MATCH DraftKings exactly on the overlap (book attribution for ranks 6-11 inferred from line-match, flagged). Crosscheck = BetOnline (8 names, via VegasOdds) -- STALE (~2026-05-23). Both primary and crosscheck re-fetched by Code on 2026-06-04. Favorite cross-check PASS (Martinez +450 DK / +400 BetOnline; Simon +450 both). DE-VIG CAVEAT (L4): truncated board; the raw implied sum reflects book vig net of the truncated tail (measured 1.330 here: thin-market vig exceeds the tail) and is NOT a clean overround. Normalize named set to 1 -> P_true(GK | winner is named); tail UNDEFINED, never a candidate. STALE by Jun-11: re-fetch fresh (FM2).",
+  "primary": {
+    "source": "DraftKings Sportsbook (top 5 via CBS Sports; ranks 6-11 via FOX Sports board, lines matched)",
+    "url": "https://www.foxsports.com/stories/soccer/2026-world-cup-golden-glove-odds-emiliano-martinez-favored-repeat",
+    "as_of": "2026-06-02",
+    "format": "american",
+    "odds": {
+      "Emiliano Martinez": 450,
+      "Unai Simon": 450,
+      "Alisson": 500,
+      "Mike Maignan": 600,
+      "Jordan Pickford": 700,
+      "Ederson": 700,
+      "David Raya": 700,
+      "Diogo Costa": 1000,
+      "Oliver Baumann": 1200,
+      "Joan Garcia": 1400,
+      "Thibaut Courtois": 2000
+    }
+  },
+  "crosscheck": {
+    "source": "BetOnline (via VegasOdds) -- STALE ~2026-05-23",
+    "url": "https://www.vegasodds.com/predictions/soccer/2026-world-cup-best-goalkeeper-odds/",
+    "as_of": "2026-05-23",
+    "format": "american",
+    "odds": {
+      "Emiliano Martinez": 400,
+      "Unai Simon": 450,
+      "Alisson Becker": 550,
+      "Ederson Moraes": 550,
+      "Mike Maignan": 600,
+      "David Raya": 700,
+      "Jordan Pickford": 700,
+      "Diogo Costa": 1000
+    }
+  }
+}

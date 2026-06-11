@@ -1,0 +1,51 @@
+{
+  "award": "top_scorer",
+  "as_of": "2026-06-02",
+  "fetched_utc": "2026-06-04",
+  "note": "WC-2026 Golden Boot (top goalscorer) futures. American moneyline. Player names ASCII-normalized. Primary = FanDuel (most complete board, 19 names); crosscheck = DraftKings (10 names). Both boards independently re-fetched by Code on 2026-06-04 (favorite cross-check PASS: Mbappe +600 / Kane +700 identical on both). DE-VIG CAVEAT (L4): the named board is TRUNCATED (the true field is hundreds of players). The raw implied sum reflects book vig NET of the truncated tail and is NOT a clean overround (measured 0.846 here: tail truncation exceeds vig). Normalizing the named set to 1 yields P_true(player | winner is named) over candidates; the tail is UNDEFINED and never generates a candidate. STALE by Jun-11: re-fetch fresh (FM2).",
+  "primary": {
+    "source": "FanDuel Sportsbook (via FOX Sports)",
+    "url": "https://www.foxsports.com/stories/soccer/soccer-2026-world-cup-odds-golden-boot",
+    "as_of": "2026-06-02",
+    "format": "american",
+    "odds": {
+      "Kylian Mbappe": 600,
+      "Harry Kane": 700,
+      "Erling Haaland": 1400,
+      "Lionel Messi": 1600,
+      "Mikel Oyarzabal": 1800,
+      "Lamine Yamal": 2000,
+      "Cristiano Ronaldo": 2500,
+      "Vinicius Junior": 3000,
+      "Raphinha": 3000,
+      "Lautaro Martinez": 3500,
+      "Julian Alvarez": 3500,
+      "Ousmane Dembele": 3500,
+      "Cody Gakpo": 4000,
+      "Ferran Torres": 4000,
+      "Bukayo Saka": 4000,
+      "Memphis Depay": 4000,
+      "Igor Thiago": 4000,
+      "Mikel Merino": 4000,
+      "Romelu Lukaku": 5000
+    }
+  },
+  "crosscheck": {
+    "source": "DraftKings Sportsbook (via CBS Sports)",
+    "url": "https://www.cbssports.com/betting/news/world-cup-odds/",
+    "as_of": "2026-06-03",
+    "format": "american",
+    "odds": {
+      "Kylian Mbappe": 600,
+      "Harry Kane": 700,
+      "Erling Haaland": 1400,
+      "Lionel Messi": 1600,
+      "Mikel Oyarzabal": 1600,
+      "Lamine Yamal": 2000,
+      "Cristiano Ronaldo": 2200,
+      "Ousmane Dembele": 3000,
+      "Lautaro Martinez": 3500,
+      "Nick Woltemade": 5000
+    }
+  }
+}

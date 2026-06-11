@@ -1,0 +1,59 @@
+{
+  "schema": "observed_ownership_v1",
+  "as_of_utc": "2026-06-06T00:00:00Z",
+  "source": "pollaya screenshots (5), Sebas manual count",
+  "run_label": "podium_test_run_preliminary_2026-06-06",
+  "n_total": 20,
+  "n_opp": 19,
+  "alpha": 1.0,
+  "excluded_entrant": "Sebas",
+  "note": "PRELIMINARY rehearsal of the Jun-10 lock (n=4-7 deciders/lever, 12-15 blanks). NOT A LOCK. Champion + 4 awards OPEN. raw_counts are OPPONENT counts (Sebas already excluded by the loader via excluded_picks).",
+  "observed_as_transcribed": {
+    "note": "screenshot colloquial form -> canonical P_true board key stored in raw_counts (provenance)",
+    "Mbappe": "Kylian Mbappe",
+    "Brasil": "Brazil",
+    "Espana": "Spain",
+    "Courtois": "Thibaut Courtois",
+    "Pedri Gonzalez": "Pedri (advisory; assister has no P_true board)"
+  },
+  "excluded_picks": {
+    "champion": "Curazao",
+    "top_scorer": "Harry Kane",
+    "assister": "Bruno Fernandes",
+    "mvp": "Kylian Mbappe",
+    "best_gk": "Emiliano Martinez"
+  },
+  "levers": {
+    "champion": {
+      "deciders": 7,
+      "blanks": 12,
+      "advisory": false,
+      "raw_counts": {"Brazil": 2, "Portugal": 2, "Spain": 2, "Uruguay": 1}
+    },
+    "top_scorer": {
+      "deciders": 5,
+      "blanks": 14,
+      "advisory": false,
+      "raw_counts": {"Kylian Mbappe": 3, "Cristiano Ronaldo": 1, "Harry Kane": 1}
+    },
+    "assister": {
+      "deciders": 5,
+      "blanks": 14,
+      "advisory": true,
+      "note": "ADVISORY ONLY - no P_true market, never an engine lever (K=4). No P_true fabricated (FM3). K=5 gate = Jun-10 FanDuel/Caesars probe.",
+      "raw_counts": {"Bruno Fernandes": 3, "Pedri Gonzalez": 1, "Lamine Yamal": 1}
+    },
+    "mvp": {
+      "deciders": 5,
+      "blanks": 14,
+      "advisory": false,
+      "raw_counts": {"Lamine Yamal": 4, "Vitinha": 1}
+    },
+    "best_gk": {
+      "deciders": 4,
+      "blanks": 15,
+      "advisory": false,
+      "raw_counts": {"Unai Simon": 2, "Diogo Costa": 1, "Thibaut Courtois": 1}
+    }
+  }
+}

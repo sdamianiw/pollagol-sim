@@ -1,0 +1,16 @@
+{
+  "schema": "noedit_baseline_v1",
+  "purpose": "Lock-run (Jun-10) no-edit proof. These files are FROZEN/cross-phase and must NOT change during the lock-run build or execution (A2 FROZEN; fit_lambdas; M7 result; H4 context). Re-hash at Step 8 and assert identical (repo is not git -> SHA256 is the no-edit proof).",
+  "as_of_utc": "2026-06-10T00:00:00Z",
+  "algorithm": "SHA256",
+  "files": {
+    "pool/pool_montecarlo.py": "F7A414180792BFDBE802406367B53708E1154627F5E02FC2D9954EC299D0A92D",
+    "src/model.py": "A29E28108D08D585329D4F8029787D7AC8E35A2C8958D0B438FE0023064F7B76",
+    "evals/backtest_results.json": "8273F0952623AC11BEA38E8C85958672DC3F11DE6B9959AF1239CEA52F398D31",
+    "src/context.py": "B86FE65431085821D6042412853F78223CF4CCA08FAD20C2E62253A479CDEFA9"
+  },
+  "notes": {
+    "evals/backtest_results.json": "8273F095... matches the canonical M7 sha recorded in tasks/HANDOFF.md.",
+    "pool/pool_montecarlo.py": "A2 engine - FROZEN; imported by podium_montecarlo for byte-exact K=1 anchor."
+  }
+}

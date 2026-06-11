@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-05-29",
+  "fetched_utc": "2026-05-30",
+  "note": "WC-2026 outright winner odds (web-sourced; API-Football free tier cannot serve season 2026 - see memory/rules.md). American moneyline. Primary = full 48-team field for de-vig; crosscheck = favorites only.",
+  "primary": {
+    "source": "FanDuel Sportsbook (via CBS Sports)",
+    "url": "https://www.cbssports.com/soccer/news/fifa-world-cup-2026-odds-favorites-futures-picks-predictions-soccer-best-bets/",
+    "format": "american",
+    "odds": {
+      "Spain": 450, "France": 480, "England": 650, "Brazil": 750, "Argentina": 900,
+      "Portugal": 950, "Germany": 1300, "Netherlands": 1700, "Belgium": 2500, "Norway": 3300,
+      "Colombia": 5000, "Uruguay": 6000, "USA": 6500, "Switzerland": 6500, "Mexico": 7000,
+      "Croatia": 7000, "Morocco": 7500, "Turkiye": 10000, "Japan": 10000, "Ecuador": 10000,
+      "Austria": 10000, "Senegal": 12500, "Sweden": 15000, "Scotland": 17500, "Ivory Coast": 20000,
+      "Canada": 25000, "Ghana": 25000, "Paraguay": 25000, "Egypt": 30000, "Algeria": 30000,
+      "Bosnia & Herzegovina": 35000, "Czechia": 50000, "South Korea": 50000, "Iran": 75000,
+      "DR Congo": 100000, "Tunisia": 150000, "Australia": 200000, "Cape Verde": 250000,
+      "Uzbekistan": 250000, "Haiti": 250000, "Panama": 250000, "Curacao": 250000, "Jordan": 250000,
+      "Saudi Arabia": 250000, "Iraq": 250000, "Qatar": 250000, "South Africa": 250000,
+      "New Zealand": 250000
+    }
+  },
+  "crosscheck": {
+    "source": "DraftKings Sportsbook (via Fox Sports)",
+    "url": "https://www.foxsports.com/stories/soccer/world-cup-2026-champion-odds",
+    "format": "american",
+    "odds": {
+      "Spain": 475, "France": 500, "England": 650, "Brazil": 850, "Argentina": 900,
+      "Portugal": 1000, "Germany": 1400, "Netherlands": 2200, "Norway": 3500, "Belgium": 3500,
+      "Colombia": 4000, "Morocco": 5000, "Uruguay": 5000, "USA": 6000, "Switzerland": 6500,
+      "Japan": 6500, "Mexico": 8000, "Croatia": 8000, "Ecuador": 8000, "Senegal": 9000,
+      "Sweden": 10000
+    }
+  }
+}

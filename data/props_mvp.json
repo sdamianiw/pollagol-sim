@@ -1,0 +1,44 @@
+{
+  "award": "mvp",
+  "as_of": "2026-06-02",
+  "fetched_utc": "2026-06-04",
+  "note": "WC-2026 Golden Ball (Player of the Tournament / best player / MVP) futures. American moneyline. Player names ASCII-normalized. Primary = Bovada (most complete board, 17 names; via TheSportsGeek, nav path Sports>Soccer>FIFA World Cup Futures>Golden Ball); crosscheck = DraftKings (5 names, via CBS Sports). Both boards independently re-fetched by Code on 2026-06-04. Favorite differs slightly by book (Bovada: Yamal +650; DraftKings: Kane +750) but the top tier {Yamal, Kane, Mbappe, Olise, Messi} is consistent. DE-VIG CAVEAT (L4): truncated board; the raw implied sum reflects book vig net of the truncated tail (measured 1.025 here: vig roughly offsets the tail) and is NOT a clean overround. Normalize named set to 1 -> P_true(player | winner is named); tail UNDEFINED, never a candidate. STALE by Jun-11: re-fetch fresh (FM2).",
+  "primary": {
+    "source": "Bovada (via TheSportsGeek)",
+    "url": "https://www.thesportsgeek.com/blog/fifa-world-cup-golden-ball-odds-predictions-best-bets/",
+    "as_of": "2026-06-02",
+    "format": "american",
+    "odds": {
+      "Lamine Yamal": 650,
+      "Harry Kane": 700,
+      "Kylian Mbappe": 1000,
+      "Michael Olise": 1000,
+      "Lionel Messi": 1000,
+      "Bruno Fernandes": 1800,
+      "Vinicius Junior": 2000,
+      "Raphinha": 2000,
+      "Rodri": 2500,
+      "Pedri": 2500,
+      "Rayan Cherki": 2500,
+      "Ousmane Dembele": 2500,
+      "Declan Rice": 2500,
+      "Jude Bellingham": 2500,
+      "Vitinha": 2500,
+      "Erling Haaland": 2500,
+      "Mikel Oyarzabal": 2500
+    }
+  },
+  "crosscheck": {
+    "source": "DraftKings Sportsbook (via CBS Sports)",
+    "url": "https://www.cbssports.com/betting/news/world-cup-odds/",
+    "as_of": "2026-06-03",
+    "format": "american",
+    "odds": {
+      "Harry Kane": 750,
+      "Lamine Yamal": 800,
+      "Kylian Mbappe": 900,
+      "Michael Olise": 1000,
+      "Lionel Messi": 1200
+    }
+  }
+}

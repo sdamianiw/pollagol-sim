@@ -1,0 +1,25 @@
+# --- Secrets / keys (never commit) ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.secret
+secrets.json
+apikey*
+*apikey*.txt
+*_key.txt
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
