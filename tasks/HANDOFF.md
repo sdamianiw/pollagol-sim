@@ -1,3 +1,20 @@
+# HANDOFF
+
+> 🟢 **TRACK-B MATCHDAY-1 RUN DONE (2026-06-11, P0–P6).** Repo now git-init'd (6 commits, `.env` ignored,
+> frozen files byte-identical to baseline `5d2f645`). Suite **150/150** (145 + 5 L17-guard tests). Single
+> fresh fetch (quota 489→487) → snapshot `data/snapshots/md1_2026-06-11T16-01-57Z.json` → 8 replays
+> (determinism byte-identical, NEUTRAL×8, x.5×8, intra-book×8). **L17 favorite-inversion guard** added
+> (output-layer, detection-only, `src/run_matchday.py`). New lessons **L20/L21/L22**.
+> **ENTERED tonight (Sebas, manual):** MEX-RSA **1-0** (FINAL) · KOR-CZE **1-1** (FINAL, HITL override of
+> as-built argmax 1-0 — gap 0.025<noise, inversion CLEARED on fresh odds). **BASELINE (NOT entered, refresh
+> per fixture):** CAN-BIH 1-0, USA-PAR 1-0, QAT-SUI 0-2, BRA-MAR 1-0, HAI-SCO 0-1, AUS-TUR 0-1.
+> **Refresh windows (contract §5, re-run `fetch_md1` + replay that day's fixtures, diff vs BASELINE, EDIT only on change):**
+> Fri ~18:00 UTC → CAN-BIH (18:50), USA-PAR (00:50 Sat) · Sat ~18:00 UTC → QAT-SUI (18:50), BRA-MAR (21:50),
+> HAI-SCO (00:50 Sun), AUS-TUR (03:50 Sun). Record: `predictions/decisions.csv` (8 rows, utc=KO) +
+> `predictions/2026-06-11/summary.md`. **Pending engine GO (post-MD, L19):** ρ-fit root fix + H4 + M7 re-run.
+
+---
+
 # HANDOFF — PODIUM LOCK RUN v3 COMPLETE (2026-06-10, decision-grade) → awaiting Sebas's manual lock
 
 > ✅ **LOCK RUN DONE (Steps 0–8, GO#1 + GO#2 granted). RECOMMENDATION — NOT A LOCK.** Decision-grade run on
