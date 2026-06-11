@@ -1,0 +1,48 @@
+{
+  "coverage": {
+    "fraction": 1.0,
+    "n_events": 72,
+    "n_mu_eff_usable": 72
+  },
+  "distribution": {
+    "dist": {
+      "1.5": 14,
+      "1.75": 4,
+      "2.0": 68,
+      "2.25": 88,
+      "2.5": 1068,
+      "2.75": 34,
+      "3.0": 52,
+      "3.25": 2,
+      "3.5": 68,
+      "3.75": 2,
+      "4.0": 4,
+      "4.25": 4,
+      "4.5": 14
+    },
+    "n_events": 72,
+    "n_quotes": 1422,
+    "n_with_totals": 72,
+    "non_x5": [
+      1.75,
+      2.0,
+      2.25,
+      2.75,
+      3.0,
+      3.25,
+      3.75,
+      4.0,
+      4.25
+    ],
+    "verdict": "NON_X5_PRESENT"
+  },
+  "provenance": {
+    "fetched_utc": "2026-06-06T13-23-58Z",
+    "fmt": "american",
+    "latency_s": 1.5,
+    "markets": "h2h,totals",
+    "regions": "eu",
+    "source": "The Odds API",
+    "sport": "soccer_fifa_world_cup"
+  }
+}

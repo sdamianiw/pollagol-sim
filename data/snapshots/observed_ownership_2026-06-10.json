@@ -1,0 +1,67 @@
+{
+  "schema": "observed_ownership_v1",
+  "as_of_utc": "2026-06-10T18:37:00Z",
+  "source": "pollaya screenshots (5, 2026-06-10 18:35-18:37), Sebas manual count; cross-checked name-by-name vs the contract §3-D4 embedded block (EXACT match)",
+  "run_label": "lock_run_decision_grade_2026-06-10",
+  "n_total": 25,
+  "n_opp": 24,
+  "alpha": 1.0,
+  "excluded_entrant": "Sebas",
+  "note": "DECISION-GRADE Jun-10 PM lock run. N_opp=24 (roster 25 - Sebas). raw_counts are OPPONENT counts (Sebas excluded separately via excluded_picks). Champion England & Argentina = 0 owners (the live contrarian levers). BINDING PRE-LOCK GATE (Sebas, GO#1): the 18:35 snapshot produces the recommendation but does NOT replace the final re-count - immediately before locking by hand, re-confirm England & Argentina still 0-owned and N_opp still 24. NOT A LOCK.",
+  "observed_as_transcribed": {
+    "note": "pollaya colloquial/Spanish form -> canonical board key stored in raw_counts (provenance)",
+    "Espana": "Spain", "Francia": "France", "Brasil": "Brazil", "Paises Bajos": "Netherlands",
+    "Mbappe": "Kylian Mbappe", "Courtois": "Thibaut Courtois", "Unai Simon": "Unai Simon",
+    "Pedri Gonzalez": "Pedri (assister advisory; folds on the MVP/scorer boards as P2-b)"
+  },
+  "pollaya_display": {
+    "Spain": "Espana", "France": "Francia", "England": "Inglaterra", "Argentina": "Argentina",
+    "Portugal": "Portugal", "Brazil": "Brasil", "Netherlands": "Paises Bajos", "Uruguay": "Uruguay",
+    "Kylian Mbappe": "Kylian Mbappe", "Harry Kane": "Harry Kane", "Cristiano Ronaldo": "Cristiano Ronaldo",
+    "Lamine Yamal": "Lamine Yamal", "Michael Olise": "Michael Olise",
+    "Emiliano Martinez": "Emiliano Martinez", "Mike Maignan": "Mike Maignan", "Unai Simon": "Unai Simon",
+    "Diogo Costa": "Diogo Costa", "Thibaut Courtois": "Thibaut Courtois", "Alisson": "Alisson",
+    "Bruno Fernandes": "Bruno Fernandes",
+    "_note": "EXACT pollaya spellings carry accents in-app (Espana=Espana with tilde, Mbappe with accent, Unai Simon with accent). ASCII-stored here to avoid encoding drift; Sebas verifies accents visually at lock. England->'Inglaterra', Argentina->'Argentina' (pollaya is Spanish/LatAm)."
+  },
+  "excluded_picks": {
+    "champion": "Curazao",
+    "top_scorer": "Harry Kane",
+    "assister": "Bruno Fernandes",
+    "mvp": "Kylian Mbappe",
+    "best_gk": "Emiliano Martinez"
+  },
+  "levers": {
+    "champion": {
+      "deciders": 20,
+      "blanks": 4,
+      "advisory": false,
+      "raw_counts": {"Spain": 6, "France": 5, "Portugal": 5, "Brazil": 2, "Uruguay": 1, "Netherlands": 1}
+    },
+    "top_scorer": {
+      "deciders": 21,
+      "blanks": 3,
+      "advisory": false,
+      "raw_counts": {"Kylian Mbappe": 12, "Harry Kane": 3, "Cristiano Ronaldo": 2, "Ousmane Dembele": 1, "Lautaro Martinez": 1, "Ferran Torres": 1, "Mikel Oyarzabal": 1}
+    },
+    "assister": {
+      "deciders": 21,
+      "blanks": 3,
+      "advisory": true,
+      "note": "ADVISORY ONLY - K=4 (Jun-10 assister board FLAT, gate fail). NOT an engine lever, no P_true fabricated (FM3). Chalk-manual = Bruno Fernandes.",
+      "raw_counts": {"Bruno Fernandes": 8, "Lamine Yamal": 4, "Michael Olise": 3, "Vitinha": 1, "James Rodriguez": 1, "Jamal Musiala": 1, "Kevin De Bruyne": 1, "Pedri Gonzalez": 1, "Raphinha": 1}
+    },
+    "mvp": {
+      "deciders": 20,
+      "blanks": 4,
+      "advisory": false,
+      "raw_counts": {"Lamine Yamal": 9, "Cristiano Ronaldo": 3, "Ousmane Dembele": 2, "Michael Olise": 1, "Vitinha": 1, "Federico Valverde": 1, "Bruno Fernandes": 1, "Raphinha": 1, "Kylian Mbappe": 1}
+    },
+    "best_gk": {
+      "deciders": 18,
+      "blanks": 6,
+      "advisory": false,
+      "raw_counts": {"Mike Maignan": 4, "Diogo Costa": 3, "Unai Simon": 3, "Thibaut Courtois": 2, "Alisson": 2, "Manuel Neuer": 2, "Emiliano Martinez": 1, "Yassine Bounou": 1}
+    }
+  }
+}

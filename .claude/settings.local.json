@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(& python -c \"import ast; ast.parse\\(open\\(r'C:\\\\Users\\\\Sdami\\\\Projects\\\\Pollagol SIM\\\\src\\\\probe.py',encoding='utf-8'\\).read\\(\\)\\); print\\('probe.py: syntax OK after edits'\\)\")",
+      "PowerShell(New-Item *)",
+      "PowerShell(& python -m unittest discover -s tests -v)",
+      "PowerShell(& python pool/leverage.py)",
+      "WebSearch",
+      "PowerShell(& python -c \"from pool.leverage import compute; ov={'Spain':0.36,'France':0.24,'Brazil':0.20,'Argentina':0.16,'England':0.04}; p,o,ovr,rows,_=compute\\('data/outrights.json','polled',ownership_override=ov\\); b=[r for r in rows if r['team']=='Brazil'][0]; print\\('STEP4: Brazil lev under polled own 20%%:',round\\(b['leverage'],2\\),'candidate=',b['contrarian_candidate']\\)\")"
+    ]
+  }
+}

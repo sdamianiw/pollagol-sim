@@ -1,0 +1,28 @@
+{
+  "award": "best_gk",
+  "as_of": "2026-06-05",
+  "candidates": ["Emiliano Martinez", "Unai Simon", "Alisson", "Mike Maignan", "Jordan Pickford", "Ederson"],
+  "note": "5 isolated lenses via Agent tool (web), independent-then-aggregate (R7). DRAFT/GATED, never a lock.",
+  "lenses": [
+    {"lens": "market", "top": "Emiliano Martinez",
+     "probs": {"Emiliano Martinez": 0.205, "Unai Simon": 0.192, "Alisson": 0.176, "Mike Maignan": 0.151, "Jordan Pickford": 0.132, "Ederson": 0.145},
+     "rationale": "3-source avg (Fox/DocSports/BettingOdds): Martinez shortest, Simon tight 2nd (~25-50pt), Alisson firm 3rd at +500; Pickford longest.",
+     "sources": ["https://www.foxsports.com/stories/soccer/2026-world-cup-golden-glove-odds-martinez (2026-06-02)", "https://www.docsports.com/2026/world-cup-golden-glove-odds (2026-06-03)"]},
+    {"lens": "form", "top": "Unai Simon",
+     "probs": {"Emiliano Martinez": 0.20, "Unai Simon": 0.18, "Alisson": 0.16, "Mike Maignan": 0.14, "Jordan Pickford": 0.15, "Ederson": 0.05},
+     "rationale": "Glove correlates with deep run; Simon #1 of top-ranked Spain. Maignan best pure metrics (75.5% save); Pickford ENG 0 conceded in 8 quals; Martinez below his standards at Villa.",
+     "sources": ["https://www.lineups.com/betting/2026-world-cup-goalkeeper-power-rankings (2026-06-01)", "https://footystats.org/players/france/mike-maignan (2026-06-01)"]},
+    {"lens": "tactical", "top": "Emiliano Martinez",
+     "probs": {"Emiliano Martinez": 0.28, "Unai Simon": 0.14, "Alisson": 0.16, "Mike Maignan": 0.14, "Jordan Pickford": 0.10, "Ederson": 0.02},
+     "rationale": "Martinez defending winner; Argentina compact/transition + easiest group (J) -> low-volume high-stakes + shootout edge. Ederson backup (Alisson starts).",
+     "sources": ["https://mundoalbiceleste.com/2025/03/22/emiliano-martinez-36-clean-sheets-50-matches (2025-03-22)", "https://www.washingtonpost.com/sports/soccer/2026/05/31/argentina-world-cup-martinez (2026-05-31)"]},
+    {"lens": "baserate", "top": "Emiliano Martinez",
+     "probs": {"Emiliano Martinez": 0.22, "Unai Simon": 0.15, "Alisson": 0.10, "Mike Maignan": 0.13, "Jordan Pickford": 0.09, "Ederson": 0.06},
+     "rationale": "Glove since 1994: 62.5% to the champion's keeper -> proxy for best keeper on best team. Martinez defending champ keeper; Simon 2nd (Spain top champ prob).",
+     "sources": ["https://www.givemesport.com/world-cup-golden-glove-winners/ (2026-06-05)", "https://en.wikipedia.org/wiki/FIFA_World_Cup_awards (2026-06-05)"]},
+    {"lens": "contrarian", "top": "Unai Simon",
+     "probs": {"Emiliano Martinez": 0.18, "Unai Simon": 0.20, "Alisson": 0.15, "Mike Maignan": 0.10, "Jordan Pickford": 0.08, "Ederson": 0.03},
+     "rationale": "Martinez crowd darling (Argentine cultural weight in Chile -> high LatAm ownership). Glove went to champ keeper in 4 of last 5; Spain co-favourite -> Simon faces fewest shots, equal price = uniqueness pick.",
+     "sources": ["https://www.foxsports.com/stories/soccer/2026-world-cup-golden-glove-odds-martinez (2026-06-02)", "https://oddspedia.com/insights/football/world-cup-2026-golden-glove-odds (2026-06-01)"]}
+  ]
+}

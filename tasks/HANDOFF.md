@@ -1,0 +1,225 @@
+# HANDOFF — PODIUM LOCK RUN v3 COMPLETE (2026-06-10, decision-grade) → awaiting Sebas's manual lock
+
+> ✅ **LOCK RUN DONE (Steps 0–8, GO#1 + GO#2 granted). RECOMMENDATION — NOT A LOCK.** Decision-grade run on
+> FRESH odds (DraftKings, LM9 sportsbook basis) + EMBEDDED FINAL ownership (N_opp=24, Sebas's 18:35
+> screenshots, exact §3-D4 match). Suite **145/145 GREEN**; A2 K=1 anchor byte-exact; **deterministic +
+> PYTHONHASHSEED-invariant**; no-edit proof (A2/fit_lambdas/M7/H4 SHA256 unchanged vs
+> `data/snapshots/lock_run_noedit_baseline_2026-06-10.json`). Spend ≈ 2 cr Odds-API (489 remaining).
+>
+> ## FINAL RECOMMENDATION (5 picks — Sebas types into pollaya, EXACT spelling; champion + 5 OPEN until he locks)
+> | lever | pick (pollaya) | basis | currently on pollaya |
+> |---|---|---|---|
+> | **champion** | **España** (Spain) | chalk; England/Argentina contrarians REJECTED (flip ΔE<0 at every σ∈[2,20]) | Curazao → CHANGE |
+> | **top_scorer** | **Kylian Mbappé** | chalk (fav +600; no scorer clears P>0.08) | Harry Kane → CHANGE |
+> | **mvp** | **Harry Kane** | Kane=Yamal +800 single-book TIE; Kane 0-owned vs Yamal 9 → **engine ΔE(Kane−Yamal)=+0.0025 ±0.0005(2·SE), materially better** | Kylian Mbappé → CHANGE |
+> | **best_gk** | **Emiliano Martínez** | chalk = leverage: fav +430 AND 0 opp owners | Emiliano Martínez → no change |
+> | **assister** | **Bruno Fernandes** | K=4 chalk-manual (board flat, K-gate failed, no fabricated P_true FM3) | Bruno Fernandes → no change |
+>
+> **Verdict = ALL-CHALK + Kane(MVP).** Every contrarian was *identified* (England lev 3.17, Argentina 2.69,
+> all clear the 0.08 gate) but *rejected on economics*: at calibrated σ≈14 a single 10-pt lever is swamped by
+> the ±14 tournament-total noise, so higher win-prob (chalk) wins — flips are NEGATIVE at every σ (determinate,
+> not σ-dependent). MVP=Kane chosen by Sebas (GO#2): the crowd over-piled on Yamal at IDENTICAL odds, leaving
+> a 0-owned co-favourite as free leverage.
+>
+> ## HONEST CAVEAT (named, bounded, does NOT reverse — Sebas, GO#2)
+> The engine treats levers as **independent**; in reality MVP↔champion **correlate** (Spain champion → a Spanish
+> MVP, i.e. Yamal, is likelier). Yamal+Spain *concentrates* correlated upside; Kane+Spain *diversifies*. Net
+> direction is **ambiguous and second-order** vs the first-order collision dominance (9 vs 0 owners) — and
+> plausibly *reinforces* Kane, since the 9 Yamal-owners are largely the same worlds where Spain wins, so
+> Yamal+Spain buys REDUNDANT collision (no separation) while Kane is a unique separator. Stylization is
+> documented (`podium_montecarlo` docstring §2.6/PA7). Doesn't change the pick.
+>
+> ## 🔴 BINDING PRE-LOCK GATE (Sebas, GO#1 — the most important gate of the run)
+> The 18:35 snapshot PRODUCES the recommendation but does NOT replace the final re-count. **Immediately before
+> locking by hand, re-confirm: (1) N_opp still = 24, (2) nothing dramatic shifted.** NOTE: because the
+> recommendation is ALL-CHALK (not a contrarian leverage play), it is ROBUST to ownership drift — the 0-owned
+> England/Argentina condition is no longer load-bearing for THIS portfolio (the contrarians lose on economics
+> regardless of ownership). Re-confirm N_opp mainly. HARD STOP: never race the Jun-11 19:00 UTC opener; if a
+> Jun-11 AM re-run can't finish with buffer, the Jun-10 recommendation STANDS (re-run protocol §11, idempotent).
+>
+> ## Artifacts this run
+> - Code (lock-run extensions, NOT frozen files): `pool/podium_montecarlo.py` (+`return_sim_vectors` SE_diff),
+>   `pool/run_podium_draft.py` (`--lock-run`, σ-bracket matrix, 2·SE+A4+R9-lock+≤1-contrarian verdict layer),
+>   `council/run_council.py` (`market_p_true(path=)`), `pool/fetch_outrights.py` (NEW; A1 probe + F2P1),
+>   `pool/build_lock_props.py` (NEW; Jun-10 prop boards), `pool/ingest_ownership.py` (L18 determinism fix).
+> - Data: `data/outrights_2026-06-10.json` (DraftKings primary, Betfair crosscheck), `data/props_*_2026-06-10.json`,
+>   `data/snapshots/observed_ownership_2026-06-10.json` (N_opp=24), `data/snapshots/lock_run_noedit_baseline_2026-06-10.json`.
+> - Lessons: **L18** (RNG-fed dict order must be sorted, not a bare set — PYTHONHASHSEED), **L19** (F2P1 =
+>   most-complete *sportsbook* board; don't bake a favourite into the contract; 3-way verdict labels).
+> - Re-run: `python pool/run_podium_draft.py --lock-run` (deterministic). Re-fetch fresh: `python pool/fetch_outrights.py`.
+>
+> 🛑 No pick LOCKED by CC. Sebas locks manually on pollaya before Jun-11 19:00 UTC.
+
+---
+
+# HANDOFF — resume point for next session (updated 2026-06-02, Steps 4–7 DONE)
+
+> ✅ **PHASE COMPLETE (Steps 0–7).** A2 `pool/pool_montecarlo.py` built + verified (selftest GREEN:
+> chalk→Fav, flip→Dark; deterministic; A1 T1–T7 still OK). `pool/decision_clock.md` written (INVARIANT/
+> TIME-DEPENDENT + PB1–PB5 + lock schedule; grep tokens PASS). L5 logged in `tasks/lessons.md`.
+> **▶ TRACK-B (2026-06-03): P0–P3 DONE.** Per-match EV engine, the ~88%-of-points lever (L6).
+> **P3 M7 backtest = SUCCESS-PROOF: VERDICT = PASS (Gate-A).** `evals/backtest.py` +
+> `evals/fetch_footballdata.py` + `tests/test_backtest.py` (full suite **69/69 GREEN**). EV vs B1 on
+> football-data.co.uk top-5 EU × 5 seasons (8955 rows). HEADLINE (home-zeroed δ=0.30, OPENING, EX-COVID):
+> **HIGH-TOTAL Δ=+0.0621 pts/match, 95% CI [+0.0139,+0.1115], n=3300 → PASS**; low-total NO-EDGE =
+> MEASURED ~0, NOT an identity (3.4% diverge, EV→1-1; draw-modal n=0 is SILENT, not confirmatory);
+> calibration beats uniform; PASS across all sensitivity rows; leakage PASS. Result =
+> `evals/backtest_results.json`; plan = `…\plans\foamy-spinning-pebble.md`. Spec corrections this session
+> (all FROZEN before reading, anti-FM1): M7-iii segmentation driver = TOTAL level only (away-fav gap-0);
+> headline EX-COVID; δ = empirical home-goal-diff (not Elo); **M7 design v = μ_eff signal-recovery**
+> (football-data pins line=2.5 → M3 was totals-blind; invert p_over→μ_eff in evals/ ONLY; L11).
+> **P4b σ-calibration — DONE 2026-06-06** (`pool/sigma_calibration.py`, suite 95/95). σ_cal=13.78 (σ_lower
+> 13.78 [CI 13.52,14.03]; σ_upper 24.93 [24.47,25.38]) derived from M7 variance as a RUNTIME value (model
+> declared first in rules.md, anti-FM1). **Verdict = SIGMA_DEPENDENT_UNDER_LEVERAGE (L13):** the bracket
+> clears the stylized ~σ7–8 flip (→ robust_chalk) BUT the real K=4 engine under starve stays contrarian_2 at
+> BOTH σ endpoints → chalk-vs-contrarian DEFERS to OBSERVED Jun-10 ownership. A2 BASE_SIGMA=6.0 FROZEN
+> (anchor PASS); σ_cal injected into `run_podium_draft.py` via `read_sigma_cal()`; M7 JSON sha-unchanged.
+> **P4a μ_eff→src/ — DONE 2026-06-06** (suite 104/104). The ONE μ_eff model (`mu_from_pover`+`poisson_over_prob`)
+> MOVED into `src/model.py`; `evals/backtest.py` re-imports it byte-identical (I4, no second model);
+> `match_distribution` now consumes `p_over` (fed to the FROZEN `fit_lambdas` as the line, mirroring
+> `fixture_eval`). totals-blind RED→GREEN; byte-equal on 3 fixtures; **M7 UNCHANGED** (deltas exact + JSON sha
+> `8273f095…`); src/ offline-pure; A2/`pool/` + `fit_lambdas` untouched. The live WC engine now carries the
+> totals-aware μ_eff edge M7 proved (completes L11's registered fix).
+> **P4c DONE 2026-06-06 (suite 121/121):** **M8 `src/run_matchday.py`** orchestrator M1→M2→[x.5 guard]→
+> M3(μ_eff)→M5→M4→summary; HITL STOP (--submit disabled); dry-run prints table+EV pick+EV-vs-modal gap
+> +sources/flags+STOP; <60s/match (3.2s); offline-pure (no evals, test-asserted); snapshot-reproducible
+> (byte-identical). Per-match argmax σ-INDEPENDENT. + `src/lines.is_half_line` + `src/probe_lines.py` (P4c-0)
+> + `tests/test_run_matchday.py`. **H3 book-selection DONE 2026-06-06 (Option A, RB3-strict):** `parse_event`
+> prefers ONE book with h2h + x.5 totals (intra-book μ_eff); else first-h2h book + totals-blind + HARD flag
+> (`match['book_selection']`, never silent); NEVER cross-book (safety assertion). **Per-match coverage = 100%
+> (72/72)** → totals-blind rarely fires; the prior NON_X5_PRESENT gate is RESOLVED. x.5 guard kept as
+> defense-in-depth. **🛑 NEW OPEN ITEM — H4 (separate GO):** M5 `context.apply_context` adjusts POST-DC; the
+> var-temper on a right-skewed matrix pushes the mean UP and overwhelms mu_factor → non-neutral flags
+> MIS-DIRECT the mean (rotation +0.179, dead_rubber +0.131 move UP; neutral +0.069). Live default=neutral
+> (tolerable); non-neutral flags NOT live-safe until M5 re-anchors μ PRE-DC (WARNING + pinned tests).
+> F1 kickoff VERIFIED; F2 'contrarian'→'EV-vs-modal gap'. Gate-A ≠ Gate-B
+> (L9): M7 PASS proves implementation + an in-distribution edge, NOT a WC edge (RB2) NOR DC-necessity.
+> **PODIUM TEST RUN — DONE 2026-06-06 (suite 137/137):** observed-ownership rehearsal of the Jun-10 lock.
+> `pool/ingest_ownership.py` Laplace floor (denom=N_opp, K_cand=top6∪observed, α=1; blanks→`_SENTINEL` so the
+> dict sums to 1 — the joint MC re-normalizes internally, **L15**) + `load_observed_from_snapshot` (Sebas
+> excluded; P2-b off-board→fold+log, not fabricate) + observed `[OBS]` block in `run_podium_draft.py` +
+> `data/snapshots/observed_ownership_2026-06-06.json` (N=20→N_opp=19) + `tests/test_observed_ownership.py`
+> (16 tests). **σ-verdict resolved-PRELIMINARY = STILL-SIGMA-DEPENDENT / INDETERMINATE:** at σ=13.78 Model A
+> (blanks score 0) recommends a 1-lever contrarian (MVP Harry Kane) but Model B (blanks~P_true) → all-chalk;
+> the **MVP lever FLIPS A↔B → INDETERMINATE, deferred to Jun-10** (Step-5b/FIX-1). Assister advisory-only
+> (Bruno Fernandes most-owned, NO P_true, K=5 gate=Jun-10 probe). A2 BASE_SIGMA=6.0 byte-exact; σ/α untuned.
+> ownership_source=observed but PRELIMINARY (n=4–7 deciders, selection-bias). NOT A LOCK.
+> A3 council + other-4-picks (DoD-3) DEFERRED by point-value. The **Jun-10 evening** lock still stands
+> (Jun-12 VOID). 🛑 No pick LOCKED;
+> champion OPEN; A2 `pool_montecarlo.py` FROZEN.
+> Re-verify anytime: `python pool/pool_montecarlo.py --selftest` · `python -m unittest discover -s tests`.
+
+<details><summary>Original Step-4 resume spec (kept for audit — now satisfied)</summary>
+
+
+> **Read this first, then `tasks/todo.md`, `CLAUDE.md`, `memory/rules.md`, `tasks/lessons.md`, and the
+> plan `C:\Users\Sdami\.claude\plans\master-prompt-contract-lively-dusk.md` (§ "PARADIGM SHIFT → OBSERVED
+> + A2 + DECISION CLOCK").** Everything below is deterministic — no thread is lost.
+
+## 🛑 HARD GATES (do NOT violate)
+- **NEVER LOCK any pick.** Champion is OPEN (Brazil in pollaya = PLACEHOLDER). The real decision run is the
+  **Jun-10 EVENING lock** (one safe day before the Jun-11 first match; Jun-12 is VOID), on FRESH odds + FINAL
+  observed ownership. HITL: recommend, Sebas locks.
+- **`prior` is still `is_gated`.** Finalize only on measured (`observed`/`polled`) + HITL.
+- **No bespoke ML; stdlib + (numpy optional); fixed seeds; provenance on every datum.**
+
+## Paradigm shift (now FACT, pollaya screenshots 2026-05-30 / confirmed 2026-06-02)
+- Premiation/locked picks (champion/scorer/assister/MVP/GK) ARE visible → `PICKS_VISIBLE=True`; `observed`
+  ownership is REAL. Per-match scorelines HIDDEN → per-match ownership = prior only.
+- **N = 12 today → TIME-DEPENDENT → ~20–25 final.** Lock **Jun-10 evening**; hard backstop = first match Jun-11 (Jun-12 VOID). Symmetry
+  (opponents see your pick) → last-mover edge is HIGH in a low-sophistication pool (captures the
+  non-strategic majority; residual uncertainty = the 1–2 sharps).
+- Observed today: 2/12 locked (Pireli18→Uruguay; **Damiani=Sebas→Brasil = PLACEHOLDER**), 10 pending.
+  **Self-exclude Sebas** from the field denominator → today's field = {Uruguay:1.0}, n=1 (noise; late-bind).
+- Rubric re-confirmed (Image 3) — no optimizer change.
+
+## ✅ DONE this phase (verified — re-confirm with the commands)
+- **Step 0 docs reconcile** — `memory/rules.md` + `CLAUDE.md §7d`: PICKS_VISIBLE=True, N=12→20–25, lock
+  Jun-10 evening (hard backstop = first match Jun-11; Jun-12 VOID), symmetry.
+- **Step 1+2 — `PICKS_VISIBLE=True` flip (TDD)** in `pool/leverage.py`; rewrote T6 (observed runs w/
+  override; w/o → ValueError) + added T7 (`is_gated`: prior→True, observed/polled→False) + `is_gated()`.
+  Evidence-driven test rewrite, NOT FM1 (log as L5 in Step 7).
+  - re-verify: `python -m unittest discover -s tests -v` → **T1–T7 OK**.
+- **Step 3 — `pool/ingest_ownership.py`** (`load_observed(picks, n_total, exclude=None)`): ownership over
+  LOCKED opponents only (self-excluded), + locked/pending counts + provenance.
+  - re-verify: `python pool/ingest_ownership.py` → PASS (no-exclude: 2 locked/10 pending/sums to 1;
+    exclude='b': {Uruguay:1.0}, 1 locked/10 pending).
+- 3 plan nits folded (A2 bullet → observed-primary/N 12→20–25; PB4 softened; PB1 → "FM2:
+  stale-value-as-current").
+
+## ▶ RESUME HERE — PENDING (Steps 4–7), in order
+
+### Step 4 — `pool/pool_montecarlo.py` (A2)  ⟵ START HERE
+E[prize] per CHAMPION candidate; argmax = recommendation. Champion = one ~10-pt lever among ~300–500 pts.
+**Design (build deterministically):**
+- Model: player score = `base ~ Normal(0, BASE_SIGMA)` + `10 if their champion pick == true champion T*`.
+  `T* ~ Categorical(P_true)`.
+- **Common Random Numbers across candidates** (variance reduction → decisive argmax): per sim draw
+  (T*, my base noise, each opponent's pick + noise) ONCE; evaluate every candidate on that same draw with
+  `my_total = my_noise + (10 if cand==T* else 0)`. rank = 1 + #{opp_total > my_total}.
+- `E[prize|cand] = mean( 0.6 if rank==1, 0.2 if ==2, 0.1 if ==3, else 0 )`. argmax over candidates.
+- Opponents = `N_final − 1` (exclude self). LOCKED opponents ~ observed `ownership`; PENDING opponents ~
+  `pending_prior` (default = ownership or chalk prior) — **SIMULATION ONLY, never to choose your own pick**.
+- Params: `DEFAULT_SEED = 20260602` (fixed, documented — do NOT use Date/random-based seeds);
+  `BASE_SIGMA ≈ 8–12` (stylized spread; DOCUMENT as a modeling assumption to calibrate from backtest
+  variance later); `n_sims ≈ 30000`. Accept `ownership_source ∈ {observed, prior}`.
+- **`--selftest` = TWO scenarios (FM1 guard; a single scenario is a latent gap).** Use SYNTHETIC clean
+  P_true so the engine-logic test is unambiguous (NOT a real-data claim):
+  - `P_true = {Fav:0.40, Mid:0.25, Dark:0.20, Rest:0.15}`; candidates `[Fav,Mid,Dark]`; `N_OPP = 11`.
+  - **(a) chalk:** ownership ∝ P_true → **argmax == Fav** (favorite; efficient field → chalk at small N).
+  - **(b) flip:** ownership `{Fav:0.60, Mid:0.33, Dark:0.02, Rest:0.05}` (chalk OVER-owned, Dark
+    UNDER-owned) → **argmax == Dark** (contrarian pays when chalk is over-owned).
+  - Print E[prize]/candidate + seed; assert both. **TUNE BASE_SIGMA empirically** so both pass decisively
+    (lower sigma ⇒ champion lever more decisive ⇒ amplifies ownership effect; start ~8–10). If (b) doesn't
+    flip, over-own chalk more / lower sigma.
+- **Real-data caveat (write in the file):** with actual WC-2026 odds, Spain/France/England cluster near
+  Brazil (≈11–15% vs 9.8%) → Brazil is NOT a clean contrarian; the synthetic selftest tests ENGINE LOGIC.
+- Reuse `pool/leverage.py`: `compute`, `american_to_prob`, `devig`, `load_outrights` for real P_true.
+- verify: `python pool/pool_montecarlo.py --selftest` → chalk→Fav AND flip→Dark, prints seed + E[prize].
+
+### Step 5 — `pool/decision_clock.md`
+The INVARIANT vs TIME-DEPENDENT table (with PB1–PB5 baked in), lock schedule, optimization rule. Content
+is fully specified in the plan's PARADIGM-SHIFT §Step 5 + §"My pushback". Key reclassifications vs the
+original order:
+- **P_true:** mechanism INVARIANT / **value TIME-DEPENDENT** (re-fetch fresh odds at snapshot; FM2).
+- **N:** top-line TIME-DEPENDENT driver (12→20–25): scales ownership denominators + shifts chalk/contrarian regime.
+- **Decision-rule:** structure INVARIANT / **N-calibration TIME-DEPENDENT**.
+- **Last-mover:** HIGH value (captures non-strategic majority); residual uncertainty = 1–2 sharps.
+- Schedule: now→Jun2 build invariants + ingest; Jun2 squads (other-4 P_true); **Jun 9 REHEARSAL**;
+  **Jun 10 evening lock**; first match Jun-11 = NEVER race (Jun-12 VOID).
+- verify: Grep `INVARIANT|TIME-DEPENDENT|Jun 10|Jun 11` ≥1 each.
+
+### Step 6 — Pushback gate
+Already satisfied (PB1–PB5 in the plan + this handoff + decision_clock). Emit/keep the reasoned verdict.
+
+### Step 7 — Log L5 + STOP
+Append to `tasks/lessons.md`:
+> **L5 — An empirically-verified assumption can be FALSIFIED by new platform evidence (caught 2026-06-02).**
+> PICKS_VISIBLE flipped False→True via pollaya screenshots. Rewriting the encoding test (T6) to the NEW
+> contract WITH the evidence cited = reconciliation, NOT FM1 test-gaming. Distinguish: editing a test
+> because reality changed (legit) vs to dodge a real failure (banned). (FM-taxonomy: FM1 false-positive;
+> FM2 stale-value-as-current.)
+
+Then STOP — do not build A3 / Track B / lock anything without a new go.
+
+</details>
+
+## Other open items (not this phase)
+- **A3** council (5 isolated Sonnet lenses + synthesis) — after A2. Can run now (Jun 2 squads out) but
+  champion lens only needs odds; scorer/MVP/GK need the published squads.
+- **Other 4 locked picks** (scorer/assister/MVP/GK) — squads published 2026-06-02; build their P_true source
+  (player props / web) after A2.
+- **Task #7** — Track-B per-match odds source still OPEN (paid API-Football | The Odds API |
+  football-data.org | web fetch). API-Football FREE cannot serve WC-2026 (L3).
+- `pool/poll_champion.md` — SUPERSEDED for champion (observed ≫ polled); keep as fallback only.
+
+## File map (Track A / pool engine)
+- `pool/leverage.py` — de-vig → P_true → leverage SCREEN; `compute()`, `is_gated()`, `PICKS_VISIBLE=True`.
+- `pool/ingest_ownership.py` — observed picks → ownership (self-exclude) + pending. [Step 3 ✓]
+- `pool/pool_montecarlo.py` — A2 E[prize] engine (CRN, seed 20260602, BASE_SIGMA 6.0, opponent groups,
+  2-scenario selftest, gated demo). [Step 4 ✓]
+- `pool/decision_clock.md` — INVARIANT/TIME-DEPENDENT map + PB1–PB5 + lock schedule. [Step 5 ✓]
+- `pool/poll_champion.md` — superseded fallback.
+- `data/outrights.json` — web-sourced WC-2026 outrights (FanDuel 48 + DraftKings 21, 2026-05-29). NOTE:
+  cached; **re-fetch fresh at the Jun-10 snapshot** (FM2).
+- `tests/test_leverage.py` — Gate-7 (T1–T7).

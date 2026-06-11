@@ -1,0 +1,28 @@
+{
+  "award": "champion",
+  "as_of": "2026-06-05",
+  "candidates": ["Spain", "France", "England", "Brazil", "Argentina", "Portugal"],
+  "note": "5 isolated lenses via Agent tool (web), independent-then-aggregate (R7). DRAFT/GATED, never a lock.",
+  "lenses": [
+    {"lens": "market", "top": "Spain",
+     "probs": {"Spain": 0.236, "France": 0.222, "England": 0.172, "Brazil": 0.136, "Argentina": 0.117, "Portugal": 0.117},
+     "rationale": "Multi-book de-vig (FanDuel/Fox): Spain shortest, France tight 2nd; stable Jun 2-4, no material movement.",
+     "sources": ["https://www.si.com/betting/...world-cup (2026-06-04)", "https://www.cbssports.com/betting/news/...world-cup... (2026-06-04)"]},
+    {"lens": "form", "top": "Spain",
+     "probs": {"Spain": 0.26, "France": 0.22, "England": 0.14, "Brazil": 0.10, "Argentina": 0.08, "Portugal": 0.08},
+     "rationale": "Spain reigning Euro/Olympic champs, Yamal-led core; France only peer (Mbappe form) but injury volatility; Brazil undermanned, Argentina Messi fatigue.",
+     "sources": ["https://www.espn.com/soccer/story/_/id/48870392/spain-world-cup-2026-squad-confirmed (2026-06-02)", "https://www.foxsports.com/stories/soccer/2026-world-cup-odds-spain-france-lead-race (2026-06-04)"]},
+    {"lens": "tactical", "top": "Spain",
+     "probs": {"Spain": 0.22, "France": 0.20, "England": 0.12, "Brazil": 0.10, "Argentina": 0.10, "Portugal": 0.09},
+     "rationale": "Spain softest group (H) + opposite-half from France (meet only in final); deepest squad, Yamal fit ~Jun 15.",
+     "sources": ["https://www.foxsports.com/stories/soccer/world-cup-2026-champion-odds (2026-06-03)", "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-bracket (2026-06-04)"]},
+    {"lens": "baserate", "top": "Spain",
+     "probs": {"Spain": 0.19, "France": 0.18, "England": 0.11, "Brazil": 0.12, "Argentina": 0.14, "Portugal": 0.07},
+     "rationale": "Only 8 nations ever won; favourites win ~27% since 1978 -> spread the field. Argentina/Brazil pedigree lifts them; Spain recency edge.",
+     "sources": ["https://en.wikipedia.org/wiki/FIFA_World_Cup (2026-05-30)", "https://www.natesilver.net/p/world-cup-2026-odds-predictions (2026-06-04)"]},
+    {"lens": "contrarian", "top": "England",
+     "probs": {"Spain": 0.22, "France": 0.20, "England": 0.12, "Brazil": 0.10, "Argentina": 0.09, "Portugal": 0.06},
+     "rationale": "Spain/France crowd-compressed (BetMGM tickets+money). England 3rd-best team but low casual ownership in a LatAm pool; Argentina bought on Messi nostalgia.",
+     "sources": ["https://www.foxsports.com/stories/soccer/world-cup-2026-champion-odds (2026-06-02)", "https://www.espn.com/espn/betting/story/_/id/48386952/...world-cup (2026-06-02)"]}
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "utc": "2026-05-30T15-09-50Z",
+  "league": 1,
+  "season": 2026,
+  "endpoints": {
+    "fixtures": {
+      "ok": false,
+      "count": 0
+    },
+    "odds": {
+      "ok": false,
+      "markets": {
+        "match_winner": false,
+        "over_under": false,
+        "correct_score": false
+      },
+      "names": []
+    },
+    "lineups": {
+      "ok": false
+    },
+    "injuries": {
+      "ok": false
+    },
+    "topscorers": {
+      "ok": false
+    }
+  },
+  "quota": {
+    "daily_limit": 100,
+    "daily_remaining": null,
+    "probe_requests_used": 3,
+    "projected_peak_day": 32,
+    "model": "(fixtures+injuries=2) + 5 fixtures x (lineups+odds=2) x 3 refreshes",
+    "cache_web_fallback_mandatory": false
+  },
+  "odds_path": "no usable odds on free tier -> The Odds API (totals) or Elo-xG fallback"
+}

@@ -1,0 +1,27 @@
+{
+  "award": "mvp",
+  "as_of": "2026-06-10",
+  "fetched_utc": "2026-06-10T00:00:00Z",
+  "note": "WC-2026 mvp futures, web-fetched 2026-06-10 for the decision-grade lock run. American. Primary=DraftKings Sportsbook (via Sports Illustrated) (single-book de-vig basis, RB3; 11 names as the book presented them). Names ASCII-normalized to board keys. De-vig + top-6 at engine time (council.market_p_true). STALE by kickoff -> this IS the Jun-10 refresh (FM2). NOT A LOCK.",
+  "overround_primary": 0.820124,
+  "primary": {
+    "source": "DraftKings Sportsbook (via Sports Illustrated)",
+    "url": "https://www.si.com/soccer/2026-world-cup-golden-ball-winner-odds-predictions-yamal-messi",
+    "as_of": "2026-06-10",
+    "format": "american",
+    "odds": {
+      "Harry Kane": 800,
+      "Lamine Yamal": 800,
+      "Michael Olise": 900,
+      "Kylian Mbappe": 900,
+      "Lionel Messi": 1200,
+      "Pedri": 1400,
+      "Vinicius Junior": 1600,
+      "Bruno Fernandes": 1800,
+      "Declan Rice": 2000,
+      "Raphinha": 2000,
+      "Vitinha": 2000
+    }
+  },
+  "crosscheck": {}
+}

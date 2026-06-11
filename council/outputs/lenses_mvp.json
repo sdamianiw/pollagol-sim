@@ -1,0 +1,28 @@
+{
+  "award": "mvp",
+  "as_of": "2026-06-05",
+  "candidates": ["Lamine Yamal", "Harry Kane", "Kylian Mbappe", "Michael Olise", "Lionel Messi", "Bruno Fernandes"],
+  "note": "5 isolated lenses via Agent tool (web), independent-then-aggregate (R7). DRAFT/GATED, never a lock.",
+  "lenses": [
+    {"lens": "market", "top": "Lamine Yamal",
+     "probs": {"Lamine Yamal": 0.217, "Harry Kane": 0.215, "Kylian Mbappe": 0.177, "Michael Olise": 0.165, "Lionel Messi": 0.138, "Bruno Fernandes": 0.088},
+     "rationale": "3-book avg (Bovada/BetMGM/Fox): Yamal & Kane co-favourites; Mbappe 3rd; two-horse top. Fernandes long (Portugal ceiling).",
+     "sources": ["https://www.foxsports.com/stories/soccer/2026-world-cup-golden-ball-odds (2026-06-02)", "https://www.thesportsgeek.com/blog/...golden-ball (2026-06-03)"]},
+    {"lens": "form", "top": "Lamine Yamal",
+     "probs": {"Lamine Yamal": 0.22, "Harry Kane": 0.10, "Kylian Mbappe": 0.18, "Michael Olise": 0.08, "Lionel Messi": 0.07, "Bruno Fernandes": 0.09},
+     "rationale": "Yamal LaLiga POTS (24G/17A all comps), Spain's engine, injury the risk; Mbappe high ceiling; Olise elite club form but secondary creator.",
+     "sources": ["https://www.fcbarcelona.com/en/football/...lamine-yamal-laliga-player-of-the-season (2026-05-20)", "https://www.bundesliga.com/en/bundesliga/news/player-of-the-month...olise (2026-05-25)"]},
+    {"lens": "tactical", "top": "Kylian Mbappe",
+     "probs": {"Lamine Yamal": 0.20, "Harry Kane": 0.10, "Kylian Mbappe": 0.22, "Michael Olise": 0.08, "Lionel Messi": 0.07, "Bruno Fernandes": 0.06},
+     "rationale": "Golden Ball rewards dominant attacker of finalist; Mbappe captain+striker+penalties = max role concentration; Yamal hamstring caps games-floor.",
+     "sources": ["https://www.theherald.co.za/sport/soccer/2026-06-05-stars-of-the-2026-world-cup-lamine-yamal (2026-06-05)", "https://www.sportsmole.co.uk/football/france/world-cup/...predicted-lineup (2026-06-03)"]},
+    {"lens": "baserate", "top": "Kylian Mbappe",
+     "probs": {"Lamine Yamal": 0.10, "Harry Kane": 0.07, "Kylian Mbappe": 0.14, "Michael Olise": 0.04, "Lionel Messi": 0.09, "Bruno Fernandes": 0.05},
+     "rationale": "1982-2022: 73% of Golden Balls from finalist/champion players; attackers dominate (10/11). Mbappe best-positioned superstar; teen winger has no precedent.",
+     "sources": ["https://www.topendsports.com/events/worldcupsoccer/golden-ball.htm (2026-06-05)", "https://en.wikipedia.org/wiki/FIFA_World_Cup_awards (2026-06-05)"]},
+    {"lens": "contrarian", "top": "Michael Olise",
+     "probs": {"Lamine Yamal": 0.12, "Harry Kane": 0.10, "Kylian Mbappe": 0.13, "Michael Olise": 0.08, "Lionel Messi": 0.06, "Bruno Fernandes": 0.07},
+     "rationale": "Yamal/Mbappe absorb casual picks; Messi takes Argentina-aligned entrants. Olise (+1000) ignored yet Bundesliga POTS in France's first XI; if France win, award may skip Mbappe (seen as GB) to the surprise star.",
+     "sources": ["https://www.foxsports.com/stories/soccer/2026-world-cup-golden-ball-odds (2026-06-02)", "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/michael-olise-france (2026-05-20)"]}
+  ]
+}

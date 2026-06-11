@@ -1,0 +1,50 @@
+================================================================================================
+PODIUM P4 - DRAFT / GATED  (prior-gated dry-run)   ownership_source=prior  is_gated=True
+  N=22 (assumed; reconcile live N at Jun-11)  N_opp=21  seed=20260602  sigma=6.0 [PLACEHOLDER, not decision-grade -> PODIUM-3]
+  snapshot (DRY-RUN cached/stale): outrights.json(as_of 2026-05-29) + props_*(2026-06-02). Jun-11 = ONE fresh re-fetch (FLAG2/FM2).
+  engine input = MARKET full-board P_true; council = overlay only (FLAG3: divergence != §7b leverage).
+================================================================================================
+
+[BASE]  efficient prior  (ownership proportional to market P_true over the top-6)
+  lever      chalk         best-contrarian    §7b lev   chosen        
+  champion   Spain         Portugal              1.25   Spain         
+  top_scorer Kylian Mbappe Mikel Oyarzabal       1.12   Kylian Mbappe 
+  mvp        Lamine Yamal  Kylian Mbappe         1.09   Lamine Yamal  
+  best_gk    Emiliano MartinezMike Maignan          1.08   Emiliano Martinez
+  -> PORTFOLIO ('Spain', 'Kylian Mbappe', 'Lamine Yamal', 'Emiliano Martinez')  VERDICT=chalk  E_chalk=0.0499  E_rec=0.0499  improvement=+0.0000
+  (efficient field -> leverage ~1 everywhere -> no contrarian -> all-chalk, as expected)
+
+[COUNCIL OVERLAY]  (triangulation; engine uses MARKET P_true, not these)
+  champion    median-leader=Spain                      vote=majority    divergence=1.17x  dissent: contrarian->England
+  top_scorer  median-leader=Kylian Mbappe              vote=majority    divergence=0.97x  dissent: contrarian->Mikel Oyarzabal
+  mvp         median-leader=Kylian Mbappe  [CONTESTED] vote=no-majority divergence=1.56x  dissent: market->Lamine Yamal,form->Lamine Yamal,contrarian->Michael Olise
+  best_gk     median-leader=Emiliano Martinez             vote=majority    divergence=1.24x  dissent: form->Unai Simon,contrarian->Unai Simon
+
+[R9a sigma-sweep]  (efficient prior; PODIUM-3: the qualitative verdict is sigma-dependent)
+  sigma= 4.0  verdict=chalk                portfolio=('Spain', 'Kylian Mbappe', 'Lamine Yamal', 'Emiliano Martinez')
+  sigma= 6.0  verdict=chalk                portfolio=('Spain', 'Kylian Mbappe', 'Lamine Yamal', 'Emiliano Martinez')
+  sigma= 8.0  verdict=chalk                portfolio=('Spain', 'Kylian Mbappe', 'Lamine Yamal', 'Emiliano Martinez')
+  sigma=10.0  verdict=chalk                portfolio=('Spain', 'Kylian Mbappe', 'Lamine Yamal', 'Emiliano Martinez')
+  sigma=12.0  verdict=chalk                portfolio=('Spain', 'Kylian Mbappe', 'Lamine Yamal', 'Emiliano Martinez')
+
+[R9b ownership +-1]  (move 1 opponent onto each lever's top non-chalk candidate)
+  champion    +1 -> Portugal         verdict=chalk                stable
+  top_scorer  +1 -> Mikel Oyarzabal  verdict=chalk                stable
+  mvp         +1 -> Kylian Mbappe    verdict=chalk                stable
+  best_gk     +1 -> Mike Maignan     verdict=chalk                stable
+
+[STRESS targeted-starve]  (each lever's 2nd-fav under-owned to 15% -> contrarian identified; GATED)
+  starved (under-owned credible candidate) per lever: champion->France, top_scorer->Harry Kane, mvp->Harry Kane, best_gk->Unai Simon
+  sigma= 4.0  contrarians_identified=4/4  chosen_contrarian=2  verdict=contrarian_2_levers  improvement=+0.0316
+  sigma= 6.0  contrarians_identified=4/4  chosen_contrarian=2  verdict=contrarian_2_levers  improvement=+0.0218
+  sigma= 8.0  contrarians_identified=4/4  chosen_contrarian=2  verdict=contrarian_2_levers  improvement=+0.0151
+  sigma=10.0  contrarians_identified=4/4  chosen_contrarian=2  verdict=contrarian_2_levers  improvement=+0.0108
+  (PODIUM-3: if the flip fires at low sigma but not high, the qualitative verdict is sigma-dependent;
+   if it stays chalk even with contrarians identified, the K=4 joint dilution suppresses it -- L12.)
+
+================================================================================================
+🛑 DRAFT / GATED - NOT A LOCK.  ownership_source=prior (is_gated) - NO observed ownership consumed.
+   This dry-run validates the pipeline + R9 sensitivities only. The finalizable run is Jun-11 LATE on
+   FRESH odds (one snapshot) + REAL observed ownership + sigma-calibrated engine (PODIUM-3), with a
+   buffer before the Jun-12 02:00 deadline. Champion + 4 awards OPEN. Sebas locks, not this engine.
+================================================================================================
