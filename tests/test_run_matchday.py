@@ -46,6 +46,75 @@ def _multi_event(*books):
             "commence_time": "2026-06-11T19:00:00Z", "bookmakers": list(books)}
 
 
+# --- Real events for the L17 favorite-inversion guard, trimmed to the single book parse_event would
+# select (first with h2h + x.5 totals). Prices extracted VERBATIM from the Jun-6 board snapshot
+# data/snapshots/probe_lines_2026-06-06T13-23-59Z.json (reproduced 2026-06-11, see lessons.md L17). ---
+_KOR_CZE_EVENT = {   # betonlineag: de-vig H=0.3539/D=0.3107/A=0.3355 (Korea fav) but DC matrix A=0.3605 (Czech) -> FIRES
+    "id": "384cbb5d76b535896a24fe65f93cfac8",
+    "home_team": "South Korea", "away_team": "Czech Republic",
+    "commence_time": "2026-06-12T02:00:00Z",
+    "bookmakers": [{"key": "betonlineag", "markets": [
+        {"key": "h2h", "outcomes": [
+            {"name": "Czech Republic", "price": 188},
+            {"name": "South Korea", "price": 173},
+            {"name": "Draw", "price": 211}]},
+        {"key": "totals", "outcomes": [
+            {"name": "Over", "price": 118, "point": 2.5},
+            {"name": "Under", "price": -138, "point": 2.5}]}]}],
+}
+_MEX_RSA_EVENT = {   # coolbet: Mexico dominant (de-vig H=0.6727, matrix H=0.6727) -> guard SILENT
+    "id": "80d82d1113934bfbea4ce8daf37a2433",
+    "home_team": "Mexico", "away_team": "South Africa",
+    "commence_time": "2026-06-11T19:00:00Z",
+    "bookmakers": [{"key": "coolbet", "markets": [
+        {"key": "h2h", "outcomes": [
+            {"name": "Mexico", "price": -227},
+            {"name": "South Africa", "price": 850},
+            {"name": "Draw", "price": 330}]},
+        {"key": "totals", "outcomes": [
+            {"name": "Over", "price": 115, "point": 2.5},
+            {"name": "Under", "price": -141, "point": 2.5}]}]}],
+}
+
+
+class TestFavoriteInversionGuard(unittest.TestCase):
+    """L17 output-layer guard: detection-only flag when the DC matrix favorite disagrees with the
+    de-vigged h2h market favorite. NEVER changes the pick (anti-tuning)."""
+
+    def test_guard_fires_on_kor_cze(self):
+        ig = run_match(_KOR_CZE_EVENT)["inversion_guard"]
+        self.assertTrue(ig["fired"], "near-even KOR-CZE should invert (draw deficit leaks to away)")
+        self.assertEqual(ig["dv_fav"], "home")      # market: South Korea
+        self.assertEqual(ig["matrix_fav"], "away")  # matrix: Czech Republic
+
+    def test_guard_silent_on_mex_rsa(self):
+        ig = run_match(_MEX_RSA_EVENT)["inversion_guard"]
+        self.assertFalse(ig["fired"], "dominant favorite MEX-RSA must NOT invert")
+        self.assertEqual(ig["dv_fav"], "home")
+        self.assertEqual(ig["matrix_fav"], "home")
+
+    def test_guard_key_always_in_summary(self):
+        s = run_match(_MEX_RSA_EVENT)
+        self.assertIn("inversion_guard", s)
+        self.assertIn("fired", s["inversion_guard"])
+
+    def test_guard_does_not_fire_on_elo_source(self):
+        # Elo-sourced strength has no h2h market to compare -> guard skips gracefully (fired False).
+        from src.run_matchday import guard_favorite_inversion
+        from src.strength import match_strength
+        from src.model import match_distribution
+        st = match_strength({"elo": {"home": 1800, "away": 1800}})
+        mat = match_distribution(st)
+        ig = guard_favorite_inversion(st, mat, "ELO1")
+        self.assertFalse(ig["fired"])
+
+    def test_guard_never_mutates_pick(self):
+        # Detection only: the EV pick on KOR-CZE is identical whether or not we read the guard.
+        s = run_match(_KOR_CZE_EVENT)
+        self.assertTrue(s["inversion_guard"]["fired"])
+        self.assertEqual(len(s["opt"]["pick"]), 2)   # pick still produced, unchanged by the guard
+
+
 class TestHalfLine(unittest.TestCase):
     def test_x5_true(self):
         for v in (1.5, 2.5, 3.5, 4.5):

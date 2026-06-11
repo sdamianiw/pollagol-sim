@@ -36,7 +36,7 @@ for _stream in (sys.stdout, sys.stderr):
 
 from src.ingest import fetch_live, parse_event, snapshot, load_snapshot
 from src.strength import match_strength
-from src.model import match_distribution, mu_from_pover, TOTAL_LINE
+from src.model import match_distribution, implied_1x2, mu_from_pover, TOTAL_LINE
 from src.context import apply_context
 from src.optimizer import optimize
 from src.lines import is_half_line
@@ -61,6 +61,25 @@ def guard_total_line(strength: dict, fixture_id: str) -> None:
         )
 
 
+def guard_favorite_inversion(strength: dict, matrix: np.ndarray, fixture_id: str) -> dict:
+    """L17 output-layer guard: flag when the DC matrix-implied favorite disagrees with the de-vigged
+    h2h MARKET favorite. On near-even/high-draw fixtures the 1-constraint fit under-produces draws and
+    leaks the missing mass onto the away side, inverting the margin (measured on KOR-CZE, 2026-06-09).
+    DETECTION ONLY: returns a status dict, NEVER mutates the pick, NEVER raises (anti-tuning - Sebas
+    decides). Compares the PRE-context matrix (the DC output L17 indicts, not the M5-adjusted one). A
+    non-market (Elo) source has no h2h favorite to compare -> fired=False. The ρ-fit ROOT fix is a
+    separate post-lock GO (L19); this guard only surfaces the disagreement to the HITL."""
+    if strength.get("source") != "market":
+        return {"fired": False, "reason": "non-market source (no h2h favorite to compare)"}
+    dv = strength["probs"]
+    im = implied_1x2(matrix)
+    dv_fav = "home" if dv["home"] > dv["away"] else "away"
+    matrix_fav = "home" if im["home"] > im["away"] else "away"
+    return {"fired": dv_fav != matrix_fav, "dv_fav": dv_fav, "matrix_fav": matrix_fav,
+            "dv_home": round(dv["home"], 5), "dv_away": round(dv["away"], 5),
+            "matrix_home": round(im["home"], 5), "matrix_away": round(im["away"], 5)}
+
+
 def _modal(matrix: np.ndarray) -> tuple[int, int]:
     idx = np.unravel_index(int(np.argmax(matrix)), matrix.shape)
     return int(idx[0]), int(idx[1])
@@ -78,12 +97,13 @@ def run_match(event: dict, fmt: str = "american", context_flags=DEFAULT_CONTEXT,
     strength = match_strength(match)
     guard_total_line(strength, match["fixture_id"])                 # x.5 guard BEFORE the mu_eff path
     matrix = match_distribution(strength)                           # M3 (mu_eff recovered inside if p_over)
+    inv_guard = guard_favorite_inversion(strength, matrix, match["fixture_id"])   # L17 detection (PRE-context)
     adj, context_flag = apply_context(matrix, context_flags, source=context_source)   # M5 before M4
     opt = optimize(adj)                                             # M4 argmax E[points]
     mu_eff = (mu_from_pover(strength["p_over"], strength["total_line"] or TOTAL_LINE)
               if strength["p_over"] is not None else None)
     return {"match": match, "strength": strength, "mu_eff": mu_eff, "context_flag": context_flag,
-            "matrix": adj, "opt": opt, "modal": _modal(adj)}
+            "matrix": adj, "opt": opt, "modal": _modal(adj), "inversion_guard": inv_guard}
 
 
 def _fmt_score(s) -> str:
@@ -117,6 +137,15 @@ def print_summary(summary: dict, snapshot_path: str | None = None) -> None:
     cf = summary["context_flag"]
     print(f"  M5 context: {cf['text']}  (flags={cf['flags']}, source={cf['source']}, "
           f"mu_x{cf['mu_factor']}, var_x{cf['variance_factor']})")
+    ig = summary.get("inversion_guard", {})
+    if ig.get("fired"):
+        fav_team = {"home": m["home"], "away": m["away"]}
+        print(f"  ⚠ FAVORITE-INVERSION (L17): matrix favors {fav_team[ig['matrix_fav']]} "
+              f"(H={ig['matrix_home']:.4f} A={ig['matrix_away']:.4f}), market favors {fav_team[ig['dv_fav']]} "
+              f"(H={ig['dv_home']:.4f} A={ig['dv_away']:.4f}) -> HITL override required; "
+              f"modal alt: {_fmt_score(modal)}")
+    elif ig:
+        print("  inversion-guard: clean (matrix favorite == market favorite)")
     if snapshot_path:
         print(f"  snapshot (reproducible): {snapshot_path}")
     # --- scoreline table (top EV) ---
