@@ -38,17 +38,17 @@ choice remains Sebas's: **1-0** (EV-max, Korea win) vs **1-1** (modal, P=0.137, 
 ## Detail — first-time fixtures + L17 watch (KOR-CZE, HAI-SCO, AUS-TUR)
 
 **KOR-CZE — South Korea vs Czech Republic** (betonlineag)
-- de-vig 1X2: H=0.3659 D=0.3098 A=0.3243 · totals line 2.5, p_over=0.4202 · λ_home=1.2697 λ_away=1.2403
+- de-vig 1X2: H=0.3659 D=0.3098 A=0.3243 · totals line 2.5, p_over=0.4202 → **mu_eff=2.3614** · λ_home=1.215698 λ_away=1.169539 (fit to mu_eff, NOT the line — L11; reproduces match_distribution byte-identical)
 - matrix 1X2: H=0.3659 D=0.2906 A=0.3435 → **fav = home** (NO inversion; draw compresses 0.310→0.291, ~1.9pp, but Korea's 4.2pp h2h lead absorbs it)
 - top-5: 1-1:0.1374, 1-0:0.1054, 0-1:0.1011, 0-0:0.0986, 2-1:0.0796 · EV pick **1-0** (E=2.174) vs modal **1-1**
 
 **HAI-SCO — Haiti vs Scotland** (pinnacle) — first-time fixture
-- de-vig 1X2: H=0.1648 D=0.2268 A=0.6083 · totals line 2.5, p_over=0.5046 · λ_home=0.7932 λ_away=1.7168
+- de-vig 1X2: H=0.1648 D=0.2268 A=0.6083 · totals line 2.5, p_over=0.5046 → **mu_eff=2.6927** · λ_home=0.851513 λ_away=1.831899 (fit to mu_eff)
 - matrix 1X2: H=0.1648 D=0.2351 A=0.6001 → **fav = away** (Scotland), no inversion
 - top-5: 0-1:0.1199, 0-2:0.1147, 1-1:0.1119, 1-2:0.0976, 0-0:0.0737 · EV pick **0-1** (E=2.964) == modal
 
 **AUS-TUR — Australia vs Turkey** (coolbet) — first-time fixture + L17 watch
-- de-vig 1X2: H=0.1941 D=0.2520 A=0.5539 · totals line 2.5, p_over=0.4764 · λ_home=0.8734 λ_away=1.6366
+- de-vig 1X2: H=0.1941 D=0.2520 A=0.5539 · totals line 2.5, p_over=0.4764 → **mu_eff=2.5794** · λ_home=0.898601 λ_away=1.682889 (fit to mu_eff)
 - matrix 1X2: H=0.1941 D=0.2528 A=0.5531 → **fav = away** (Turkey), no inversion (margin wide enough)
 - top-5: 0-1:0.1216, 1-1:0.1201, 0-2:0.1071, 1-2:0.0963, 0-0:0.0814 · EV pick **0-1** (E=2.829) == modal
 

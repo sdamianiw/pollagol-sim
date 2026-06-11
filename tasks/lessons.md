@@ -269,3 +269,25 @@ plan as an explicit push-back (and the inversion was reproduced to 4 decimals on
 Treat a planning contract as a *hypothesis about the code*, never as ground truth. A planned constant that the
 code contradicts is a push-back to surface, not an instruction to follow. (Sibling of L18's lesson: a fixed seed/
 contract is necessary but not sufficient — the substrate it runs on must actually match.)
+
+## L21 — An external-audit gate has integrity only if the executor waits for the auditor's ACTUAL verdict, not an anticipated/self-supplied "GO" (caught 2026-06-11, matchday-1 P4 gate)
+**Pattern:** the matchday-1 contract pre-declared "Plan APPROVED by Sebas (GO) + audited by claude.ai" and the
+P5 step keyed off an "Auditor GO". The risk the auditor flagged: if the executor accepts a "GO" that the
+gate-REQUESTER (Sebas) can author before the external reviewer (claude.ai) has actually run, the audit gate is
+theater — the very independent check it exists to provide is bypassed. (This run did stop correctly at P4 and
+waited for the real verdict, which then returned findings F1–F6; the lesson hardens the rule against the near-miss.)
+**Rule:** at a HITL/external-audit gate, distinguish two distinct authorities: (a) the principal's instruction
+to proceed (Sebas — legitimate, HITL) and (b) the external reviewer's VERDICT (claude.ai — must be the
+reviewer's own emitted output, with its findings, not a relayed/anticipated label). Do not advance past an
+external-review gate on (a) standing in for (b). When a "GO" arrives, confirm its provenance: whose verdict is
+this, and has the reviewer actually run? Name what you are waiting for and stop until it exists.
+
+## L22 — Per-fixture λ must be fit to mu_eff (price), not the totals line (re-confirmed 2026-06-11, F1 byte-check)
+**Pattern:** a transparency dump (and the auditor's independent repro) computed λ via `fit_lambdas(probs,
+total_line=2.5)` (fit mu≈2.51) while the LIVE `match_distribution` fits to `mu_eff = mu_from_pover(p_over, line)`
+(KOR-CZE: 2.3614, fit mu 2.385). Same HOME (the fit pins P_home exactly) but draw/away drift ~0.8–1.1pp →
+`match_distribution != score_matrix(fit_lambdas(probs, line))`. The matrix/EV/modal were always from the
+correct path (unchanged), but the *displayed* λ were inconsistent with the matrix. This is L11 recurring at
+the reporting layer. **Detection/Rule:** any λ or matrix repro MUST go through `mu_eff` when `p_over` is present;
+assert `np.array_equal(match_distribution(st), score_matrix(lh, la, RHO))` before publishing λ. The over/under
+PRICE carries the goal signal, never the (often pinned) line (L11).
