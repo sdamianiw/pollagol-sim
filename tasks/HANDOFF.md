@@ -1,5 +1,22 @@
 # HANDOFF
 
+> 🟢 **WEEKEND MATCHDAY CADENCE RUN DONE (2026-06-12).** Resumed the per-fixture refresh on the corrected
+> optimizer (exact=3). (1) **Closed today's 2 picks** on fresh Jun-12 odds: **CAN-BIH 1-0** (E=2.953,
+> aligned) and **USA-PAR 1-0** (E=2.678, EV-vs-modal gap persists) — both **STAND vs BASELINE, no change**;
+> the only Jun-11 flip candidate (USA-PAR) did NOT flip. EDIT-only-on-change → no `decisions.csv` mutation
+> for the unchanged picks. (2) **Closed the MD1 coverage gap:** `src/fetch_md1.py` window/count were
+> hardcoded (`WIN_HI=2026-06-14T06:00Z`, expect 8), silently dropping the 7 remaining MD1 fixtures. Added
+> `--win-hi`/`--expect` + a pure `filter_window()` (TDD: `tests/test_fetch_md1.py`, defaults byte-identical;
+> suite **172/172**, was 165 + 7). Fresh fetch `--win-hi 2026-06-15T23:00Z --expect 13` (quota 487→**485**,
+> 2 cr) → snapshot `data/snapshots/md1_2026-06-12T17-10-37Z.json` (13 unplayed fixtures; MEX/KOR played &
+> dropped). Added 7 BASELINE rows (GER-CUW 3-0, NED-JPN 1-0, CIV-ECU 0-1, SWE-TUN 1-0, ESP-CPV 3-0, BEL-EGY
+> 1-0, KSA-URU 0-1) + backfilled forecast cols → `decisions.csv` now **15 rows**; recorded n=2 (us=5/B1=8/B2=5)
+> UNCHANGED. All 13 guards clean (neutral×13, x.5×13, intra-book×13, L17 clean×13). **Flip-watch (EV≠modal):
+> USA-PAR, NED-JPN, CIV-ECU.** Output `predictions/2026-06-12/summary.md`; refresh table below extended through
+> Mon Jun-15. 🛑 Nothing entered/locked by CC. **NEXT: Sat ~18:00 UTC refresh** (QAT-SUI/BRA-MAR/HAI-SCO/AUS-TUR).
+>
+> ---
+>
 > 🟢 **TRACK-B OBJECTIVE-FUNCTION FIX + EXECUTION-DISCIPLINE LOOP DONE (2026-06-12).** Two gated phases,
 > both auditor-checked.
 > **PHASE 1 (GATE 1 PASS, commit `3778c4c`):** fixed a silent objective bug — optimizer paid EXACT-SCORE
@@ -37,9 +54,12 @@
 > as-built argmax 1-0 — gap 0.025<noise, inversion CLEARED on fresh odds). **BASELINE (NOT entered, refresh
 > per fixture):** CAN-BIH 1-0, USA-PAR 1-0, QAT-SUI 0-2, BRA-MAR 1-0, HAI-SCO 0-1, AUS-TUR 0-1.
 > **Refresh windows (contract §5, re-run `fetch_md1` + replay that day's fixtures, diff vs BASELINE, EDIT only on change):**
-> Fri ~18:00 UTC → CAN-BIH (18:50), USA-PAR (00:50 Sat) · Sat ~18:00 UTC → QAT-SUI (18:50), BRA-MAR (21:50),
-> HAI-SCO (00:50 Sun), AUS-TUR (03:50 Sun). Record: `predictions/decisions.csv` (8 rows, utc=KO) +
-> `predictions/2026-06-11/summary.md`. **Pending engine GO (post-MD, L19):** ρ-fit root fix + H4 + M7 re-run.
+> Fri ~18:00 UTC → CAN-BIH (18:50), USA-PAR (00:50 Sat) — **DONE Jun-12: both 1-0 STAND** · Sat ~18:00 UTC →
+> QAT-SUI (18:50, 0-2), BRA-MAR (21:50, 1-0), HAI-SCO (00:50 Sun, 0-1), AUS-TUR (03:50 Sun, 0-1) · **Sun ~15:00 UTC**
+> → GER-CUW (16:50, 3-0), NED-JPN (19:50, 1-0¹), CIV-ECU (22:50, 0-1¹), SWE-TUN (01:50 Mon, 1-0) · **Mon ~14:00 UTC**
+> → ESP-CPV (15:50, 3-0), BEL-EGY (18:50, 1-0), KSA-URU (21:50, 0-1). ¹=flip-watch (EV≠modal). Record:
+> `predictions/decisions.csv` (15 rows, utc=KO) + `predictions/2026-06-1{1,2}/summary.md`. **Pending engine GO
+> (post-MD, L19):** ρ-fit root fix + H4 + M7 re-run.
 
 ---
 

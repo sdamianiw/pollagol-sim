@@ -9,6 +9,7 @@ Reuses src.probe_oddssource._get/_load_dotenv and src.ingest.snapshot - no secon
 On a non-OK response it prints the failure and exits non-zero (P2 STOP; fall back per the contract §6).
 """
 from __future__ import annotations
+import argparse
 import os
 import sys
 from datetime import datetime, timezone
@@ -33,6 +34,13 @@ def _commence(ev: dict) -> datetime:
     return datetime.fromisoformat(ev["commence_time"].replace("Z", "+00:00"))
 
 
+def filter_window(events: list, win_lo: datetime = WIN_LO, win_hi: datetime = WIN_HI) -> list:
+    """Pure, inclusive [win_lo, win_hi] filter sorted by commence_time. Defaults = the FROZEN MD1
+    window (2026-06-11T00:00Z .. 2026-06-14T06:00Z) so the original 8-fixture replay is byte-identical;
+    pass a wider win_hi to capture later MD1 fixtures (Sun Jun-14 / Mon Jun-15) that the API now serves."""
+    return sorted([e for e in events if win_lo <= _commence(e) <= win_hi], key=_commence)
+
+
 def _hdr(headers: dict, name: str):
     """Case-insensitive header lookup (server casing varies)."""
     for k, v in (headers or {}).items():
@@ -41,7 +49,8 @@ def _hdr(headers: dict, name: str):
     return None
 
 
-def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,totals") -> int:
+def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,totals",
+              win_hi: datetime = WIN_HI, expect: int = 8) -> int:
     _load_dotenv()
     key = os.environ.get("THE_ODDS_API_KEY") or os.environ.get("ODDS_API_KEY")
     if not key:
@@ -62,8 +71,8 @@ def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,to
 
     events = r["body"]
     print(f"events returned: {len(events)}")
-    inwin = sorted([e for e in events if WIN_LO <= _commence(e) <= WIN_HI], key=_commence)
-    print(f"events in MD1 window [{WIN_LO:%Y-%m-%dT%H:%MZ}, {WIN_HI:%Y-%m-%dT%H:%MZ}]: {len(inwin)}")
+    inwin = filter_window(events, WIN_LO, win_hi)
+    print(f"events in MD1 window [{WIN_LO:%Y-%m-%dT%H:%MZ}, {win_hi:%Y-%m-%dT%H:%MZ}]: {len(inwin)}")
     print("-" * 88)
     for e in inwin:
         print(f"  {e['commence_time']}  {e['home_team']:<16} vs {e['away_team']:<20}  id={e['id']}")
@@ -71,16 +80,28 @@ def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,to
 
     prov = {"source": "The Odds API", "sport": SPORT, "fmt": fmt, "regions": regions, "markets": markets,
             "fetched_utc": fetched_utc, "x_requests_remaining": rem, "x_requests_used": used,
-            "window": [WIN_LO.isoformat(), WIN_HI.isoformat()], "n_events_total": len(events)}
+            "window": [WIN_LO.isoformat(), win_hi.isoformat()], "n_events_total": len(events)}
     path = snapshot({"events": inwin, "provenance": prov}, "md1")
     print(f"snapshot written: {path}")
-    if len(inwin) != 8:
-        print(f"⚠ EXPECTED 8 MD1 fixtures, got {len(inwin)} -> STOP for HITL (do not guess). "
+    if len(inwin) != expect:
+        print(f"⚠ EXPECTED {expect} MD1 fixtures, got {len(inwin)} -> STOP for HITL (do not guess). "
               f"Inspect the list above against the contract §3 table.")
         return 2
-    print("OK: exactly 8 MD1 fixtures captured.")
+    print(f"OK: exactly {expect} MD1 fixtures captured.")
     return 0
 
 
+def _parse_iso_utc(s: str) -> datetime:
+    return datetime.fromisoformat(s.replace("Z", "+00:00"))
+
+
 if __name__ == "__main__":
-    sys.exit(fetch_md1())
+    ap = argparse.ArgumentParser(description="MD1 enumeration + single fresh fetch (Track B, HITL).")
+    ap.add_argument("--win-hi", default=None,
+                    help="upper window bound, ISO UTC (default 2026-06-14T06:00Z = the frozen MD1 window). "
+                         "Widen to capture later MD1 fixtures the API now serves, e.g. 2026-06-15T23:00Z.")
+    ap.add_argument("--expect", type=int, default=8,
+                    help="HITL count-guard: STOP (exit 2) unless exactly this many fixtures land in-window.")
+    a = ap.parse_args()
+    win_hi = _parse_iso_utc(a.win_hi) if a.win_hi else WIN_HI
+    sys.exit(fetch_md1(win_hi=win_hi, expect=a.expect))
