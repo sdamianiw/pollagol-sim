@@ -1,6 +1,6 @@
 """M4 optimizer - argmax E[competition points] over the DC score distribution (Track B).
 
-Objective = the LOCKED additive rubric (memory/rules.md): exact 2 + outcome 3 + per-team goals (<=2)
+Objective = the LOCKED additive rubric (memory/rules.md): exact 3 + outcome 3 + per-team goals (<=2)
 + GD 1. Optimize E[points], NOT P(exact). The 4 locked unit tests are the correctness gate. Rejects
 scorelines below a plausibility floor (PM7: never recommend an implausible exact score). numpy.
 """
@@ -20,7 +20,7 @@ def points(pred: tuple[int, int], actual: tuple[int, int]) -> int:
     ah, aa = actual
     pts = 0
     if ph == ah and pa == aa:
-        pts += 2                                              # exact score
+        pts += 3                                              # exact score
     if _sgn(ph - pa) == _sgn(ah - aa):
         pts += 3                                              # correct outcome (1 / X / 2)
     pts += (1 if ph == ah else 0) + (1 if pa == aa else 0)    # team goals (max 2)
