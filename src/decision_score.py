@@ -9,6 +9,17 @@ Scoring uses the SINGLE corrected rubric src.optimizer.points (exact=3). Two Bri
                    the thing L17 draw-compression degrades (same object the L17 guard reads). PRIMARY.
   * brier_market = de-vig MARKET 1X2 - INPUT-CALIBRATION reference (well-calibrated by construction;
                    NOT a model signal). SECONDARY.
+Why store BOTH: the DC fit and the market disagree on the outcome split (the F12 gap; MEX dD/dA~0.0043,
+KOR~0.0192) - that disagreement is the model signal, and brier_market alone (near-tautological) would miss it.
+
+PRE- vs POST-context (correcting an auditor F18 premise): brier_model reads the PRE-context DC matrix on
+purpose - it isolates the DC fit / L17 and matches the L17 guard's object. Note neutral context is NOT a
+no-op (CONTEXT_RULES['neutral'] = var_factor 1.06), so the PRE-context DC matrix already differs from the
+POST-context COMMITTED forecast even on MD1 (MEX brier 0.1611 pre vs 0.1654 post; KOR 0.6045 vs 0.5986).
+brier_model therefore tracks the DC FIT, not the committed forecast. LIMITATION (F17, registered pre-MD3):
+this is BLIND to an apply_context/M5 corruption (H4, dormant until ~MD3) because that lives only in the
+POST-context matrix. Before H4 wakes, add a POST-context model-Brier (or track pre+post) - it is the only
+metric that would flag an H4 regression.
 
 CLI:
   python -m src.decision_score backfill --snapshot data/snapshots/md1_2026-06-11T16-01-57Z.json
@@ -53,7 +64,13 @@ def outcome_class(score: tuple[int, int]) -> str:
 
 
 def favorite_pick(probs: dict) -> tuple[int, int]:
-    """B1 baseline = back the 1X2 favorite to win 1-0 / 0-1. Never a draw; tie on win-prob -> home."""
+    """B1 baseline = back the higher-win-prob side to win 1-0 / 0-1 (mirrors evals/backtest.py b1_pick).
+
+    NEVER a draw - even on a DRAW-FAVOURED fixture (X is the modal 1X2 outcome) B1 still picks the more
+    likely WINNER's 1-0/0-1 (this is the deliberate definition: B1 is the chalk 'favourite wins by one'
+    rule, not 'predict the modal outcome' - that's B2/modal). None of the 8 MD1 fixtures is draw-favoured,
+    so this branch is untested live; the behaviour is defined, not deferred. Tie on win-prob -> home.
+    """
     return (1, 0) if probs["home"] >= probs["away"] else (0, 1)
 
 
