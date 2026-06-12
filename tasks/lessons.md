@@ -291,3 +291,24 @@ correct path (unchanged), but the *displayed* λ were inconsistent with the matr
 the reporting layer. **Detection/Rule:** any λ or matrix repro MUST go through `mu_eff` when `p_over` is present;
 assert `np.array_equal(match_distribution(st), score_matrix(lh, la, RHO))` before publishing λ. The over/under
 PRICE carries the goal signal, never the (often pinned) line (L11).
+
+## L23 — Validate every objective-function constant against the platform config before trusting a pick; a perfectly-optimized WRONG objective is silent (caught 2026-06-12, Track-B exact=2→3)
+**Pattern:** the per-match optimizer's `points()` rubric encoded the EXACT-SCORE category as `+2` (max/match 8),
+but the pollaya pool config pays `+3` (max/match 9). The optimizer was working flawlessly — argmax E[points],
+145+ green tests, a passing M7 backtest — yet maximizing the wrong objective. It produced no error, no warning,
+no visible anomaly: every pick "looked right" because the bug lived in the constant the whole apparatus trusts.
+The danger is exactly that silence — a mis-specified objective doesn't crash, it quietly biases every downstream
+decision and then corrupts any diagnosis that reasons from those decisions. Forensics under the corrected rubric
+showed the blast radius was small *this time* (0/6 weekend picks flipped; MEX-RSA stayed argmax 1-0, E=3.530 vs
+2-0 E=3.458 — the bug cost nothing on the one locked entry), and the backtest edge over B1 actually *widened*
+(high-total Δ +0.0621→+0.0809) — but "small impact" was only knowable *after* the fix, and the next mis-encoded
+constant may not be benign. Collateral: the Track-A σ-calibration (`SIGMA_CAL`=13.7782) was derived under the old
+support {0,1,3,4,8}; flagged stale (F9), recalibration is a separate Track-A GO (out of scope here).
+**Rule:** every constant that DEFINES the objective (scoring weights, payout multipliers, max-per-unit) must be
+cross-checked against the authoritative platform/config source — not just unit-tested for internal consistency.
+A locked test that asserts the WRONG number (here, `== 8`) is a green light on a broken gauge: it proves the code
+matches the test, never that the test matches reality. Re-derive the objective from the source of truth (the
+pollaya rubric), not from the codebase's own restatement of it. When you DO correct an objective constant, treat
+every artifact that consumed it (backtest verdict, prior picks, σ/calibration) as suspect until re-run or
+explicitly scoped out — a fix to the objective invalidates the diagnostics built on the old one. (Supersedes the
+auditor's retracted L23; sibling of L20 — constants are hypotheses, here verified against the platform, not the repo.)

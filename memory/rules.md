@@ -5,7 +5,7 @@ Optimize **E[points]**, never P(exact score).
 
 | Category | Pts | Exact semantics |
 |---|---|---|
-| Exact score | 2 | home AND away goals both correct |
+| Exact score | 3 | home AND away goals both correct |
 | Correct outcome (1 / X / 2) | 3 | correct win/draw/loss |
 | Team goals | 1 **per team, max 2** | predicted goals for that team == actual goals for that team |
 | Goal difference | 1 | predicted (home − away) margin == actual margin (any scoreline) |
@@ -15,7 +15,7 @@ Categories are **additive** (a perfect exact pick scores all of them).
 ### Locked unit tests (optimizer must reproduce EXACTLY)
 | Actual | Predict | Exact | Outcome | Team goals | GD | **Total** |
 |---|---|---|---|---|---|---|
-| 1-0 | 1-0 | 2 | 3 | 1+1 | 1 | **8** |
+| 1-0 | 1-0 | 3 | 3 | 1+1 | 1 | **9** |
 | 1-0 | 2-1 | 0 | 3 | 0+0 | 1 | **4** |
 | 1-0 | 3-2 | 0 | 3 | 0+0 | 1 | **4** |
 | 2-2 | 1-1 | 0 | 3 | 0+0 | 1 | **4** |
@@ -278,9 +278,13 @@ read as final/directional. Repro: σ/ownership sweep over `pool.podium_montecarl
 
 **What σ is.** In the A2/joint engines a player's score is `base ~ Normal(0, σ) + Σ_k 10·[pick_k==T*_k]`.
 σ is the std of a player's **tournament-TOTAL** competition points (the non-locked-pick remainder), **NOT a
-per-match std (I2 / FM2).** Per-match points come from the LOCKED additive rubric (exact +2, outcome +3,
-per-team goal +1 each, goal-difference +1); the achievable per-match totals are **{0, 1, 3, 4, 8}** (a 5 or
-7 is unreachable: an exact score forces outcome+both-team-goals+GD = 8, and GD-match ⇒ outcome-match).
+per-match std (I2 / FM2).** Per-match points come from the LOCKED additive rubric (exact +3, outcome +3,
+per-team goal +1 each, goal-difference +1); the achievable per-match totals are **{0, 1, 3, 4, 9}** (5–8
+unreachable: an exact score forces outcome+both-team-goals+GD = 9, and GD-match ⇒ outcome-match).
+> **NOTE (2026-06-12, Track-B exact=2→3 correction, F9):** the stored `SIGMA_CAL`=13.7782 in
+> `memory/sigma_calibration.md` was derived under the PRIOR exact=2 support {0, 1, 3, 4, 8}; it is a
+> known-stale Track-A figure pending a separately-GO'd recalibration — OUT OF SCOPE for this Track-B
+> objective fix (no σ recomputed here; the A2 pool/podium artifacts remain frozen on the old σ).
 
 **Aggregation (iid-per-match).** `Var(total) = N · Var(per-match)` ⇒ **σ_total = √N · s_pm**, where
 - **N** = matches an entrant scores = **DECLARED_N: 104** (WC-2026: 48 group + 46 knockout). Sensitivity

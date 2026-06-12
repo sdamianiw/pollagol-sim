@@ -96,7 +96,7 @@ class TestBacktest(unittest.TestCase):
 
     # --- vectorized EV picker == FROZEN optimizer.optimize (no shadow SUT) ---
     def test_points_tensor_is_locked_rubric(self):
-        self.assertEqual(int(_POINTS[1, 0, 1, 0]), 8)
+        self.assertEqual(int(_POINTS[1, 0, 1, 0]), 9)
         self.assertEqual(int(_POINTS[2, 1, 1, 0]), 4)
         self.assertEqual(int(_POINTS[1, 1, 2, 2]), 4)
         self.assertEqual(int(_POINTS[2, 1, 0, 3]), 0)
