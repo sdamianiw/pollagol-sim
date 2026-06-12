@@ -67,7 +67,9 @@ Do NOT assume visibility. **HITL GATE: no locked pick may be finalized while `ow
 ## Key dates (verified 2026-05-30; FIFA/Sky/Al Jazeera/beIN)
 - Final roster lock **2026-06-01**; FIFA publishes squads **2026-06-02**; kickoff **2026-06-11**.
 - Run the locked-pick council **after Jun 2** (squads public); finalize by **~Jun 10**.
-- Group matchdays: MD1 Jun 11–15 · MD2 Jun 18–23 · MD3 (simultaneous) Jun 24–27 · R32 from Jun 28.
+- Group matchdays: **MD1 Jun 11–18** (24 matches = 48 teams; last = UZB-COL Jun-18 02:00Z — corrected from
+  the wrong "Jun 11–15" 2026-06-12, a root cause of the F23 window-cutoff bug) · MD2 Jun 18–24 ·
+  MD3 (simultaneous) Jun 24–27 · R32 from Jun 28.
 
 ## Layout
 `src/` per-match engine · `pool/` E[prize] engine · `council/` 5-lens locked-pick council ·
@@ -78,3 +80,12 @@ Do NOT assume visibility. **HITL GATE: no locked pick may be finalized while `ow
 Primary = API-Football free tier (`league=1&season=2026`), **100 req/DAY**. Cache aggressively; prefetch
 static once; don't re-poll odds faster than the ~3h server refresh. Mandatory web fallback when
 rate-limited or missing. Odds/quota verdict from the Step-0 probe lives in `memory/rules.md`.
+
+**Refresh completeness (HARD — post-F23, 2026-06-12).** The fixture denominator is the **FIFA calendar
+(MD1 = 24 matches), NOT the set the odds endpoint returns under your own window.** Deriving "what's left"
+from a probe of the same `/events`/window you are auditing is **circular** and silently drops fixtures
+(F23: IRN-NZL, the Tue Jun-16 00:50Z straggler, was lost exactly this way — and the scope question to the
+HITL inherited the same false premise). On EVERY matchday refresh, mechanically: (1) probe `/events` for the
+next ~72h and **diff the ids vs `predictions/decisions.csv`** — any calendar fixture not in the CSV is a
+dropped pick; (2) set `fetch_md1 --expect` from the **FIFA-calendar count for the window**, never from a
+probe of the same endpoint (else the guard only verifies fetch==probe, not fetch==calendar — F24). See L25.
