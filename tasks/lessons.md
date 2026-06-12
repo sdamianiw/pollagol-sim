@@ -312,3 +312,20 @@ pollaya rubric), not from the codebase's own restatement of it. When you DO corr
 every artifact that consumed it (backtest verdict, prior picks, σ/calibration) as suspect until re-run or
 explicitly scoped out — a fix to the objective invalidates the diagnostics built on the old one. (Supersedes the
 auditor's retracted L23; sibling of L20 — constants are hypotheses, here verified against the platform, not the repo.)
+
+## L24 — The autonomy worth automating is EXECUTION DISCIPLINE, not model adaptation (caught 2026-06-12, Track-B Phase 2)
+**Pattern:** the instinct after each match is to "learn" — tune ρ/σ/λ toward what just happened. That is the
+cardinal error (I3): with n=2 (or n=20) the per-match points signal is pure noise (a ±0.05 pts/match paired-SE
+needs ~280 matches to clear 0), so a model that mutates after each game is fitting noise and silently corrupts
+the very diagnostics you'd use to notice. The execution-discipline loop (`src/decision_score.py`) instead
+registers EVERYTHING (forecast + result), compares EVERYTHING (us vs B1=favorite, vs B2=modal, two Brier
+conventions), and acts on NOTHING result-driven: results flow ONE way — decisions.csv → scoring → display —
+never back into a model constant. The Brier we track for model-health is the matrix-implied (PRE-context DC)
+convention, not de-vig-market (market is well-calibrated by construction → near-tautological, blind to the L17
+draw-compression we actually want to catch — auditor F12). Backfilled n=2: us=5, B1=8, B2=5 (we trail the
+naive favorite-1-0 baseline by 3 over two games — exactly the kind of small-n result you must NOT act on).
+**Rule:** automate the discipline (never miss a fixture, never mis-enter, always rubric-optimal, always logged
++ compared), NOT the model. No result→model path, ever (grep-guarded; CLAUDE.md I3). Present every cumulative
+diff with n + the ~280-match caveat; a model change is a separate Gate-7-RED-first GO from a mechanical cause,
+never an inference from live scores. Track model-health with the metric that degrades when the model drifts
+(matrix-implied Brier), not the one that looks good no matter what (market Brier).

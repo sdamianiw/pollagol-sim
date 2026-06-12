@@ -34,7 +34,18 @@ calibrated scoreline distribution and the single scoreline that **maximizes expe
 
 ## Objective function
 Optimize **E[competition points]** under the rubric in `memory/rules.md` — NOT P(exact score). See that
-file for the locked rubric and its 4 unit tests (R5 mitigation).
+file for the locked rubric and its 4 unit tests (R5 mitigation). **Exact-score weight = 3, max/match = 9**
+(corrected 2026-06-12; was a mis-encoded 2 — see `tasks/lessons.md` L23).
+
+## I3 — NO result→model feedback (the cardinal invariant; HARD)
+No code path may read match results / `predictions/decisions.csv` and write a MODEL parameter
+(`fit_lambdas`, optimizer weights, ρ, σ, μ_eff, context factors, or any constant in `src/model.py`,
+`src/optimizer.py`, `src/strength.py`, `src/context.py`). Results flow ONE way only: `decisions.csv` →
+`src/decision_score.py` → points/Brier (read-only scoring). The model engine consumes ONLY market odds
+(live or snapshot), NEVER an outcome. The discipline being automated is **execution** (never mis-enter,
+always rubric-optimal), never model adaptation; model constants change only via a separately-GO'd,
+Gate-7-RED-first mechanical fix, never from live results. (Structural guard, enforced by review/grep —
+not a formal proof; verified clean 2026-06-12.)
 
 ## §7d — Platform: pollaya.com  `[pick visibility = PENDING VERIFICATION]`
 LatAm soccer-pool app, admin-configurable game modes. Our pool's custom admin config: per-match edits up

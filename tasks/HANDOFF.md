@@ -1,5 +1,26 @@
 # HANDOFF
 
+> 🟢 **TRACK-B OBJECTIVE-FUNCTION FIX + EXECUTION-DISCIPLINE LOOP DONE (2026-06-12).** Two gated phases,
+> both auditor-checked.
+> **PHASE 1 (GATE 1 PASS, commit `3778c4c`):** fixed a silent objective bug — optimizer paid EXACT-SCORE
+> `+2` but pollaya pays `+3` (max/match 8→9). RED→GREEN minimal diff (`src/optimizer.py:23` 2→3 + 3 exact
+> test assertions 8→9 + new GD-proof test; 3 non-exact locked tests stay 4/4/4). Backtest regenerated under
+> exact=3 (det.): verdict STILL PASS, edge WIDENED (high-total Δ +0.0621→+0.0809), Brier 0.5792 unchanged.
+> Forensics: 0/6 weekend flips, MEX-RSA argmax stays 1-0 (bug cost 0 realized points). **L23** logged.
+> **PHASE 2 (GATE 2 — auditor verdict PENDING, commit `<this>`):** `src/decision_score.py` (new) +
+> `decisionlog` schema (13→26 cols, `migrate_schema`/`update_decision`) + `review.ps1` 3-way + `-Mark`.
+> Backfilled 8 fixtures (forecast cols) + recorded the 2 played: **MEX-RSA 2-0, KOR-CZE 2-1**. Cumulative
+> n=2: **us=5, B1=8, B2=5** (us−B1=−3, us−B2=0), mean Brier **model=0.3828 (PRIMARY, F12 model-health)** /
+> market=0.3817 (secondary input-cal; auditor's 0.3818 used 3dp inputs — 0.0001 reconciliation). Small-n
+> caveat enforced. **I3 guardrail** in CLAUDE.md + grep-clean (no result→model path; F14 max-8 grep clean —
+> `MAX_GOALS=8` is the goal grid, not the points ceiling). **L24** logged. Suite **165/165** (151 + 14 new).
+> **NEXT: GATE 2 auditor verdict + Sebas GO. Then resume the MATCHDAY cadence below** (weekend BASELINE
+> refreshes now run on the corrected optimizer; record results via `python -m src.decision_score record
+> <fixture> <H-A>` as matches finish; `review.ps1 -Mark` to close them). Pending engine GO (post-MD, L19):
+> ρ-fit + H4 + M7 re-run.
+>
+> ---
+>
 > 🟢 **TRACK-B MATCHDAY-1 RUN DONE (2026-06-11, P0–P6).** Repo now git-init'd (6 commits, `.env` ignored,
 > frozen files byte-identical to baseline `5d2f645`). Suite **150/150** (145 + 5 L17-guard tests). Single
 > fresh fetch (quota 489→487) → snapshot `data/snapshots/md1_2026-06-11T16-01-57Z.json` → 8 replays
