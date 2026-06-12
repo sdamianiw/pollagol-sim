@@ -18,6 +18,13 @@
 > refreshes now run on the corrected optimizer; record results via `python -m src.decision_score record
 > <fixture> <H-A>` as matches finish; `review.ps1 -Mark` to close them). Pending engine GO (post-MD, L19):
 > ρ-fit + H4 + M7 re-run.
+> **🟡 PRE-MD3 WATCH (auditor carry-forwards, GATE-2 PASS):** (F17) `brier_model` reads the PRE-context DC
+> matrix, so it is BLIND to an H4/M5 corruption (lives only POST-context; dormant until ~MD3, Jun 24–27).
+> Verified pre≠post even on MD1 (neutral = `var_x1.06`, NOT a no-op — corrects the auditor's F18 premise;
+> MEX brier 0.1611 pre vs 0.1654 post). **Before MD3 / before H4 wakes: add a POST-context model-Brier**
+> (pre+post) — the only metric that flags an H4 regression. Bundle with the L19 ρ-fit+H4 GO. (F18 doc fixed
+> in `decision_score.py`; F19 I3 grep extended to `pool/` = clean.) (B1 draw-favoured case is DEFINED, not
+> deferred — backs the win-favourite 1-0/0-1, never X; no MD1 fixture is draw-favoured.)
 >
 > ---
 >
