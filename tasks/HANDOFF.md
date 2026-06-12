@@ -1,16 +1,35 @@
 # HANDOFF
 
+> 🔴→🟢 **F23 CORRECTION (2026-06-12, Sebas audit).** The weekend run below claimed "all 7 remaining MD1
+> fixtures" — **FALSE.** The denominator is the FIFA calendar: **MD1 = 24 matches** (48 teams), so 2 played +
+> 13 snapshot = 15 covered → **9 missing, not 7.** Root cause: the "4 Sunday vs 7 remaining?" scope question
+> derived its denominator from a probe of the **same `/events` window being audited** (circular); compounded by
+> CLAUDE.md's wrong "MD1 Jun 11–15" (real: Jun 11–18). The 9 missing (chronological MD1 #14–22):
+> **IRN-NZL** Tue Jun-16 01:00Z · FRA-SEN Jun-16 19:00 · IRQ-NOR Jun-16 22:00 · ARG-ALG Jun-17 01:00 ·
+> AUT-JOR Jun-17 04:00 · POR-COD Jun-17 17:00 · ENG-CRO Jun-17 20:00 · GHA-PAN Jun-17 23:00 · UZB-COL
+> Jun-18 02:00. **IRN-NZL was the live risk** (deadline Mon-night 00:50Z, ~3h after KSA-URU) — now ADDED as
+> BASELINE **1-0** (E=2.910, aligned; williamhill; snapshot `md1_2026-06-12T17-36-02Z.json`, quota 487→**483**).
+> `decisions.csv` now **16 rows**; recorded n=2 (us=5/B1=8/B2=5) UNCHANGED. The other **8 (FRA-SEN→UZB-COL) are
+> the Tue Jun-16+ cadence batch** (NOT this weekend; see Other open items). Fixes: CLAUDE.md §Data refresh-
+> completeness rule (probe `/events` ~72h + diff vs decisions.csv; `--expect` from calendar not same-endpoint
+> probe — F24) + MD1 date corrected + **L25** logged. (F25: CIV-ECU = priority flip-watch on cheap late
+> re-check. F26: GER-CUW/ESP-CPV 3-0 are totals-line-sensitive — a totals move can legitimately flip 3-0↔2-0,
+> odds-driven not a bug. Türkiye/Turkey pollaya-dropdown spelling still open for AUS-TUR Sat.)
+>
+> ---
+>
 > 🟢 **WEEKEND MATCHDAY CADENCE RUN DONE (2026-06-12).** Resumed the per-fixture refresh on the corrected
 > optimizer (exact=3). (1) **Closed today's 2 picks** on fresh Jun-12 odds: **CAN-BIH 1-0** (E=2.953,
 > aligned) and **USA-PAR 1-0** (E=2.678, EV-vs-modal gap persists) — both **STAND vs BASELINE, no change**;
 > the only Jun-11 flip candidate (USA-PAR) did NOT flip. EDIT-only-on-change → no `decisions.csv` mutation
 > for the unchanged picks. (2) **Closed the MD1 coverage gap:** `src/fetch_md1.py` window/count were
-> hardcoded (`WIN_HI=2026-06-14T06:00Z`, expect 8), silently dropping the 7 remaining MD1 fixtures. Added
+> hardcoded (`WIN_HI=2026-06-14T06:00Z`, expect 8), silently dropping later MD1 fixtures (this run added 7;
+> the true gap was 9 — see F23 correction above). Added
 > `--win-hi`/`--expect` + a pure `filter_window()` (TDD: `tests/test_fetch_md1.py`, defaults byte-identical;
 > suite **172/172**, was 165 + 7). Fresh fetch `--win-hi 2026-06-15T23:00Z --expect 13` (quota 487→**485**,
 > 2 cr) → snapshot `data/snapshots/md1_2026-06-12T17-10-37Z.json` (13 unplayed fixtures; MEX/KOR played &
 > dropped). Added 7 BASELINE rows (GER-CUW 3-0, NED-JPN 1-0, CIV-ECU 0-1, SWE-TUN 1-0, ESP-CPV 3-0, BEL-EGY
-> 1-0, KSA-URU 0-1) + backfilled forecast cols → `decisions.csv` now **15 rows**; recorded n=2 (us=5/B1=8/B2=5)
+> 1-0, KSA-URU 0-1) + backfilled forecast cols → `decisions.csv` **15 rows** (→**16** after F23 added IRN-NZL); recorded n=2 (us=5/B1=8/B2=5)
 > UNCHANGED. All 13 guards clean (neutral×13, x.5×13, intra-book×13, L17 clean×13). **Flip-watch (EV≠modal):
 > USA-PAR, NED-JPN, CIV-ECU.** Output `predictions/2026-06-12/summary.md`; refresh table below extended through
 > Mon Jun-15. 🛑 Nothing entered/locked by CC. **NEXT: Sat ~18:00 UTC refresh** (QAT-SUI/BRA-MAR/HAI-SCO/AUS-TUR).
@@ -57,9 +76,10 @@
 > Fri ~18:00 UTC → CAN-BIH (18:50), USA-PAR (00:50 Sat) — **DONE Jun-12: both 1-0 STAND** · Sat ~18:00 UTC →
 > QAT-SUI (18:50, 0-2), BRA-MAR (21:50, 1-0), HAI-SCO (00:50 Sun, 0-1), AUS-TUR (03:50 Sun, 0-1) · **Sun ~15:00 UTC**
 > → GER-CUW (16:50, 3-0), NED-JPN (19:50, 1-0¹), CIV-ECU (22:50, 0-1¹), SWE-TUN (01:50 Mon, 1-0) · **Mon ~14:00 UTC**
-> → ESP-CPV (15:50, 3-0), BEL-EGY (18:50, 1-0), KSA-URU (21:50, 0-1). ¹=flip-watch (EV≠modal). Record:
-> `predictions/decisions.csv` (15 rows, utc=KO) + `predictions/2026-06-1{1,2}/summary.md`. **Pending engine GO
-> (post-MD, L19):** ρ-fit root fix + H4 + M7 re-run.
+> → ESP-CPV (15:50, 3-0), BEL-EGY (18:50, 1-0), KSA-URU (21:50, 0-1), **IRN-NZL (Tue 00:50Z, 1-0 — F23 add;
+> widen `--win-hi ≥ 2026-06-16T02:00Z`)**. ¹=flip-watch (EV≠modal; CIV-ECU = priority on a cheap late re-check, F25).
+> Record: `predictions/decisions.csv` (**16 rows**, utc=KO) + `predictions/2026-06-1{1,2}/summary.md`. **Pending
+> engine GO (post-MD, L19):** ρ-fit root fix + H4 + M7 re-run.
 
 ---
 
@@ -270,6 +290,12 @@ Then STOP — do not build A3 / Track B / lock anything without a new go.
 </details>
 
 ## Other open items (not this phase)
+- **🟡 NEXT CADENCE BATCH — MD1 #15–22 (Tue Jun-16 → Thu Jun-18), 8 fixtures still BASELINE-pending** (F23
+  denominator): FRA-SEN (Jun-16 19:00), IRQ-NOR (Jun-16 22:00), ARG-ALG (Jun-17 01:00), AUT-JOR (Jun-17 04:00),
+  POR-COD (Jun-17 17:00), ENG-CRO (Jun-17 20:00), GHA-PAN (Jun-17 23:00), UZB-COL (Jun-18 02:00). Run a Tue
+  ~14:00 UTC cadence: `fetch_md1 --win-hi 2026-06-18T03:00:00Z --expect 22` (calendar-derived) → add the 8 +
+  backfill → diff `/events` vs decisions.csv (CLAUDE.md §Data rule). After MD1#22, MD2 begins (Czech-RSA Jun-18
+  16:00). This completes MD1 = 24.
 - **A3** council (5 isolated Sonnet lenses + synthesis) — after A2. Can run now (Jun 2 squads out) but
   champion lens only needs odds; scorer/MVP/GK need the published squads.
 - **Other 4 locked picks** (scorer/assister/MVP/GK) — squads published 2026-06-02; build their P_true source

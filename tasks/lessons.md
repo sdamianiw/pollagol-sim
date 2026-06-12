@@ -329,3 +329,22 @@ naive favorite-1-0 baseline by 3 over two games — exactly the kind of small-n 
 diff with n + the ~280-match caveat; a model change is a separate Gate-7-RED-first GO from a mechanical cause,
 never an inference from live scores. Track model-health with the metric that degrades when the model drifts
 (matrix-implied Brier), not the one that looks good no matter what (market Brier).
+
+## L25 — A completeness claim needs an INDEPENDENT denominator; never the same source/window under audit (caught 2026-06-12, Track-B weekend run)
+**Pattern:** the Jun-12 run claimed to "close the MD1 coverage gap," widened `fetch_md1`'s window, and asked
+the HITL "add the 4 Sunday games or all 7 remaining?" — then added "all 7" and declared the gap closed. But
+"7 remaining" was derived from a probe of the **same `/events` endpoint within the same window being
+audited** → circular. The real denominator is the **FIFA calendar: MD1 = 24 matches (48 teams)**; we had
+covered 15 (2 played + 13), so **9** were missing, not 7. The dropped fixtures included **IRN-NZL (Tue Jun-16
+01:00Z, deadline Mon-night 00:50Z)** — a live mis-entry risk and the *exact* silent-drop the run said it was
+fixing. The scope question itself propagated the false premise (the HITL can't catch a denominator error you
+fed them). Compounding root cause: CLAUDE.md said "MD1 Jun 11–15" (wrong; MD1 runs Jun 11–18), reinforcing the
+"Sunday+Monday is the tail" mental model. **Rule:** a completeness/exhaustiveness claim ("all remaining", "the
+full set", "nothing left") MUST be checked against a denominator from a DIFFERENT source than the one you are
+enumerating — here the FIFA match calendar (24 R1 matches), never the odds API's windowed return. Operationally
+(now HARD in CLAUDE.md §Data): every refresh, probe `/events` next ~72h and **diff ids vs decisions.csv**; set
+`--expect` from the calendar count, not a same-endpoint probe (a guard fed the probe's number only proves
+fetch==probe, not fetch==calendar — F24). Sibling of L3 (free tier can't serve WC odds — verify the source
+actually covers the need), L7, and L23 (a silently-wrong constant passes every test that doesn't independently
+pin the truth). When you say "complete," name the denominator and where it came from.
+
