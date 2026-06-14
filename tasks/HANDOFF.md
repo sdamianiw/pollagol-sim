@@ -23,8 +23,13 @@
 > IRN-NZL 1-0; **Jun-16** FRA-SEN 1-0 / IRQ-NOR 0-2 / ARG-ALG 1-0¹ / AUT-JOR 2-0; **Jun-17** POR-COD 2-0 /
 > ENG-CRO 1-0 / GHA-PAN 1-0¹ / UZB-COL 0-1¹ (¹ = EV≠modal flip-watch). Record results:
 > `python -m src.decision_score record <fid> <H-A> --entered-pick <typed>`; cumulative via `… summary`; field via
-> `… standings <date>`. **PENDING (separate GO): ANNEX V variance-modulation (build-but-wait)** + the L19
-> ρ-fit/H4/M7 engine bundle. 🛑 Branch **NOT merged** — Sebas merges to master (F32); CC does not merge.
+> `… standings <date>`. **ANNEX V (build-but-wait): SKELETON DONE (commit `2ce2c8c`)** — λ-dial
+> `src/variance_select.py` (pure selection layer, lam=0 ≡ optimizer, default-OFF `run_matchday` hook, 0 frozen
+> edits) + `evals/variance_ev_cost.py`: REAL per-game EV-cost ≈ **+0.004–0.011 pts** (max 0.058, moves 5/16,
+> saturates by lam=1) — ~40× SMALLER than the stylized −0.4 (the rubric CAPS achievable variance: the tilt only
+> bumps a favorite win up one goal, e.g. 1-0→2-0). DEFERRED post-MD3: placement-MC + H1–H4 + eval-panel +
+> activation gate (F35 H4-fixed; F34 ≥2–3 matchdays). **PENDING GO:** the L19 ρ-fit/H4/M7 engine bundle.
+> 🛑 Branch **NOT merged** — Sebas merges to master (F32); CC does not merge.
 > Output: `predictions/2026-06-14/summary.md`.
 >
 > ---
