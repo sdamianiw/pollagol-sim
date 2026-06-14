@@ -1,5 +1,39 @@
 # HANDOFF
 
+> 🟢 **TRACK-B DUAL-TRACK + MD1 CADENCE COMPLETE (2026-06-14, GATE 0–6, branch `track-b-dualtrack-md1-cadence`).**
+> All on the FROZEN model — **0 edits** to model/optimizer/strength/context (`git diff --stat` clean). Suite
+> **188/188** (172 + 16 new). Nothing entered/locked by CC.
+> **DUAL-TRACK (additive schema 26→28: `entered_pick`,`pts_entered`):** recorded the 8 played MD1 games both
+> ways. Anchor reconciles EXACTLY (auditor-verified, NOT massaged): **us_entered=15 · us_model=19 · B1=23 ·
+> override=−4** (= real pollaya standing 15, rank 20/27, field median 19). Override damage is ONE fixture
+> (HAI-SCO −5: entered 0-2, model 0-1 hit exact=9); USA-PAR +1; other 6 net 0. `summary` now labels us_entered
+> (REAL) vs us_model (counterfactual) + the override line. **L26** logged.
+> **CADENCE (F27 diff-driven · F29 conditional):** fresh fetch (`--win-hi 2026-06-18T03:00Z --expect 16`, quota
+> 487→**481**, snapshot `md1_2026-06-14T12-14-52Z.json`) served all 16 unplayed → diffed ids vs decisions.csv →
+> added the 8 Jun-16/17 rows on the frozen optimizer (guards clean ×8, determinism byte-identical, backfill
+> idempotent). `decisions.csv` = **24 MD1 rows** (full MD1; IRN-NZL + UZB-COL present). F29 full-PASS branch.
+> **STANDINGS:** new `decision_score standings <date>` (DETERMINISTIC stats, NO council) → `standings/standings_log.csv`
+> first row (us=15, rank 20/27, median 19, mean 18.96, sd 5.69, z −0.70, pctl 0.30, leader 28, podium_cut 26,
+> gap_median −4, gap_podium −11, override −4). Input `standings/2026-06-14/standings.json` (N=27).
+> **🚨 TODAY's REVERT (Sebas types; CC never enters):** GER-CUW **4-0 → 3-0** (entered ≠ model EV-argmax; clear,
+> high-confidence); NED-JPN **1-1 → 1-0** (judgment: 1-0 = EV-argmax, 1-1 = modal on a near-even board — keep 1-1
+> only with a logged draw-thesis). CIV-ECU 0-1 / SWE-TUN 1-0 = model-aligned. Deadlines: GER-CUW 16:50Z,
+> NED-JPN 19:50Z.
+> **NEXT cadence (refresh before each 10-min-pre-KO deadline):** Jun-15 ESP-CPV 3-0 / BEL-EGY 1-0 / KSA-URU 0-1 /
+> IRN-NZL 1-0; **Jun-16** FRA-SEN 1-0 / IRQ-NOR 0-2 / ARG-ALG 1-0¹ / AUT-JOR 2-0; **Jun-17** POR-COD 2-0 /
+> ENG-CRO 1-0 / GHA-PAN 1-0¹ / UZB-COL 0-1¹ (¹ = EV≠modal flip-watch). Record results:
+> `python -m src.decision_score record <fid> <H-A> --entered-pick <typed>`; cumulative via `… summary`; field via
+> `… standings <date>`. **ANNEX V (build-but-wait): SKELETON DONE (commit `2ce2c8c`)** — λ-dial
+> `src/variance_select.py` (pure selection layer, lam=0 ≡ optimizer, default-OFF `run_matchday` hook, 0 frozen
+> edits) + `evals/variance_ev_cost.py`: REAL per-game EV-cost ≈ **+0.004–0.011 pts** (max 0.058, moves 5/16,
+> saturates by lam=1) — ~40× SMALLER than the stylized −0.4 (the rubric CAPS achievable variance: the tilt only
+> bumps a favorite win up one goal, e.g. 1-0→2-0). DEFERRED post-MD3: placement-MC + H1–H4 + eval-panel +
+> activation gate (F35 H4-fixed; F34 ≥2–3 matchdays). **PENDING GO:** the L19 ρ-fit/H4/M7 engine bundle.
+> 🛑 Branch **NOT merged** — Sebas merges to master (F32); CC does not merge.
+> Output: `predictions/2026-06-14/summary.md`.
+>
+> ---
+>
 > 🔴→🟢 **F23 CORRECTION (2026-06-12, Sebas audit).** The weekend run below claimed "all 7 remaining MD1
 > fixtures" — **FALSE.** The denominator is the FIFA calendar: **MD1 = 24 matches** (48 teams), so 2 played +
 > 13 snapshot = 15 covered → **9 missing, not 7.** Root cause: the "4 Sunday vs 7 remaining?" scope question

@@ -348,3 +348,21 @@ fetch==probe, not fetch==calendar — F24). Sibling of L3 (free tier can't serve
 actually covers the need), L7, and L23 (a silently-wrong constant passes every test that doesn't independently
 pin the truth). When you say "complete," name the denominator and where it came from.
 
+## L26 — Instrument the override; treat its SIGN as execution-discipline, NEVER a model signal (caught 2026-06-14, Track-B dual-track)
+**Pattern:** the human's HITL overrides of the model's EV-argmax pick, scored against results, NET **−4 pts**
+over the 8 played MD1 games (us_entered 15 vs us_model 19) — concentrated almost entirely in ONE fixture
+(**HAI-SCO −5**: entered 0-2, but the model's 0-1 hit the exact score for 9), partially offset by USA-PAR +1;
+the other 6 net 0. The instinct to "improve" on the model by typing a flashier / higher-scoring line (4-0 over
+the model's 3-0; 0-2 over 0-1; 1-1-the-modal over the EV-argmax 1-0) systematically bleeds E[points], because
+the optimizer ALREADY maximizes exactly that objective — an override is a bet that you out-predict a calibrated
+argmax. The seductive next trap is to "learn" from the −4 and tune the model: that is the I3 cardinal error
+(n=8 is pure noise; ~280 matches to clear a ±0.05 pts/match paired-SE). A second trap is the LABEL — the
+cumulative summary historically called the MODEL track "us", so "us" silently meant the counterfactual (19),
+not our actual 15-pt standing (F36). **Rule:** make the override VISIBLE and scored
+(`override_value = us_entered − us_model`, now in `cumulative`/`summary_text`; dual-track schema cols
+`entered_pick`/`pts_entered`, additive), and label **`us_entered` (real)** vs **`us_model` (counterfactual)**
+unambiguously. Use the sign ONLY as execution feedback — default to the model pick, override ONLY with a logged
+§5 thesis (the soft `is_model_high_confidence` advisory flags clear-favorite fixtures where an override is most
+expensive, e.g. GER-CUW). NEVER feed override_value — or any result — back into a model parameter (I3).
+Sibling of L24 (automate the discipline, not the model).
+
