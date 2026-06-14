@@ -82,10 +82,18 @@ class TestFavoriteInversionGuard(unittest.TestCase):
     de-vigged h2h market favorite. NEVER changes the pick (anti-tuning)."""
 
     def test_guard_fires_on_kor_cze(self):
-        ig = run_match(_KOR_CZE_EVENT)["inversion_guard"]
-        self.assertTrue(ig["fired"], "near-even KOR-CZE should invert (draw deficit leaks to away)")
+        # G-RHO4: pinned to the FROZEN path (rho_fit=False) -> documents the L17 bug as a regression.
+        ig = run_match(_KOR_CZE_EVENT, rho_fit=False)["inversion_guard"]
+        self.assertTrue(ig["fired"], "frozen-ρ near-even KOR-CZE inverts (draw deficit leaks to away)")
         self.assertEqual(ig["dv_fav"], "home")      # market: South Korea
         self.assertEqual(ig["matrix_fav"], "away")  # matrix: Czech Republic
+
+    def test_guard_clears_on_kor_cze_with_rho_fit(self):
+        # G-RHO4 / Gate-7: rho_fit=True restores draw mass -> favorite matches market, no inversion, no clamp.
+        s = run_match(_KOR_CZE_EVENT, rho_fit=True)
+        self.assertFalse(s["inversion_guard"]["fired"], "ρ-fit clears the L17 favorite-inversion")
+        self.assertEqual(s["inversion_guard"]["matrix_fav"], "home")
+        self.assertIsNone(s["rho_clamp"], "market draw 0.311 < 0.32 band -> ρ reaches it unclamped")
 
     def test_guard_silent_on_mex_rsa(self):
         ig = run_match(_MEX_RSA_EVENT)["inversion_guard"]

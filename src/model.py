@@ -14,13 +14,15 @@ from math import factorial
 
 import numpy as np
 
-RHO = -0.05                      # Dixon-Coles low-score correction (fixed, documented)
+RHO = -0.05                      # Dixon-Coles low-score correction (frozen default; live path unless rho_fit)
+RHO_LO, RHO_HI = -0.20, 0.10     # L19 fitted-ρ band (DC literature |ρ|~0.03-0.15 -> roomy; clamp telemetry G-RHO3)
 MAX_GOALS = 8                    # score grid 0..8 per side
 LAMBDA_MIN, LAMBDA_MAX = 0.15, 4.0   # clamp (R6)
 PRIOR_MU = 2.6                   # tournament prior expected total goals (shrink target)
 SHRINK = 0.10                    # shrink weight of total_line toward PRIOR_MU
 TOTAL_LINE = 2.5                 # default O/U line for the price->mu_eff inversion (rules.md M7 design v, P4a)
 _BISECT_ITERS = 50
+_RHO_BISECT_ITERS = 18           # outer ρ search (range 0.30 -> ~1e-6 precision; inner _solve_s stays 50)
 
 _FACT = np.array([factorial(k) for k in range(MAX_GOALS + 1)], dtype=float)
 
@@ -92,6 +94,41 @@ def fit_lambdas(probs: dict, total_line: float | None = None, rho: float = RHO) 
     return _split(mu, _solve_s(probs["home"], mu, rho))
 
 
+def fit_dc(probs: dict, mu: float, rho_fit: bool = True) -> tuple[float, float, float, str | None]:
+    """L19 ρ-fit. With μ PINNED (from the totals price), solve (s, ρ) to match (P_home, P_draw):
+    outer bisection on ρ to match the de-vig MARKET P_draw, inner `_solve_s` to match P_home at each ρ
+    -> 2 DOF / 2 constraints, exactly identified. Implied draw is DECREASING in ρ (ρ↓ inflates the
+    diagonal cells (0,0),(1,1)). ρ is clamped to [RHO_LO, RHO_HI]; `clamp` in {None,'lo','hi'} flags a
+    band-edge clamp for telemetry (G-RHO3). rho_fit=False -> ρ frozen at RHO (byte-identical to the old
+    fit_lambdas + RHO path). I3: reads ONLY de-vig market probs, NEVER a result.
+    Returns (lambda_home, lambda_away, rho, clamp)."""
+    mu = (1.0 - SHRINK) * float(mu) + SHRINK * PRIOR_MU     # R6 shrink, identical to fit_lambdas (totals path)
+    if not rho_fit:
+        lh, la = _split(mu, _solve_s(probs["home"], mu, RHO))
+        return lh, la, RHO, None
+    target = probs["draw"]
+
+    def implied_draw(r: float) -> float:
+        lh, la = _split(mu, _solve_s(probs["home"], mu, r))
+        return implied_1x2(score_matrix(lh, la, r))["draw"]
+
+    if target >= implied_draw(RHO_LO):          # most-negative ρ can't make enough draws -> under-deliver
+        rho, clamp = RHO_LO, "lo"
+    elif target <= implied_draw(RHO_HI):        # even least draws exceed target (rare; draw-poor board)
+        rho, clamp = RHO_HI, "hi"
+    else:
+        lo, hi = RHO_LO, RHO_HI
+        for _ in range(_RHO_BISECT_ITERS):
+            rho = 0.5 * (lo + hi)
+            if implied_draw(rho) > target:      # too many draws -> raise ρ (lowers draw)
+                lo = rho
+            else:                               # too few draws -> lower ρ
+                hi = rho
+        rho, clamp = 0.5 * (lo + hi), None
+    lh, la = _split(mu, _solve_s(probs["home"], mu, rho))
+    return lh, la, rho, clamp
+
+
 def poisson_over_prob(mu: float, line: float = TOTAL_LINE) -> float:
     """P(total goals > line) for total ~ Poisson(mu). For line=2.5 -> P(T>=3). Monotone increasing in mu.
 
@@ -124,21 +161,39 @@ def mu_from_pover(p_over: float, line: float = TOTAL_LINE, lo: float = 0.2, hi: 
     return 0.5 * (lo + hi)
 
 
-def match_distribution(strength: dict, rho: float = RHO, max_goals: int = MAX_GOALS) -> np.ndarray:
+def match_distribution(strength: dict, rho: float = RHO, max_goals: int = MAX_GOALS,
+                       rho_fit: bool = False) -> np.ndarray:
     """End-to-end: M2 strength dict -> DC score matrix.
 
     P4a: when the totals PRICE is present, the total-goals signal enters via mu_eff = mu_from_pover(p_over)
     (rules.md M7 design v) - NOT the (often pinned) line - mirroring evals.backtest.fixture_eval. mu_eff is
-    passed as the line to the FROZEN fit_lambdas. Falls back to the line / nested-solve when p_over is absent
-    (e.g. Elo source)."""
+    passed as the line to fit_lambdas. Falls back to the line / nested-solve when p_over is absent (e.g. Elo).
+
+    L19: rho_fit=True unfreezes ρ (fit_dc) to match the market P_draw on the totals-present path -> clears
+    L17 draw-compression + favorite-inversion. Default OFF -> byte-identical to the frozen ρ path (BUILD≠FIRE
+    live; the flip to default-ON is Sebas's GO after the M7 re-run passes G-RHO2)."""
     p_over = strength.get("p_over")
     line = strength.get("total_line")
     if p_over is not None:
         mu_eff = mu_from_pover(p_over, line if line else TOTAL_LINE)
+        if rho_fit:
+            lh, la, rho_used, _ = fit_dc(strength["probs"], mu_eff, rho_fit=True)
+            return score_matrix(lh, la, rho_used, max_goals)
         lh, la = fit_lambdas(strength["probs"], mu_eff, rho)
     else:
         lh, la = fit_lambdas(strength["probs"], line, rho)
     return score_matrix(lh, la, rho, max_goals)
+
+
+def dc_fit_info(strength: dict, rho_fit: bool = False) -> tuple[float, str | None]:
+    """Live DC-fit diagnostics (G-RHO3 telemetry): (rho_used, clamp). Frozen path / no totals -> (RHO, None).
+    Deterministic mirror of the fit inside match_distribution -> same (probs, mu_eff) => same ρ."""
+    p_over = strength.get("p_over")
+    if p_over is None or not rho_fit:
+        return RHO, None
+    mu_eff = mu_from_pover(p_over, strength.get("total_line") or TOTAL_LINE)
+    _, _, rho_used, clamp = fit_dc(strength["probs"], mu_eff, rho_fit=True)
+    return rho_used, clamp
 
 
 def rho_sensitivity(strength: dict) -> dict:

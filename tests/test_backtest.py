@@ -41,7 +41,7 @@ class TestBacktest(unittest.TestCase):
         # clear away favorite, LOW total -> EV and B1 BOTH pick the favorite's low win (0,1) -> gap 0
         match = {"odds_1x2": {"home": 4.5, "draw": 3.6, "away": 1.75}, "fmt": "decimal",
                  "totals": {"over": 2.3, "under": 1.65, "line": 2.5}}
-        ev, b1, _p, p_over = fixture_eval(match, delta=0.0)
+        ev, b1, _p, p_over, _rho, _clamp = fixture_eval(match, delta=0.0)
         self.assertEqual(b1, (0, 1))
         self.assertEqual(ev, (0, 1))
         self.assertEqual(ev, b1)                          # gap-0 by construction
@@ -52,7 +52,7 @@ class TestBacktest(unittest.TestCase):
         # B1 stays 1-0 -> divergence. (RED before mu_eff was wired: mu pinned at 2.5 -> EV picked 1-0.)
         match = {"odds_1x2": {"home": 1.65, "draw": 4.3, "away": 4.8}, "fmt": "decimal",
                  "totals": {"over": 1.5, "under": 2.6, "line": 2.5}}
-        ev, b1, _p, p_over = fixture_eval(match, delta=0.0)
+        ev, b1, _p, p_over, _rho, _clamp = fixture_eval(match, delta=0.0)
         self.assertGreaterEqual(p_over, HIGH_TOTAL_P)
         self.assertEqual(b1, (1, 0))
         self.assertNotEqual(ev, (1, 0))

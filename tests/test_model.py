@@ -121,5 +121,89 @@ class TestMuEff(unittest.TestCase):
             self.assertLess(mu, 7.5)       # off the hi=8.0 bound
 
 
+class TestRhoFit(unittest.TestCase):
+    """L19 ρ-fit (Gate-7): unfreeze ρ to match the de-vig MARKET P_draw with μ pinned from the totals
+    price -> clears draw-compression + favorite-inversion on near-even boards (lessons.md L17).
+    Fixture = KOR-CZE betonlineag (home=South Korea fav; market H/D/A=0.3539/0.3107/0.3355, matrix inverts
+    to Czech under the frozen ρ). 0.3107 < 0.32 -> ρ-fit reaches it without clamping."""
+
+    @classmethod
+    def setUpClass(cls):
+        from src.strength import match_strength
+        cls.KC = match_strength({"odds_1x2": {"home": 173, "draw": 211, "away": 188}, "fmt": "american",
+                                 "totals": {"over": 118, "under": -138, "line": 2.5}})
+
+    def _draw_and_fav(self, rho_fit):
+        im = implied_1x2(match_distribution(dict(self.KC), rho_fit=rho_fit))
+        return im["draw"], ("home" if im["home"] > im["away"] else "away")
+
+    def test_off_path_reproduces_bug(self):
+        """G-RHO4 frozen-path regression: rho_fit=False under-produces draw AND inverts the favorite."""
+        draw, fav = self._draw_and_fav(rho_fit=False)
+        self.assertLess(draw, self.KC["probs"]["draw"] - 0.015)
+        self.assertEqual(fav, "away")
+
+    def test_on_path_matches_market_draw_no_inversion(self):
+        """Gate-7 GREEN: rho_fit=True matches market draw and clears the inversion (favorite=home)."""
+        draw, fav = self._draw_and_fav(rho_fit=True)
+        self.assertAlmostEqual(draw, self.KC["probs"]["draw"], places=2)
+        self.assertEqual(fav, "home")
+
+    def test_fit_dc_exactly_identified(self):
+        """μ pinned -> (s,ρ) solve (P_home,P_draw) exactly; no clamp at draw 0.311."""
+        from src.model import fit_dc, score_matrix, mu_from_pover
+        mu = mu_from_pover(self.KC["p_over"], self.KC["total_line"])
+        lh, la, rho, clamp = fit_dc(self.KC["probs"], mu, rho_fit=True)
+        im = implied_1x2(score_matrix(lh, la, rho))
+        self.assertAlmostEqual(im["home"], self.KC["probs"]["home"], places=2)
+        self.assertAlmostEqual(im["draw"], self.KC["probs"]["draw"], places=2)
+        self.assertIsNone(clamp)
+
+    def test_off_equals_frozen_fit_lambdas(self):
+        """Byte-compat: rho_fit=False == the frozen fit_lambdas + RHO (live default path unchanged)."""
+        from src.model import fit_dc, fit_lambdas, mu_from_pover, RHO
+        mu = mu_from_pover(self.KC["p_over"], self.KC["total_line"])
+        lh, la, rho, clamp = fit_dc(self.KC["probs"], mu, rho_fit=False)
+        flh, fla = fit_lambdas(self.KC["probs"], mu, RHO)
+        self.assertEqual((lh, la, rho, clamp), (flh, fla, RHO, None))
+
+    def test_determinism(self):
+        from src.model import fit_dc, mu_from_pover
+        mu = mu_from_pover(self.KC["p_over"], self.KC["total_line"])
+        self.assertEqual(fit_dc(self.KC["probs"], mu, rho_fit=True),
+                         fit_dc(self.KC["probs"], mu, rho_fit=True))
+
+    def test_default_is_frozen(self):
+        """match_distribution default (no rho_fit arg) stays byte-identical to the frozen path."""
+        a = match_distribution(dict(self.KC))
+        b = match_distribution(dict(self.KC), rho_fit=False)
+        self.assertTrue(np.array_equal(a, b))
+
+    def test_g_rho1_same_rho_live_and_backtest(self):
+        """G-RHO1: the IDENTICAL fitted ρ reaches score_matrix in match_distribution (live) AND
+        evals.backtest.fixture_eval (delta=0 -> home_zero identity). A single-path test can't catch a
+        threading mismatch — this asserts both paths AND that the live matrix == score_matrix(fit_dc)."""
+        from src.model import dc_fit_info, fit_dc, score_matrix, mu_from_pover
+        from src.strength import match_strength
+        from evals.backtest import fixture_eval
+        matches = [
+            {"odds_1x2": {"home": 173, "draw": 211, "away": 188}, "fmt": "american",
+             "totals": {"over": 118, "under": -138, "line": 2.5}},    # KOR-CZE near-even
+            {"odds_1x2": {"home": -227, "draw": 330, "away": 850}, "fmt": "american",
+             "totals": {"over": 115, "under": -141, "line": 2.5}},    # MEX-RSA dominant fav
+            {"odds_1x2": {"home": -135, "draw": 250, "away": 320}, "fmt": "american",
+             "totals": {"over": -130, "under": 105, "line": 2.5}},    # high-total moderate fav
+        ]
+        for m in matches:
+            st = match_strength(m)
+            live_rho, _ = dc_fit_info(st, rho_fit=True)
+            *_, bt_rho, _bt_clamp = fixture_eval(m, 0.0, rho_fit=True)   # delta=0 -> home_zero is identity
+            self.assertEqual(live_rho, bt_rho, f"ρ differs live vs backtest on {m['odds_1x2']}")
+            mu = mu_from_pover(st["p_over"], st["total_line"])
+            lh, la, r, _ = fit_dc(st["probs"], mu, rho_fit=True)
+            self.assertTrue(np.allclose(match_distribution(st, rho_fit=True),
+                                        score_matrix(lh, la, r), atol=1e-12))
+
+
 if __name__ == "__main__":
     unittest.main()
