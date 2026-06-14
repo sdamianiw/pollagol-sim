@@ -366,3 +366,20 @@ unambiguously. Use the sign ONLY as execution feedback — default to the model 
 expensive, e.g. GER-CUW). NEVER feed override_value — or any result — back into a model parameter (I3).
 Sibling of L24 (automate the discipline, not the model).
 
+## L27 — The variance λ-dial is LOW-TORQUE under the exact=3 rubric; it optimizes the WRONG proxy for P(top-3) (caught 2026-06-14, ANNEX V skeleton)
+**Pattern:** the placement-bet instinct (MAX P(top-3); 60/20/10 pays nothing below 3rd) suggested a per-match
+mean-variance dial — argmax `E[pts] + λ·SD[pts]` — to "buy upside variance" when trailing. Built and measured on
+the REAL matrices, it is nearly INERT: under exact=3, E[pts] and SD[pts] are POSITIVELY correlated (the same
+modal-favorite pick that maximizes E[pts] also carries the most spread), so the dial is frozen on all but
+coin-flip matches, and even there trades only ~0.10 EV for ~0.07 SD. The auditor's stylized −0.4 per-game cost
+was WRONG (real ≈ +0.004–0.011, max 0.058; moves 5/16 fixtures, saturates by λ=1) — but the implied P(top-3)
+BENEFIT is equally illusory (≈ net wash; P(top3) ~3.2% essentially unchanged). Root cause: the dial optimizes
+per-MATCH SD, the WRONG proxy for tournament P(top-3). **Rule:** a null placement result from the dial means
+"WRONG LEVER", not "variance is useless." The real top-3 levers are **(a) outcome hit-rate** — the 3-pt outcome
+component dominates the rubric, so the L19 ρ-fit/H4 bundle (fix draw-compression + favorite-inversion) raises
+E[pts] AND P(top-3) directly; and **(b) field-DIFFERENTIATION** — deviating from the field's likely modal pick
+on near-even matches buys CORRELATED upside (you beat the WHOLE field at once when right), which a self-only SD
+dial structurally cannot. The deferred placement-MC must therefore test FIELD-DIFFERENTIATION, NOT the
+mean-variance dial. Sibling of L26 (instrument, don't tune) and the L9 proxy caveat (per-match SD ≠ tournament
+placement). BUILD≠FIRE still holds — the skeleton fires nothing.
+

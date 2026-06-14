@@ -27,9 +27,16 @@
 > `src/variance_select.py` (pure selection layer, lam=0 ≡ optimizer, default-OFF `run_matchday` hook, 0 frozen
 > edits) + `evals/variance_ev_cost.py`: REAL per-game EV-cost ≈ **+0.004–0.011 pts** (max 0.058, moves 5/16,
 > saturates by lam=1) — ~40× SMALLER than the stylized −0.4 (the rubric CAPS achievable variance: the tilt only
-> bumps a favorite win up one goal, e.g. 1-0→2-0). DEFERRED post-MD3: placement-MC + H1–H4 + eval-panel +
-> activation gate (F35 H4-fixed; F34 ≥2–3 matchdays). **PENDING GO:** the L19 ρ-fit/H4/M7 engine bundle.
-> 🛑 Branch **NOT merged** — Sebas merges to master (F32); CC does not merge.
+> bumps a favorite win up one goal, e.g. 1-0→2-0). **RE-SCOPE (L27):** the deferred placement-MC must test
+> **FIELD-DIFFERENTIATION** (deviate from the field's likely modal pick on near-even matches = correlated
+> upside, beats the whole field at once when right), NOT the mean-variance dial (per-match SD is the WRONG
+> proxy for P(top-3); the dial is low-torque/net-wash). DEFERRED post-MD3: placement-MC (field-diff) +
+> eval-panel + activation gate (F35 H4-fixed; F34 ≥2–3 matchdays of standings_log).
+> **NEXT ENGINEERING GO (await Sebas) = the real top-3 ROI:** the **L19 ρ-fit/H4/M7 engine bundle** (fixes
+> draw-compression + favorite-inversion → raises outcome-hit-rate directly, the 3-pt component that dominates
+> scoring; naturally aligns with the post-MD3 H4 activation window).
+> 🟢 **MERGED to master** 2026-06-14 (commit `c6aaf6d`, F32 HITL exception = Sebas's explicit GO; post-merge
+> verify: 196/196, frozen diff EMPTY). Branch `track-b-dualtrack-md1-cadence` retained.
 > Output: `predictions/2026-06-14/summary.md`.
 >
 > ---
