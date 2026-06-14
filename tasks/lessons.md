@@ -408,4 +408,14 @@ under exact=3) + inversion-correctness (never recommend a market-contradicting p
 burden, e.g. KOR-CZE/NED-JPN). **BUILD≠FIRE holds: kept default-OFF; the flip to live is Sebas's GO, justified —
 if at all — by the calibration/correctness value, NOT by an E[pts] edge (there is none).** Sibling of L27 (right
 defect, wrong objective) and L26 (instrument, don't tune).
+**Auditor-reproduced** (independent 2000-board sim, same rubric): outcome-hit 0.5477→0.5428, exact-hit
+0.1203→0.1240, draw-rate 2.2%→9.4% — same direction, NOT a scoring bug. Subset mechanism: pick-changed subset
+(12%) outcome-hit DROPS −0.040 (E[pts] flat); **inverting subset (1.3%) outcome-hit DROPS −0.012 because ρ-fit
+swaps the inverted-AWAY pick (the 2nd-likeliest outcome) for the DRAW (the LEAST-likely outcome)** — so "fixing
+the inversion" SUBTRACTS points at the decision layer (a stronger keep-OFF reason than the flat aggregate).
+**META-LESSON (L27+L28):** two per-match PROBABILITY levers both target real defects and are both E[pts]-inert ⇒
+**the binding constraint is the OBJECTIVE (E[pts], single-entry, this rubric), NOT the probabilities.** The only
+remaining top-3 torque is the objective swap E[pts]→P(top-3) via **field-DIFFERENTIATION** (post-MD3; SINGLE-entry
+framing per Clair-Letscher, NOT HVZ's multi-entry submodular portfolio). Disposition: ρ-fit KEPT GATED OFF
+(parked, validated knowledge); `rho-fit` branch unmerged; engine stays frozen on master.
 

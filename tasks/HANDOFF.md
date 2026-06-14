@@ -13,18 +13,22 @@
 > gated OFF. The flip for the calibration/exact-hit/inversion-correctness value is Sebas's HITL call.** Committed
 > on `rho-fit` (NOT merged). **Real top-3 torque now = field-DIFFERENTIATION only** (objective E[pts]→P(top-3));
 > the per-match probability levers (dial L27, ρ-fit L28) are both E[pts]-inert.
-> **FIELD-DIFF SPEC (post-MD3, build-ready):** maximize P(top-3), NOT E[pts] (Clair-Letscher 2007 — `pool/`
-> already maximizes E[prize]). On the *k* most near-even boards, deviate from the field's MODAL scoreline (chalk
-> favorite-win) = CORRELATED upside, leapfrogs the whole field when right (Hunter-Vielma-Zaman 2016: top-heavy
-> payoff → contrarian/correlated maximizes the upper tail, submodular P(≥1 hit), greedy-optimal; Metrick 1996:
-> field overbacks favorites). Field = chalk PRIOR (per-match scorelines hidden). Extend `pool/pool_montecarlo.py`
-> CRN to per-match scorelines; compare {all-modal} vs {differentiate-on-k}; pick the set maximizing P(top-3).
-> SELECTIVE + LATE (fire only when `standings_log` shows you trailing — Dubins-Savage bold play / Brown-Harlow-
-> Starks 1996: variance-seek when behind, in PLACEMENT space not self-SD). Gate: ≥2-3 matchdays `standings_log`
-> + H4/M5 fixed. BUILD≠FIRE. RPS (Constantinou-Fenton 2012) = optional ordinal eval diagnostic, NEVER a gate
-> (Wheatcroft 2021 contests it). DIBP (Karlis-Ntzoufras 2003) = the draws upgrade where ρ clamps (P_draw≳0.32);
-> documented fallback only.
-> H4/M5 context fix stays separately deferred to pre-MD3 (dormant under the live `neutral` flag).
+> **FIELD-DIFF SPEC (post-MD3, build-ready) — SINGLE-ENTRY framing:** maximize P(top-3), NOT E[pts]
+> (Clair-Letscher 2007, one bracket — `pool/` already maximizes E[prize]). On the *k* most near-even boards,
+> deviate from the field's MODAL scoreline (chalk favorite-win) = CORRELATED upside, leapfrogs the whole field
+> when right. Field = chalk PRIOR (per-match scorelines hidden). **Build = extend the existing
+> `pool/pool_montecarlo.py` CRN E[prize] MC to per-match scorelines; compare {all-modal} vs {differentiate-on-k},
+> pick the set maximizing P(top-3).** Do NOT implement Hunter-Vielma-Zaman's submodular portfolio algorithm —
+> HVZ (2016) is a MULTI-entry (many-lineup) framework; we submit ONE entry, so it does not apply. HVZ/Metrick
+> are the conceptual hook only (top-heavy payoff → field overbacks favorites → contrarian/correlated wins the
+> upper tail). SELECTIVE + LATE (fire only when `standings_log` shows you trailing — Dubins-Savage bold play /
+> Brown-Harlow-Starks 1996: variance-seek when behind, in PLACEMENT space not self-SD). Gate: ≥2-3 matchdays
+> `standings_log` + H4/M5 fixed. BUILD≠FIRE. RPS (Constantinou-Fenton 2012) = optional ordinal eval diagnostic,
+> NEVER a gate (Wheatcroft 2021 contests it). DIBP (Karlis-Ntzoufras 2003) = the draws upgrade where ρ clamps
+> (P_draw≳0.32); documented fallback only.
+> **H4/M5 WATCH (pre-MD3):** context fix stays deferred (dormant under the live `neutral` flag) — but even
+> `neutral` is NOT a perfect 1X2 identity: KOR-CZE draw 0.3107 (pre-M5) → 0.3009 (post-M5). Verify/close when
+> H4 is fixed.
 >
 > ---
 >
