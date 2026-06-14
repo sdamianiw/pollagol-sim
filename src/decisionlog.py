@@ -25,8 +25,12 @@ _BASE_FIELDS = ["utc", "fixture_id", "home", "away", "pick", "ev", "p_pick", "to
 #   m_*=PRE-context DC implied_1x2 (model-health forecast, F12).
 # Scoring (written by src/decision_score when a result is recorded):
 #   points_{actual,b1,b2} (corrected rubric), brier_model (PRIMARY, m_*), brier_market (secondary, devig_*).
+# Dual-track (Track-B 2026-06-14; APPENDED, additive): entered_pick = the score the human actually typed into
+#   pollaya (may diverge from `pick` = the model EV-argmax via a HITL override); pts_entered = its rubric
+#   points. `pick`/`points_actual` STAY the MODEL track (never renamed). override = pts_entered - points_actual.
 _PHASE2_FIELDS = ["modal", "favorite_pick", "devig_h", "devig_d", "devig_a", "m_h", "m_d", "m_a",
-                  "points_actual", "points_b1", "points_b2", "brier_model", "brier_market"]
+                  "points_actual", "points_b1", "points_b2", "brier_model", "brier_market",
+                  "entered_pick", "pts_entered"]
 FIELDS = _BASE_FIELDS + _PHASE2_FIELDS
 _REQUIRED = ("source", "reasoning")
 

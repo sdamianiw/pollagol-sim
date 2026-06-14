@@ -152,5 +152,118 @@ class TestSchemaMigrateUpdate(unittest.TestCase):
             os.unlink(path)
 
 
+class TestDualTrack(unittest.TestCase):
+    """Gate 1 (Track-B 2026-06-14): additive entered_pick/pts_entered; dual-track score_row; retcon guard."""
+    # the current 26-col schema (BASE 13 + the original 13 Phase-2 cols) = the PRE-dual-track state.
+    OLD26 = dl._BASE_FIELDS + ["modal", "favorite_pick", "devig_h", "devig_d", "devig_a", "m_h", "m_d",
+                               "m_a", "points_actual", "points_b1", "points_b2", "brier_model",
+                               "brier_market"]
+
+    def _write_26col(self):
+        import csv
+        fd, path = tempfile.mkstemp(suffix=".csv")
+        os.close(fd)
+        with open(path, "w", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=self.OLD26)
+            w.writeheader()
+            w.writerow({**{k: "" for k in self.OLD26},
+                        "utc": "2026-06-11T19:00:00Z", "fixture_id": "FID1", "home": "Mexico",
+                        "away": "South Africa", "pick": "1-0", "source": "x",
+                        "reasoning": "y, with a comma", "result": "2-0", "modal": "1-0",
+                        "favorite_pick": "1-0", "points_actual": "4",
+                        "m_h": "0.678787", "m_d": "0.216839", "m_a": "0.104375",
+                        "devig_h": "0.678787", "devig_d": "0.212568", "devig_a": "0.108646"})
+        return path
+
+    def test_migrate_appends_dual_track_cols_idempotent(self):
+        self.assertEqual(len(self.OLD26), 26)
+        path = self._write_26col()
+        try:
+            dl.migrate_schema(path)
+            rows = dl.read_decisions(path)
+            self.assertIn("entered_pick", rows[0])              # new cols present
+            self.assertIn("pts_entered", rows[0])
+            self.assertEqual(rows[0]["entered_pick"], "")       # blank for the pre-existing row
+            self.assertEqual(rows[0]["pts_entered"], "")
+            self.assertEqual(rows[0]["pick"], "1-0")            # existing 26 values byte-identical
+            self.assertEqual(rows[0]["points_actual"], "4")
+            self.assertEqual(rows[0]["reasoning"], "y, with a comma")   # comma survives quoting
+            dl.migrate_schema(path)                              # idempotent
+            self.assertEqual(len(dl.read_decisions(path)), 1)
+            self.assertEqual(len(dl.FIELDS), 28)
+        finally:
+            os.unlink(path)
+
+    def test_score_row_with_entered_pick(self):
+        # MEX actual 2-0; entered 1-0 (== model pick) -> pts_entered == points_actual == 4
+        s = ds.score_row(MEX, (2, 0), entered_pick=(1, 0))
+        self.assertEqual(s["pts_entered"], 4)
+        self.assertEqual(s["points_actual"], 4)
+        # entered 0-2 (away win) vs actual 2-0 -> 0 points (override would be -4 here)
+        self.assertEqual(ds.score_row(MEX, (2, 0), entered_pick=(0, 2))["pts_entered"], 0)
+
+    def test_score_row_without_entered_pick_unchanged(self):
+        s = ds.score_row(MEX, (2, 0))
+        self.assertNotIn("pts_entered", s)                      # existing 5-key contract intact
+        self.assertEqual(len(s), 5)
+
+    def test_record_dual_track_then_retcon_guard(self):
+        path = self._write_26col()
+        try:
+            dl.migrate_schema(path)
+            r = ds.record("FID1", "2-0", entered_pick="0-2", path=path)   # entered != model 1-0
+            self.assertEqual(r["entered_pick"], "0-2")
+            self.assertEqual(r["pts_entered"], 0)               # 0-2 vs 2-0 = 0 pts
+            rows = dl.read_decisions(path)
+            self.assertEqual(rows[0]["entered_pick"], "0-2")
+            self.assertEqual(rows[0]["pts_entered"], "0")
+            self.assertEqual(rows[0]["points_actual"], "4")     # model track untouched
+            with self.assertRaises(ValueError):                 # retcon: cannot overwrite a set entered_pick
+                ds.record("FID1", "2-0", entered_pick="1-0", path=path)
+        finally:
+            os.unlink(path)
+
+
+class TestOverrideInstrumentation(unittest.TestCase):
+    """Gate 5 (F28/F36): override_value over the 8 played reconciles to -4; predicate; summary labels."""
+    # (pts_entered, points_actual=pts_model) for the 8 played MD1 fixtures (GATE-0 reconciliation):
+    # MEX 4/4, KOR 1/1, CAN 1/1, USA 4/3, QAT 0/0, BRA 1/1, HAI 4/9, AUS 0/0 -> 15 vs 19 -> override -4
+    PAIRS = [(4, 4), (1, 1), (1, 1), (4, 3), (0, 0), (1, 1), (4, 9), (0, 0)]
+
+    def _dual_rows(self, pairs):
+        return [{"result": "x", "points_actual": str(m), "points_b1": "0", "points_b2": "0",
+                 "brier_model": "0", "brier_market": "0", "pts_entered": str(e)} for e, m in pairs]
+
+    def test_override_value_minus4_on_8_played(self):
+        c = ds.cumulative(self._dual_rows(self.PAIRS))
+        self.assertEqual(c["n"], 8)
+        self.assertEqual(c["n_dual"], 8)
+        self.assertEqual(c["us_entered"], 15)        # REAL standing
+        self.assertEqual(c["us"], 19)                # model EV-argmax counterfactual
+        self.assertEqual(c["override_value"], -4)    # entered - model (the anchor)
+
+    def test_override_absent_without_entered_pick(self):
+        rows = [{"result": "2-0", "points_actual": "4", "points_b1": "4", "points_b2": "4",
+                 "brier_model": "0.16", "brier_market": "0.16"}]
+        c = ds.cumulative(rows)
+        self.assertIsNone(c["override_value"])
+        self.assertIsNone(c["us_entered"])
+        self.assertEqual(c["n_dual"], 0)
+
+    def test_summary_shows_override_only_when_dual(self):
+        with_dual = ds.summary_text(ds.cumulative(self._dual_rows([(4, 4), (4, 9)])))
+        self.assertIn("us_entered", with_dual)
+        self.assertIn("OVERRIDE", with_dual)
+        without = ds.summary_text(ds.cumulative(
+            [{"result": "2-0", "points_actual": "4", "points_b1": "4", "points_b2": "4",
+              "brier_model": "0.16", "brier_market": "0.16"}]))
+        self.assertNotIn("OVERRIDE", without)
+        self.assertIn("280", without)                # the small-n caveat is still present
+
+    def test_is_model_high_confidence(self):
+        self.assertTrue(ds.is_model_high_confidence({"home": 0.92, "draw": 0.06, "away": 0.02}))   # clear fav
+        self.assertFalse(ds.is_model_high_confidence({"home": 0.40, "draw": 0.30, "away": 0.30}))  # near-even
+
+
 if __name__ == "__main__":
     unittest.main()
