@@ -383,3 +383,29 @@ dial structurally cannot. The deferred placement-MC must therefore test FIELD-DI
 mean-variance dial. Sibling of L26 (instrument, don't tune) and the L9 proxy caveat (per-match SD ≠ tournament
 placement). BUILD≠FIRE still holds — the skeleton fires nothing.
 
+## L28 — ρ-fit (L19) CLEARS favorite-inversion + improves calibration/exact-hit, but is E[pts]/outcome-NEUTRAL: the draw-compression "bug" is real at the PROBABILITY layer, ~inert at the DECISION layer (caught 2026-06-14, M7 re-run, branch `rho-fit`)
+**Pattern:** the L17/L19 thesis was "fit ρ to the market P_draw → restore the ~2–3pp draw deficit → fix
+favorite-inversion → RAISE outcome-hit-rate (the dominant 3-pt component) → raise E[pts] AND P(top-3)." Built
+(`fit_dc`: μ pinned from the totals price, solve `s←P_home` + `ρ←P_draw` by nested bisection, exactly identified;
+band-clamp [−0.20,+0.10]; gated `rho_fit`, default-OFF → live byte-identical) and TDD-validated (Gate-7 RED→GREEN
+on KOR-CZE: pick 0-1→1-1, inversion cleared; G-RHO1 same ρ in live+backtest; G-RHO4 OFF/ON test scoping; G-RHO5
+I3-clean). The **M7 re-run (frozen ρ → fitted ρ, club leagues n=8945) REFUTES the edge half of the thesis:**
+- outcome-hit-rate **0.5366 → 0.5336 (Δ −0.0030)** — the stated objective went slightly DOWN (within noise →
+  NEUTRAL, NOT the predicted lift) → **G-RHO2 NO-PASS**.
+- high-total E[pts] edge **+0.0809 → +0.0779** (still PASS, marginally narrower); exact-hit **0.1158 → 0.1235
+  (+0.77pp)** and Brier **0.5792 → 0.5789** both IMPROVE; favorite-inversion artifact fixed.
+- EV draw-rate **2.8% → 9.0%** (empirical 25.3%): converges, NO overshoot — but stays far below empirical because
+  the **rubric's EV-argmax is structurally draw-averse**: under exact=3/outcome=3/GD=1, a 1-0 favorite pick banks
+  outcome+GD+team-goals more reliably than a 1-1 even when the draw is well-calibrated. clamp-rate 0.84%; LIVE
+  board 2026-06-14 = **0/16 picks changed** (no inverted near-even fixture pending).
+**Root cause / rule:** calibrating P_draw does NOT make the EV-optimal pick choose more draws — the decision layer
+(argmax E[pts]) is robust/saturated to moderate probability shifts, exactly as the variance λ-dial was (L27). **Two
+distinct per-match levers (variance dial L27, ρ-fit L28) both target real defects and both fail to move
+E[pts]/P(top-3) → the binding constraint is the OBJECTIVE, not the probabilities.** The only remaining torque is
+changing the objective E[pts]→P(top-3) via **field-DIFFERENTIATION** (correlated contrarian vs the field), the
+deferred post-MD3 lever. ρ-fit's real (smaller) value = calibration (Brier↓) + exact-hit (+0.77pp = real points
+under exact=3) + inversion-correctness (never recommend a market-contradicting pick; ends the manual-override
+burden, e.g. KOR-CZE/NED-JPN). **BUILD≠FIRE holds: kept default-OFF; the flip to live is Sebas's GO, justified —
+if at all — by the calibration/correctness value, NOT by an E[pts] edge (there is none).** Sibling of L27 (right
+defect, wrong objective) and L26 (instrument, don't tune).
+

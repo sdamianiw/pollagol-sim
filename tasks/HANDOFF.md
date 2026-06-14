@@ -1,5 +1,33 @@
 # HANDOFF
 
+> 🟡 **L19 ρ-FIT BUILT + M7-VALIDATED — NO-PASS on the edge gate; kept BUILD≠FIRE (2026-06-14, branch `rho-fit` off master `05cde08`).**
+> `fit_dc` (μ pinned from the totals price, solve `s←P_home` + `ρ←P_draw` by nested bisection, exactly identified;
+> band-clamp [−0.20,+0.10]; gated `rho_fit`, **default-OFF → live path byte-identical**, suite **204/204**).
+> Gate-7 RED→GREEN on KOR-CZE (pick 0-1→1-1, inversion cleared); G-RHO1 (same ρ live+backtest), G-RHO4 (OFF/ON
+> test scoping), G-RHO5 (I3 grep-clean) all PASS.
+> **M7 re-run verdict — G-RHO2 = NO-PASS:** outcome-hit-rate **0.5366→0.5336 (Δ −0.0030)** — the dominant 3-pt
+> objective did NOT rise (neutral within noise). High-total edge +0.0809→+0.0779 (still PASS, narrower). exact-hit
+> **+0.77pp** (0.1158→0.1235) and Brier 0.5792→0.5789 DO improve; favorite-inversion fixed; draw-rate 2.8%→9.0%
+> (converges, no overshoot; empirical 25.3% — the rubric is structurally draw-averse). clamp 0.84%; LIVE board
+> 0/16 picks changed. **L28** logged. **RECOMMENDATION: do NOT flip default-ON as an edge (there is none); keep
+> gated OFF. The flip for the calibration/exact-hit/inversion-correctness value is Sebas's HITL call.** Committed
+> on `rho-fit` (NOT merged). **Real top-3 torque now = field-DIFFERENTIATION only** (objective E[pts]→P(top-3));
+> the per-match probability levers (dial L27, ρ-fit L28) are both E[pts]-inert.
+> **FIELD-DIFF SPEC (post-MD3, build-ready):** maximize P(top-3), NOT E[pts] (Clair-Letscher 2007 — `pool/`
+> already maximizes E[prize]). On the *k* most near-even boards, deviate from the field's MODAL scoreline (chalk
+> favorite-win) = CORRELATED upside, leapfrogs the whole field when right (Hunter-Vielma-Zaman 2016: top-heavy
+> payoff → contrarian/correlated maximizes the upper tail, submodular P(≥1 hit), greedy-optimal; Metrick 1996:
+> field overbacks favorites). Field = chalk PRIOR (per-match scorelines hidden). Extend `pool/pool_montecarlo.py`
+> CRN to per-match scorelines; compare {all-modal} vs {differentiate-on-k}; pick the set maximizing P(top-3).
+> SELECTIVE + LATE (fire only when `standings_log` shows you trailing — Dubins-Savage bold play / Brown-Harlow-
+> Starks 1996: variance-seek when behind, in PLACEMENT space not self-SD). Gate: ≥2-3 matchdays `standings_log`
+> + H4/M5 fixed. BUILD≠FIRE. RPS (Constantinou-Fenton 2012) = optional ordinal eval diagnostic, NEVER a gate
+> (Wheatcroft 2021 contests it). DIBP (Karlis-Ntzoufras 2003) = the draws upgrade where ρ clamps (P_draw≳0.32);
+> documented fallback only.
+> H4/M5 context fix stays separately deferred to pre-MD3 (dormant under the live `neutral` flag).
+>
+> ---
+>
 > 🟢 **TRACK-B DUAL-TRACK + MD1 CADENCE COMPLETE (2026-06-14, GATE 0–6, branch `track-b-dualtrack-md1-cadence`).**
 > All on the FROZEN model — **0 edits** to model/optimizer/strength/context (`git diff --stat` clean). Suite
 > **188/188** (172 + 16 new). Nothing entered/locked by CC.

@@ -10,7 +10,7 @@
     "ex_covid": 0.31143597335307177,
     "full5": 0.2759352317141262
   },
-  "generated_utc": "2026-06-12T08:56:05Z",
+  "generated_utc": "2026-06-14T14:36:03Z",
   "headline": {
     "aggregate": {
       "b1_pm": 2.7798963346908554,
@@ -64,6 +64,39 @@
     "n_seen": 5404
   },
   "leakage_check": "PASS",
+  "rho_fit_gate": {
+    "brier": {
+      "frozen": 0.579150979462159,
+      "rho_fit": 0.5789499254979809
+    },
+    "clamp_rate": {
+      "n": 8945,
+      "n_clamped": 75,
+      "rate": 0.008384572386808273
+    },
+    "ev_draw_rate": {
+      "empirical_actual": 0.25276690888764675,
+      "frozen": 0.028172163219675795,
+      "rho_fit": 0.0897708216880939
+    },
+    "exact_hit": {
+      "frozen": 0.11581889323644494,
+      "rho_fit": 0.12353269983230855
+    },
+    "high_total_delta": {
+      "frozen": 0.0809090909090909,
+      "rho_fit": 0.07787878787878788
+    },
+    "high_total_verdict": {
+      "frozen": "PASS",
+      "rho_fit": "PASS"
+    },
+    "outcome_hit": {
+      "delta": -0.0030184460592509454,
+      "frozen": 0.5366126327557295,
+      "rho_fit": 0.5335941866964785
+    }
+  },
   "sensitivity": {
     "closing odds, δ=0.30 ex-COVID": {
       "b1_pm": 2.832020170185944,

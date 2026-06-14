@@ -36,7 +36,7 @@ for _stream in (sys.stdout, sys.stderr):
 
 from src.ingest import fetch_live, parse_event, snapshot, load_snapshot
 from src.strength import match_strength
-from src.model import match_distribution, implied_1x2, mu_from_pover, TOTAL_LINE
+from src.model import match_distribution, dc_fit_info, implied_1x2, mu_from_pover, TOTAL_LINE
 from src.context import apply_context
 from src.optimizer import optimize
 from src.variance_select import select as select_variance   # ANNEX V dial (default OFF; BUILD != FIRE)
@@ -87,7 +87,8 @@ def _modal(matrix: np.ndarray) -> tuple[int, int]:
 
 
 def run_match(event: dict, fmt: str = "american", context_flags=DEFAULT_CONTEXT,
-              context_source: str = DEFAULT_CONTEXT_SOURCE, variance_lam: float = 0.0) -> dict:
+              context_source: str = DEFAULT_CONTEXT_SOURCE, variance_lam: float = 0.0,
+              rho_fit: bool = False) -> dict:
     """One match through M1(parse) -> M2 -> [x.5 guard] -> M3(mu_eff) -> M5 context -> M4 argmax.
 
     Returns a summary dict. Raises LineGuardStop on a non-x.5 totals line (H1).
@@ -96,11 +97,14 @@ def run_match(event: dict, fmt: str = "american", context_flags=DEFAULT_CONTEXT,
     ANNEX V (BUILD != FIRE): `variance_lam` defaults to 0.0 -> the pure E[pts] argmax (byte-identical); a
     > 0 lambda swaps in the variance/P(top-3) mean-variance dial (src/variance_select). Firing is gated by
     the deferred activation gate (post-MD3), never by this call alone.
+    L19 (BUILD != FIRE): `rho_fit` defaults to False -> frozen ρ, byte-identical live path; True unfreezes ρ
+    (fit_dc) to clear the L17 draw-compression/favorite-inversion. The flip to default-ON is Sebas's GO.
     """
     match = parse_event(event, fmt)
     strength = match_strength(match)
     guard_total_line(strength, match["fixture_id"])                 # x.5 guard BEFORE the mu_eff path
-    matrix = match_distribution(strength)                           # M3 (mu_eff recovered inside if p_over)
+    matrix = match_distribution(strength, rho_fit=rho_fit)          # M3 (mu_eff inside if p_over; L19 ρ-fit gated)
+    rho_used, rho_clamp = dc_fit_info(strength, rho_fit=rho_fit)    # G-RHO3 telemetry (same fit as the matrix)
     inv_guard = guard_favorite_inversion(strength, matrix, match["fixture_id"])   # L17 detection (PRE-context)
     adj, context_flag = apply_context(matrix, context_flags, source=context_source)   # M5 before M4
     # M4 selection. DEFAULT (variance_lam=0.0) = argmax E[points] (byte-identical, the live path). ANNEX V:
@@ -109,7 +113,8 @@ def run_match(event: dict, fmt: str = "american", context_flags=DEFAULT_CONTEXT,
     mu_eff = (mu_from_pover(strength["p_over"], strength["total_line"] or TOTAL_LINE)
               if strength["p_over"] is not None else None)
     return {"match": match, "strength": strength, "mu_eff": mu_eff, "context_flag": context_flag,
-            "matrix": adj, "opt": opt, "modal": _modal(adj), "inversion_guard": inv_guard}
+            "matrix": adj, "opt": opt, "modal": _modal(adj), "inversion_guard": inv_guard,
+            "rho_used": rho_used, "rho_clamp": rho_clamp}
 
 
 def _fmt_score(s) -> str:
@@ -140,6 +145,11 @@ def print_summary(summary: dict, snapshot_path: str | None = None) -> None:
               f"mu_eff={summary['mu_eff']:.4f}  [M3 totals-aware]")
     else:
         print("  totals: none -> M3 nested-solve (no mu_eff); totals signal unavailable")
+    rho_used, rho_clamp = summary.get("rho_used"), summary.get("rho_clamp")
+    if rho_used is not None:
+        clamp_txt = f"  ⚠ CLAMPED @{rho_clamp} (partial draw fix; DIBP upgrade pending)" if rho_clamp else ""
+        mode = "L19 ρ-fit ON" if rho_used != -0.05 or rho_clamp else "frozen ρ=-0.05 (ρ-fit OFF)"
+        print(f"  M3 ρ: {rho_used:+.4f}  [{mode}]{clamp_txt}")
     cf = summary["context_flag"]
     print(f"  M5 context: {cf['text']}  (flags={cf['flags']}, source={cf['source']}, "
           f"mu_x{cf['mu_factor']}, var_x{cf['variance_factor']})")

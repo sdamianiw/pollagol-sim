@@ -30,7 +30,7 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from src.strength import match_strength
-from src.model import fit_lambdas, score_matrix, implied_1x2, MAX_GOALS, LAMBDA_MIN
+from src.model import fit_lambdas, fit_dc, score_matrix, implied_1x2, MAX_GOALS, LAMBDA_MIN
 from src.model import poisson_over_prob, mu_from_pover   # P4a: ONE μ_eff model lives in src/ now (I4)
 from src.optimizer import points, PLAUSIBILITY_FLOOR
 from evals.fetch_footballdata import fetch_all, SEASONS, LEAGUES, COVID_SEASONS, cache_path
@@ -134,15 +134,17 @@ def outcome(gh: int, ga: int) -> str:
     return "home" if gh > ga else ("away" if ga > gh else "draw")
 
 
-def fixture_eval(match: dict, delta: float):
-    """One fixture -> (ev_pick, b1_pick, neutral 1X2 probs, p_over). Pure (no result input).
-    Totals signal enters via mu_eff = mu_from_pover(p_over) (rules.md v), NOT the pinned 2.5 line."""
+def fixture_eval(match: dict, delta: float, rho_fit: bool = False):
+    """One fixture -> (ev_pick, b1_pick, neutral 1X2 probs, p_over, rho_used, clamp). Pure (no result input).
+    Totals signal enters via mu_eff = mu_from_pover(p_over) (rules.md v), NOT the pinned 2.5 line.
+    L19/G-RHO1: the fitted ρ from fit_dc is threaded into score_matrix (the frozen path silently used the
+    DEFAULT RHO here — the latent bug). rho_fit=False reproduces the old fit_lambdas+RHO path byte-for-byte."""
     strength = match_strength(match)
     mu_eff = mu_from_pover(strength["p_over"], strength["total_line"] or TOTAL_LINE)
-    lh, la = fit_lambdas(strength["probs"], mu_eff)
+    lh, la, rho_used, clamp = fit_dc(strength["probs"], mu_eff, rho_fit=rho_fit)
     lhz, laz = home_zero(lh, la, delta)
-    matrix = score_matrix(lhz, laz)
-    return ev_pick(matrix), b1_pick(lhz, laz), implied_1x2(matrix), strength["p_over"]
+    matrix = score_matrix(lhz, laz, rho_used)
+    return ev_pick(matrix), b1_pick(lhz, laz), implied_1x2(matrix), strength["p_over"], rho_used, clamp
 
 
 # ---- statistics ----------------------------------------------------------------------------------
@@ -214,11 +216,14 @@ def _actual(row):
 
 
 # ---- a run = (delta, basis, seasons) -> per-fixture diffs + segments ------------------------------
-def run_backtest(seasons, delta, basis="opening", leagues=LEAGUES):
-    """Evaluate EV vs B1 over the fixtures. Returns a dict of arrays/metrics (no printing)."""
+def run_backtest(seasons, delta, basis="opening", leagues=LEAGUES, rho_fit=False):
+    """Evaluate EV vs B1 over the fixtures. Returns a dict of arrays/metrics (no printing).
+    rho_fit threads the L19 fitted ρ; rho_fit=False reproduces the frozen-ρ headline byte-for-byte.
+    Also collects outcome-hit (3-pt component), EV draw-rate, and ρ clamp-count (G-RHO2/G-RHO3)."""
     diffs, ev_pts, b1_pts = [], [], []
     seg, probs, outs, exact = [], [], [], []
     draw_modal_diffs = []
+    outcome_hit, ev_draw, clamps = [], [], []
     n_seen = n_dropped = 0
     for _season, _league, row in load_rows(seasons, leagues):
         n_seen += 1
@@ -227,10 +232,14 @@ def run_backtest(seasons, delta, basis="opening", leagues=LEAGUES):
         if match is None or actual is None:
             n_dropped += 1
             continue
-        ev, b1, p1x2, p_over = fixture_eval(match, delta)
+        ev, b1, p1x2, p_over, rho_used, clamp = fixture_eval(match, delta, rho_fit=rho_fit)
         ep, bp = points(ev, actual), points(b1, actual)
         diffs.append(ep - bp); ev_pts.append(ep); b1_pts.append(bp)
         probs.append(p1x2); outs.append(outcome(*actual)); exact.append(1.0 if ev == actual else 0.0)
+        outcome_hit.append(1.0 if outcome(*ev) == outcome(*actual) else 0.0)   # the dominant 3-pt component
+        ev_draw.append(1.0 if ev[0] == ev[1] else 0.0)                          # EV pick is a draw (G-RHO2)
+        if clamp is not None:
+            clamps.append(clamp)                                               # ρ band-edge clamp (G-RHO3)
         is_high = p_over >= HIGH_TOTAL_P
         seg.append("high" if is_high else "low")
         # draw-OUTCOME-strict-max check. NOTE (2026-06-04): given the μ_eff floor (~1.8) vs the s=0
@@ -243,6 +252,8 @@ def run_backtest(seasons, delta, basis="opening", leagues=LEAGUES):
     return {"diffs": diffs, "ev_pts": np.array(ev_pts), "b1_pts": np.array(b1_pts),
             "seg": seg, "probs": probs, "outs": outs, "exact": np.array(exact),
             "draw_modal": np.array(draw_modal_diffs), "n": diffs.size,
+            "outcome_hit": np.array(outcome_hit), "ev_draw": np.array(ev_draw),
+            "n_clamped": len(clamps), "rho_fit": rho_fit,
             "n_seen": n_seen, "n_dropped": n_dropped, "delta": delta, "basis": basis,
             "seasons": list(seasons)}
 
@@ -336,6 +347,29 @@ def main() -> int:
     print(f"  multiclass Brier = {brier:.4f}   log-loss = {ll:.4f}   "
           f"exact-hit-rate(EV) = {cal['exact'].mean():.4f}   headline exact-hit = {head['exact'].mean():.4f}")
 
+    # ---- L19 ρ-FIT GATE (G-RHO2 objective + G-RHO3 clamp telemetry) ----------------------------
+    # Re-run the headline (verdict) and calibration (Brier/hit-rates) with the FITTED ρ and diff vs frozen.
+    # G-RHO2: outcome-hit-rate is the dominant 3-pt component; draw-rate must CONVERGE to empirical, NOT
+    # overshoot. Necessary-but-not-sufficient guards: verdict PASS holds, Brier no worse, exact-hit no worse.
+    head_rho = run_backtest(NONCOVID, delta=HOME_EDGE_GOALS, basis="opening", rho_fit=True)
+    cal_rho = run_backtest(SEASONS, delta=0.0, basis="opening", rho_fit=True)
+    high_rho = segment_stats(head_rho, head_rho["seg"] == "high")
+    brier_rho, ll_rho = brier_logloss(cal_rho["probs"], cal_rho["outs"])
+    actual_draw = float(np.mean([o == "draw" for o in cal["outs"]]))
+    oh_fr, oh_rh = float(cal["outcome_hit"].mean()), float(cal_rho["outcome_hit"].mean())
+    dr_fr, dr_rh = float(cal["ev_draw"].mean()), float(cal_rho["ev_draw"].mean())
+    print("-" * 96)
+    print("L19 ρ-FIT GATE — frozen ρ=-0.05  →  fitted ρ (per-fixture):")
+    print(f"  HIGH-TOTAL verdict   : {high['verdict']} (Δ={high['delta']:+.4f})  ->  "
+          f"{high_rho['verdict']} (Δ={high_rho['delta']:+.4f})    [G-RHO2 necessary: PASS must hold]")
+    print(f"  multiclass Brier     : {brier:.4f}  ->  {brier_rho:.4f}   (lower=better; must be no worse)")
+    print(f"  exact-hit-rate (EV)  : {cal['exact'].mean():.4f}  ->  {cal_rho['exact'].mean():.4f}   (no worse)")
+    print(f"  OUTCOME-hit-rate (EV): {oh_fr:.4f}  ->  {oh_rh:.4f}   (Δ={oh_rh-oh_fr:+.4f})  <<< the 3-pt objective")
+    print(f"  EV draw-rate         : {dr_fr:.4f}  ->  {dr_rh:.4f}   (empirical actual draw-rate={actual_draw:.4f};"
+          f" CONVERGE, not overshoot)")
+    print(f"  ρ clamp-rate         : {cal_rho['n_clamped']}/{cal_rho['n']} "
+          f"= {cal_rho['n_clamped']/max(cal_rho['n'],1):.2%}   [G-RHO3: clamp binds at P_draw≳0.32; DIBP later]")
+
     # ---- SENSITIVITY (read on HIGH-TOTAL; not the headline) ------------------------------------
     print("-" * 96)
     print("SENSITIVITY — high-total Δ + CI (robustness, NOT a second attempt at the headline):")
@@ -372,6 +406,16 @@ def main() -> int:
         "sensitivity": {k: _clean(v) for k, v in sens_out.items()},
         "data_derived_delta": {"full5": dd_full, "ex_covid": dd_ex},
         "verdict_high_total": high["verdict"],
+        "rho_fit_gate": {
+            "high_total_verdict": {"frozen": high["verdict"], "rho_fit": high_rho["verdict"]},
+            "high_total_delta": {"frozen": high["delta"], "rho_fit": high_rho["delta"]},
+            "brier": {"frozen": brier, "rho_fit": brier_rho},
+            "exact_hit": {"frozen": float(cal["exact"].mean()), "rho_fit": float(cal_rho["exact"].mean())},
+            "outcome_hit": {"frozen": oh_fr, "rho_fit": oh_rh, "delta": oh_rh - oh_fr},
+            "ev_draw_rate": {"frozen": dr_fr, "rho_fit": dr_rh, "empirical_actual": actual_draw},
+            "clamp_rate": {"n_clamped": cal_rho["n_clamped"], "n": cal_rho["n"],
+                           "rate": cal_rho["n_clamped"] / max(cal_rho["n"], 1)},
+        },
     }
     out_path = os.path.join(os.path.dirname(__file__), "backtest_results.json")
     with open(out_path, "w", encoding="utf-8") as f:
