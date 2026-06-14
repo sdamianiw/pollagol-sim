@@ -39,6 +39,7 @@ from src.strength import match_strength
 from src.model import match_distribution, implied_1x2, mu_from_pover, TOTAL_LINE
 from src.context import apply_context
 from src.optimizer import optimize
+from src.variance_select import select as select_variance   # ANNEX V dial (default OFF; BUILD != FIRE)
 from src.lines import is_half_line
 
 DEFAULT_CONTEXT = "neutral"   # WC group = neutral venue (CONTEXT_RULES; documented §5 assumption, SOURCED)
@@ -86,12 +87,15 @@ def _modal(matrix: np.ndarray) -> tuple[int, int]:
 
 
 def run_match(event: dict, fmt: str = "american", context_flags=DEFAULT_CONTEXT,
-              context_source: str = DEFAULT_CONTEXT_SOURCE) -> dict:
+              context_source: str = DEFAULT_CONTEXT_SOURCE, variance_lam: float = 0.0) -> dict:
     """One match through M1(parse) -> M2 -> [x.5 guard] -> M3(mu_eff) -> M5 context -> M4 argmax.
 
     Returns a summary dict. Raises LineGuardStop on a non-x.5 totals line (H1).
     Data-flow note: M5 (context) adjusts the DISTRIBUTION before M4 (argmax) - the working e2e order
     M3->M5->M4, not the literal 'M4->M5' shorthand in the contract.
+    ANNEX V (BUILD != FIRE): `variance_lam` defaults to 0.0 -> the pure E[pts] argmax (byte-identical); a
+    > 0 lambda swaps in the variance/P(top-3) mean-variance dial (src/variance_select). Firing is gated by
+    the deferred activation gate (post-MD3), never by this call alone.
     """
     match = parse_event(event, fmt)
     strength = match_strength(match)
@@ -99,7 +103,9 @@ def run_match(event: dict, fmt: str = "american", context_flags=DEFAULT_CONTEXT,
     matrix = match_distribution(strength)                           # M3 (mu_eff recovered inside if p_over)
     inv_guard = guard_favorite_inversion(strength, matrix, match["fixture_id"])   # L17 detection (PRE-context)
     adj, context_flag = apply_context(matrix, context_flags, source=context_source)   # M5 before M4
-    opt = optimize(adj)                                             # M4 argmax E[points]
+    # M4 selection. DEFAULT (variance_lam=0.0) = argmax E[points] (byte-identical, the live path). ANNEX V:
+    # a > 0 lambda swaps in the variance/P(top-3) mean-variance dial - BUILD-NOT-FIRE, gated post-MD3.
+    opt = select_variance(adj, variance_lam) if variance_lam else optimize(adj)   # M4 argmax E[points]
     mu_eff = (mu_from_pover(strength["p_over"], strength["total_line"] or TOTAL_LINE)
               if strength["p_over"] is not None else None)
     return {"match": match, "strength": strength, "mu_eff": mu_eff, "context_flag": context_flag,
