@@ -419,3 +419,50 @@ remaining top-3 torque is the objective swap E[pts]→P(top-3) via **field-DIFFE
 framing per Clair-Letscher, NOT HVZ's multi-entry submodular portfolio). Disposition: ρ-fit KEPT GATED OFF
 (parked, validated knowledge); `rho-fit` branch unmerged; engine stays frozen on master.
 
+## L29 — A recorded RESULT must be the cross-checked final score, never a remembered/expected one; the BLANK cell is the safety net (caught 2026-06-16, MD4/MD5 ingest)
+**Pattern:** the cadence contract's PART-0a asserted NED-JPN was logged as 1-1 and needed "fixing" to 2-2
+(actual: van Dijk 50', Summerville 64' / Nakamura 57', Kamada 88'). In fact `decisions.csv` had NED-JPN
+`result` **BLANK** — nothing was ever mis-recorded; the "1-1" lived only in a stale mental model / an earlier
+plan note. The system caught it pre-write. Had the row been pre-seeded with the remembered 1-1, the retcon
+would have stood silently (record overwrites a blank result; `entered_pick` is retcon-locked once set).
+**Rule:** only ever `record` a result that is the cross-checked final score (≥2 sources), and treat a BLANK
+result cell as the correct default — never pre-seed a row with an anticipated score. A planned/expected value
+is not a result; the gap between "what I think happened" and "the confirmed scoreline" is exactly where
+grounding errors enter. Sibling of L25 (independent denominator) applied at the result layer.
+
+## L30 — Reconcile Σpts_entered against the observed standings board before trusting a batch of recorded results; "override = 0" is a sum, not an agreement (caught 2026-06-16, MD4/MD5 ingest)
+**Pattern:** after recording the 8 MD4/MD5 results, the dual-track cumulative read **Σus_entered = 28** over
+n=16 — EXACTLY the observed pollaya board (us=28, rank 21/27). That equality is an INDEPENDENT check that
+every (result, entered_pick) pair was entered correctly: the model and entry tracks are both derived inside
+the tool, but the board is an OUTSIDE measurement. The cumulative override settled to **+0** (rows 1–8 = −4
+[HAI −5 + USA +1], plus NED +4 over MD4/MD5) — a coincidental wash, not a target. **Rule:** when bulk-recording
+played fixtures, reconcile Σpts_entered vs the latest standings board (the L25 independent denominator) before
+trusting the batch; a mismatch means a wrong result or wrong entered_pick, caught while still fixable. Use the
+override SIGN only as execution feedback (L26), never a model signal (I3) — and never read "override = 0" as
+"model and I agree": it is a sum that can hide offsetting ±.
+
+## L31 — All four MD5 games drew; the draw-lean counterfactual scored huge but it is variance (azar), not skill — do NOT tilt the live picks (caught 2026-06-16, MD5 review)
+**Pattern:** MD5 finished ESP-CPV 0-0, BEL-EGY 1-1, KSA-URU 1-1, IRN-NZL 2-2 — **4/4 draws**. A draw-leaning
+slate would have banked a large counterfactual (~+26 across the wave) vs the chalk favorite-by-one picks (~+3);
+the instinct after a draw cluster is to start picking draws. But the rubric's EV-argmax is structurally
+draw-averse for a reason (L28: a 1-0 favorite banks outcome+GD+team-goals more reliably than a 1-1 even when
+the draw is well-calibrated), and a 4-draw cluster is a small-n variance excursion (azar) compressing f_skill
+over a 4-game window — NOT a calibration failure or a skill signal. **Rule:** never convert a realized variance
+cluster into a model/objective change (I-NOTILT, I3). P_draw is reported as CONTEXT, never added to the pick.
+The legitimate response to "my picks under-weight draws" is the post-MD3 field-DIFFERENTIATION lever on
+near-even matches (correlated contrarian, L27/L28), evaluated on calibrated probabilities over the full slate —
+NOT a reactive draw-lean. Sibling of L28 (right defect, wrong layer) and the I-NOTILT cadence invariant.
+
+## L32 — Deviating from EV-argmax to a gut scoreline on low-confidence near-even games strictly lowers E[pts] and never gains (caught 2026-06-19, Ronda-1/MD2 ingest)
+**Pattern:** Over the 12 Jun-16→18 fixtures Sebas deviated from the EV-argmax pick on 9, and the realized
+override came to **−9 pts** (Σus_entered=65 vs Σus_model=74) — almost exactly the gap between his real rank
+(21/27) and where strict EV-discipline would have placed him. The cost concentrated where the EV pick hit the
+exact score and the gut pick did not: **GHA-PAN** (EV 1-0 == actual 1-0 = 9 pts; entered 1-1 = 1; −8) and
+**MEX-KOR** (EV 1-0 == actual 1-0 = 9; entered 2-1 = 4; −5). A by-one EV pick weakly dominates a gut 2-1 —
+equal when the favorite wins by 2, strictly better when by 1 — so a gut scoreline can only match or lose vs the
+EV pick, never beat it in expectation. The empirical "the favorite keeps winning 1-0" is the model being
+*correct*, NOT a separate pattern to chase. **Rule:** enter the EV-argmax pick verbatim; entry-discipline =
+model-discipline. The only thing that may flip a recommendation off fresh EV is DATA INVALIDITY (illiquid /
+single-book odds), never a preferred scoreline. Extends L28/L31 and the I-NOTILT cadence invariant down to the
+human entry layer.
+

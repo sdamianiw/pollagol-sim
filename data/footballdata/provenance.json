@@ -8,7 +8,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "E0",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\1920_E0.csv",
@@ -21,7 +21,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "SP1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\1920_SP1.csv",
@@ -34,7 +34,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "I1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\1920_I1.csv",
@@ -47,7 +47,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "D1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\1920_D1.csv",
@@ -60,7 +60,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "F1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\1920_F1.csv",
@@ -73,7 +73,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "E0",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2021_E0.csv",
@@ -86,7 +86,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "SP1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2021_SP1.csv",
@@ -99,7 +99,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "I1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2021_I1.csv",
@@ -112,7 +112,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "D1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2021_D1.csv",
@@ -125,7 +125,7 @@
     {
       "cached": true,
       "covid": true,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "F1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2021_F1.csv",
@@ -138,7 +138,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "E0",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2122_E0.csv",
@@ -151,7 +151,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "SP1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2122_SP1.csv",
@@ -164,7 +164,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "I1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2122_I1.csv",
@@ -177,7 +177,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "D1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2122_D1.csv",
@@ -190,7 +190,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "F1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2122_F1.csv",
@@ -203,7 +203,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "E0",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2223_E0.csv",
@@ -216,7 +216,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "SP1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2223_SP1.csv",
@@ -229,7 +229,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "I1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2223_I1.csv",
@@ -242,7 +242,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "D1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2223_D1.csv",
@@ -255,7 +255,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "F1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2223_F1.csv",
@@ -268,7 +268,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "E0",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2324_E0.csv",
@@ -281,7 +281,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "SP1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2324_SP1.csv",
@@ -294,7 +294,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "I1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2324_I1.csv",
@@ -307,7 +307,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "D1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2324_D1.csv",
@@ -320,7 +320,7 @@
     {
       "cached": true,
       "covid": false,
-      "fetched_utc": "2026-06-03T19:52:32Z",
+      "fetched_utc": "2026-06-16T15:55:51Z",
       "league": "F1",
       "ok": true,
       "path": "C:\\Users\\Sdami\\Projects\\Pollagol SIM\\data\\footballdata\\2324_F1.csv",
@@ -331,7 +331,7 @@
       "url": "https://www.football-data.co.uk/mmz4281/2324/F1.csv"
     }
   ],
-  "generated_utc": "2026-06-03T19:52:32Z",
+  "generated_utc": "2026-06-16T15:55:51Z",
   "n_files_ok": 25,
   "source": "football-data.co.uk",
   "total_rows": 8955

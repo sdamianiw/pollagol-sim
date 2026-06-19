@@ -1,5 +1,36 @@
 # HANDOFF
 
+> 🟢 **RONDA-1 CATCH-UP + FINISH + MD2 SEED — CADENCE CONTRACT DONE (2026-06-16, branch `rho-fit`; engine FROZEN, live byte-identical, `rho_fit` OFF).**
+> Data-ops only — **0 edits** to model/optimizer/strength/context/sigma/A2 (`git status` clean on all 6); I-3
+> re-confirmed (backtest LEAKAGE=PASS). HITL respected (CC records, never enters pollaya). Plan:
+> `…\plans\cadence-contract-bubbly-ripple.md`.
+> **PART 0 — ingest/record (8 MD4/MD5 played games, dual-track):** GER-CUW 7-1, NED-JPN 2-2, CIV-ECU 1-0,
+> SWE-TUN 5-1, ESP-CPV 0-0, BEL-EGY 1-1, KSA-URU 1-1, IRN-NZL 2-2. Entered = baseline for all except **NED-JPN
+> entered 1-1 (override +4)**; **GER-CUW entered 3-0** (the Jun-14 4-0→3-0 revert held). **Cumulative n=16:
+> Σus_model=28, Σus_entered=28, override=+0** = the observed pollaya board (us=28, rank 21/27) → **L25
+> cross-check PASS**. **NED-JPN "fix" premise was FALSE** — its `result` was BLANK, never 1-1 (recorded 2-2;
+> Gate-7 = the blank cell). **Standings S3 (Jun-16) ingested** (`standings/2026-06-16/standings.json`, board
+> read off screenshots; us=28, rank 21/27, leader 44, podium_cut 42, gap_podium −14, override 0) →
+> `standings_log.csv` = **2 rows (Jun-14+Jun-16) → F34 floor MET**. **S2/Jun-15 SKIPPED** (no board photos).
+> review.ps1 → **0 played-unreviewed** (14 stamped). backtest re-run = deterministic reproduction: **HIGH-TOTAL
+> PASS Δ+0.0809** [CI +0.0209,+0.1421], Brier 0.5792, exact-hit 0.1158, LEAKAGE=PASS, G-RHO2 still NO-PASS.
+> **L29** (record the cross-checked final, not a remembered score; blank = safety net), **L30** (reconcile
+> Σpts_entered vs the board; override=0 is a sum, not agreement), **L31** (4/4 MD5 draws → draw-lean
+> counterfactual is variance not skill; I-NOTILT) logged.
+> **PART 1 — cadence picks (Tue Jun-16 → Fri Jun-19 German, ONE API call):** fresh fetch
+> `fetch_md1 --win-hi 2026-06-19T22:00:00Z` (quota **481→479**, ~2cr, snapshot `md1_2026-06-16T15-59-46Z.json`),
+> 14 in-window. F27 diff: 8 existing (FRA-SEN→UZB-COL; fresh odds → **0 flips vs baseline**) + **5 NEW MD2
+> BASELINES ADDED** (CZE-RSA 1-0, SUI-BIH 1-0, CAN-QAT 2-0, MEX-KOR 1-0, USA-AUS 1-0; `log_decision`+`backfill`,
+> guards clean). **SCO-MAR EXCLUDED** (KO Jun-19 22:00Z = 00:00 CEST Saturday, past the Friday-German cutoff; in
+> the snapshot, add on request). EV-argmax pass on all **13**: 0 coinflips, guards clean, ρ frozen −0.05
+> (rho_fit OFF), context neutral. EV-vs-modal flip-watch: FRA-SEN, ARG-ALG, GHA-PAN, UZB-COL, MEX-KOR
+> (lowest-conf = GHA-PAN, MEX-KOR, near-even). `decisions.csv` = **16 recorded + 13 pending = 29 rows**.
+> **🛑 HITL STOP — 13 picks pending Sebas entry; nothing recorded for them.** Record post-match:
+> `python -m src.decision_score record <fid> <H-A> --entered-pick <typed>`. **After the 8 Ronda-1 play+record →
+> Ronda-1 = 24/24**; MD2 seeded through Fri Jun-19 German. Refresh K/L + MD2 before each 10-min-pre-KO deadline.
+>
+> ---
+>
 > 🟡 **L19 ρ-FIT BUILT + M7-VALIDATED — NO-PASS on the edge gate; kept BUILD≠FIRE (2026-06-14, branch `rho-fit` off master `05cde08`).**
 > `fit_dc` (μ pinned from the totals price, solve `s←P_home` + `ρ←P_draw` by nested bisection, exactly identified;
 > band-clamp [−0.20,+0.10]; gated `rho_fit`, **default-OFF → live path byte-identical**, suite **204/204**).
@@ -21,9 +52,19 @@
 > pick the set maximizing P(top-3).** Do NOT implement Hunter-Vielma-Zaman's submodular portfolio algorithm —
 > HVZ (2016) is a MULTI-entry (many-lineup) framework; we submit ONE entry, so it does not apply. HVZ/Metrick
 > are the conceptual hook only (top-heavy payoff → field overbacks favorites → contrarian/correlated wins the
-> upper tail). SELECTIVE + LATE (fire only when `standings_log` shows you trailing — Dubins-Savage bold play /
-> Brown-Harlow-Starks 1996: variance-seek when behind, in PLACEMENT space not self-SD). Gate: ≥2-3 matchdays
-> `standings_log` + H4/M5 fixed. BUILD≠FIRE. RPS (Constantinou-Fenton 2012) = optional ordinal eval diagnostic,
+> upper tail). SELECTIVE + LATE (deviate only when `standings_log` shows you trailing — Dubins-Savage bold play /
+> Brown-Harlow-Starks 1996: variance-seek when behind, in PLACEMENT space not self-SD).
+> **BUILD ≠ FIRE — explicit windows (verified 2026-06-14: NEITHER built yet):**
+> • **BUILD = ACCIONABLE PRE-MD3 (build-but-wait, needs its own GO).** Two pieces, both code-able + TDD-able NOW
+>   with NO live data (scenario-band only, like the λ-dial was): (a) **H4/M5 re-anchor fix** — re-architect
+>   `apply_context` to re-anchor μ PRE-DC (feed adjusted μ to `fit_dc`), Gate-7 RED first; today it is still the
+>   post-DC tilt (`context.py:65-68`, warning lines 10-20). (b) **placement-MC machinery** — extend
+>   `pool/pool_montecarlo.py` CRN to per-match scorelines, report a P(top-3) SCENARIO BAND for {all-modal} vs
+>   {differentiate-on-k}. NEITHER exists (no `placement*.py`/`field*.py`; only the L27 λ-dial `variance_select.py`
+>   is built — that is NOT field-diff).
+> • **FIRE = POST-MD3 ONLY.** Activating a live differentiation pick needs ≥2-3 matchdays `standings_log` (the
+>   trailing signal) + H4 fixed + an activation threshold. The BUILD does not wait for this; the FIRE does.
+> RPS (Constantinou-Fenton 2012) = optional ordinal eval diagnostic,
 > NEVER a gate (Wheatcroft 2021 contests it). DIBP (Karlis-Ntzoufras 2003) = the draws upgrade where ρ clamps
 > (P_draw≳0.32); documented fallback only.
 > **H4/M5 WATCH (pre-MD3):** context fix stays deferred (dormant under the live `neutral` flag) — but even
