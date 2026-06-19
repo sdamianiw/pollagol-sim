@@ -34,10 +34,19 @@ Common Random Numbers: per sim draw player base-noise, each board's realized sco
 opponents' picks ONCE; evaluate BOTH arms (control = us_baseline everywhere; treatment = decorrelating on
 the first k) on that SAME draw. Only our k picks differ -> k=0 => Delta E == 0.0 byte-exact (int rubric).
 
+CONDITIONAL PROPERTY (NOT universal): "trailing -> Delta E > 0, leading -> Delta E <= 0" holds ONLY when a
+board is LEVER-ACTIVE = our EV-argmax `us_baseline` == the field `modal` (we are correlated with the field,
+so `decorrelating` ADDS relative-to-field variance). If `us_baseline` != `modal` (our EV pick already
+decorrelates from the field), switching to `decorrelating` can REDUCE relative variance AND EV, INVERTING
+the property (a TRAILING player can then get Delta E < 0). The differentiation lever is differentiation-
+ELIGIBLE only on lever-active boards; `board_lever_status()` flags this and the P4 decorrelating-pick
+SELECTION must enforce `us_baseline == modal` (see test_inverting_regime).
+
 PODIUM TIE-BREAK (pollaya board footer): a points tie is resolved AD-HOC by the tied members (no
 deterministic split / preset tiebreaker). This sim uses strict `>` for rank (`rank = 1 + #{opp > us}`),
-so an exact tie favors us (optimistic); with continuous `base` noise exact ties are measure-zero -> the
-convention only bites at an exact boundary tie -> negligible, documented.
+so an exact tie favors us -> OPTIMISTIC. With continuous `base` noise exact ties are measure-zero so the
+convention only bites at an exact boundary tie; but note P(top-3) near an exact cut-tie is therefore
+MODEL-OPTIMISTIC (the real pool would resolve such a tie ad-hoc, possibly against us).
 
 BUILD != FIRE: default-OFF (imported by no live/cadence path), RECOMMENDS only, changes NO pick. The real
 MD3 run is P4 (Jun-24, separate GO + a trailing-status read). Determinism: numpy default_rng(DEFAULT_SEED),
@@ -63,7 +72,10 @@ from src.model import implied_1x2  # noqa: E402
 MAX_GOALS = 9                                   # score matrices are 9x9 (src.model.score_matrix default)
 COINFLIP_THRESHOLD = 0.08                       # |P_top - P_draw| < 0.08  (predictions/.../summary.md)
 GATE_P_FIELD_MODAL = 0.85                       # adverse-corner field-deviation for the FIRE gate
-DEFAULT_EPS_MIN = 0.02                          # effect-size floor: Delta P(top-3) >= +0.02 (HITL-set)
+# DEMO placeholder ONLY. eps_min is HITL-SET at the P4 fire decision, tied to the realized variance budget
+# (e.g. a multiple of the bootstrap SE_diff and/or a fraction of the podium-gap in P(top-3)) - it is NOT
+# this 0.02. recommend_placement flags whether the value in force is the demo default or HITL-supplied.
+DEMO_EPS_MIN = 0.02                             # effect-size floor: Delta P(top-3) >= eps_min
 SIGMA_ABS_ANCHORS = (6.0, 8.0, 13.78, 19.5)     # secondary absolute sigma anchors (cross-check only)
 
 # Precompute the LOCKED additive rubric as a lookup table -> fully vectorized, byte-identical to points().
@@ -86,6 +98,15 @@ def is_coinflip(matrix: np.ndarray, threshold: float = COINFLIP_THRESHOLD) -> bo
     p = implied_1x2(matrix)
     p_top = max(p["home"], p["away"])
     return abs(p_top - p["draw"]) < threshold
+
+
+def board_lever_status(board) -> str:
+    """'active' iff our EV-argmax `us_baseline` == the field `modal` (we are CORRELATED with the field, so
+    `decorrelating` ADDS relative-to-field variance -> the lever works as intended). Else 'inverted-risk':
+    our EV pick already decorrelates from the field, so switching to `decorrelating` may REDUCE relative
+    variance AND EV -> the trailing->Delta E>0 property can INVERT. A board is differentiation-ELIGIBLE iff
+    'active'; the P4 decorrelating-pick selection MUST enforce this precondition (see test_inverting_regime)."""
+    return "active" if tuple(board["us_baseline"]) == tuple(board["modal"]) else "inverted-risk"
 
 
 def _cell(pick) -> int:
@@ -246,8 +267,9 @@ def _bootstrap_ci_diff(prize_trt, prize_ctrl, *, n_bootstrap=5000, alpha=0.05, b
 def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
                         n_sims: int = DEFAULT_N_SIMS, seed: int = DEFAULT_SEED,
                         n_bootstrap: int = 5000, alpha: float = 0.05,
-                        eps_min: float = DEFAULT_EPS_MIN,
+                        eps_min: float | None = None,
                         gate_p_field_modal: float = GATE_P_FIELD_MODAL,
+                        sigma_top_extra: float | None = None,
                         k_fire: int | None = None) -> dict:
     """k-sweep (exploratory) + ADVERSE-CORNER fire gate. RECOMMENDATION ONLY; NOT fired in the build.
 
@@ -257,13 +279,29 @@ def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
     corner = min Delta E over the sigma grid {0.75s,s,1.25s} U {6,8,13.78,19.5} evaluated under
     p_field_modal=gate_p_field_modal (0.85): adverse CI_lo > 0 AND adverse Delta P(top-3) >= eps_min.
     The bootstrap CI is MC-error only (~1/sqrt(n_sims)); the sigma swing dominates -> gate on the corner.
+
+    eps_min: None -> DEMO_EPS_MIN (0.02) with `eps_min_is_demo=True` surfaced; at P4 the HITL passes an
+        explicit value tied to the realized variance budget (then `eps_min_is_demo=False`).
+    sigma_top_extra: optional extra upper sigma anchor. At P4 set it to e.g. max(19.5, c*sigma(MD3-period))
+        since per-period variance is RISING (sigma(g1)=3.53 -> sigma(g2)=7.18); default None -> the grid
+        tops out at 19.5 and sigma > 19.5 is OUT-OF-COVERAGE (reported as `sigma_grid_top`).
+    Also returns `board_levers` (per-board 'active'/'inverted-risk' via board_lever_status) and
+    `n_ineligible_boards`: differentiation is sound only on lever-ACTIVE boards (us_baseline == modal).
     """
     if sigma_opp is None:
         raise ValueError("sigma_opp is required (PART-0 measured sigma(g2)); pass it explicitly")
+    eps_min_is_demo = eps_min is None
+    if eps_min is None:
+        eps_min = DEMO_EPS_MIN
     K = len(boards)
     if k_fire is None:
         k_fire = K                                                 # pre-registered: differentiate on all
     _validate(standings, us_id, boards, k_fire)
+
+    # ---- per-board lever eligibility (P1.2): differentiation is sound only where us_baseline == modal ----
+    board_levers = [{"board": i, "status": board_lever_status(b),
+                     "eligible": board_lever_status(b) == "active"} for i, b in enumerate(boards)]
+    n_ineligible = sum(1 for lv in board_levers if not lv["eligible"])
 
     # ---- HEADLINE: primary sigma, k_fire, contract base (p_field_modal=1.0) ----
     head = expected_prizes_placement(standings, us_id, boards, k_fire, sigma_opp=sigma_opp,
@@ -282,7 +320,10 @@ def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
     argmax_k = max(sweep, key=lambda s: s["delta_E_prize"])["k"]   # EXPLORATORY only (not the gate)
 
     # ---- ADVERSE-CORNER fire gate at the pre-registered k_fire ----
-    sigma_grid = sorted(set([0.75 * sigma_opp, sigma_opp, 1.25 * sigma_opp]) | set(SIGMA_ABS_ANCHORS))
+    anchors = set(SIGMA_ABS_ANCHORS)
+    if sigma_top_extra is not None:
+        anchors.add(float(sigma_top_extra))                        # P4 data-driven top (rising variance)
+    sigma_grid = sorted(set([0.75 * sigma_opp, sigma_opp, 1.25 * sigma_opp]) | anchors)
     grid = []
     for s in sigma_grid:
         r = expected_prizes_placement(standings, us_id, boards, k_fire, sigma_opp=s, n_sims=n_sims,
@@ -301,7 +342,14 @@ def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
                          "control": head["control"], "treatment": head["treatment"]},
             "sweep": sweep, "argmax_k_exploratory": argmax_k,
             "sigma_grid": grid, "adverse_corner": adverse,
-            "eps_min": eps_min, "gate_p_field_modal": gate_p_field_modal,
+            "sigma_grid_top": max(g["sigma"] for g in grid),
+            "sigma_grid_top_note": ("HITL sigma_top_extra supplied" if sigma_top_extra is not None
+                                    else "default top=19.5; sigma>19.5 is OUT-OF-COVERAGE (set sigma_top_extra at P4)"),
+            "board_levers": board_levers, "n_ineligible_boards": n_ineligible,
+            "eps_min": eps_min, "eps_min_is_demo": eps_min_is_demo,
+            "eps_min_note": ("DEMO default 0.02 - HITL must set at P4 (variance-budget-tied)"
+                             if eps_min_is_demo else "HITL-supplied"),
+            "gate_p_field_modal": gate_p_field_modal,
             "fire": fire,
             "note": "RECOMMENDATION ONLY - NOT FIRED. Real MD3 run = P4 (Jun-24, separate GO)."}
 
@@ -354,12 +402,24 @@ def _selftest(n_sims=DEFAULT_N_SIMS, seed=DEFAULT_SEED):
     r0 = expected_prizes_placement(st_tr, "us", boards, k=0, sigma_opp=SIGMA, n_sims=n_sims, seed=seed)
     print(f"(c) k=0 identity: Delta E = {r0['delta_E_prize']!r}  (expect exactly 0.0)")
 
-    assert r_tr["delta_E_prize"] > 0, "(a) trailing: expected Delta E > 0"
-    assert r_ld["delta_E_prize"] <= 0, "(b) leading: expected Delta E <= 0"
+    # (d) INVERTING REGIME (CONDITIONALITY): a LEVER-INVERTED board (EV-argmax us_baseline=1-1 != field
+    #     modal=1-0; decorrelating=0-1 is BOTH lower-EV AND lower-relative-to-field-variance) -> even when
+    #     TRAILING, differentiating HURTS (Delta E <= 0). Proves the trailing->+ property is CONDITIONAL.
+    inv = {"matrix": _toy_matrix(0.40, 0.38, 0.22), "modal": (1, 0), "us_baseline": (1, 1),
+           "decorrelating": (0, 1)}
+    inv_boards = [dict(inv), dict(inv), dict(inv)]
+    r_inv = expected_prizes_placement(st_tr, "us", inv_boards, k=3, sigma_opp=SIGMA, n_sims=n_sims, seed=seed)
+    print(f"(d) INVERTED+TRAILING us=58: board_lever_status={board_lever_status(inv)!r}  "
+          f"Delta E={r_inv['delta_E_prize']:+.5f}  (expect Delta E <= 0 -> property INVERTS off-eligibility)")
+
+    assert r_tr["delta_E_prize"] > 0, "(a) trailing+lever-active: expected Delta E > 0"
+    assert r_ld["delta_E_prize"] <= 0, "(b) leading+lever-active: expected Delta E <= 0"
     assert r0["delta_E_prize"] == 0.0, "(c) k=0: expected exactly 0.0"
-    print("SELFTEST: PASS  (a) trailing->+  (b) leading-><=0  (c) k=0->0.0 exact")
+    assert board_lever_status(nb) == "active" and board_lever_status(inv) == "inverted-risk"
+    assert r_inv["delta_E_prize"] <= 0, "(d) inverted+trailing: expected Delta E <= 0 (lever inverts)"
+    print("SELFTEST: PASS  (a) trailing->+  (b) leading-><=0  (c) k=0->0.0 exact  (d) inverted+trailing-><=0")
     print("=" * 78)
-    return r_tr, r_ld, r0
+    return r_tr, r_ld, r0, r_inv
 
 
 def main():

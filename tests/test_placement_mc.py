@@ -17,7 +17,7 @@ import numpy as np
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from pool.placement_mc import (  # noqa: E402
-    expected_prizes_placement, recommend_placement, is_coinflip,
+    expected_prizes_placement, recommend_placement, is_coinflip, board_lever_status,
     _toy_matrix, _draw_results, _cell, _POINTS_TABLE, MAX_GOALS,
 )
 from pool.pool_montecarlo import DEFAULT_SEED  # noqa: E402
@@ -49,27 +49,45 @@ class TestPlacementMC(unittest.TestCase):
         self.assertEqual(r["control"], r["treatment"])
 
     def test_ii_trailing_delta_positive(self):
-        # us below the podium cut but within reach; near-even boards -> differentiation variance helps.
+        # CONDITIONAL property (NOT universal): trailing -> Delta E > 0 holds ONLY on a LEVER-ACTIVE board
+        # (us_baseline == field modal, so decorrelating ADDS relative-to-field variance). NEAR_EVEN is
+        # lever-active by construction. See test_inverting_regime for the off-eligibility counter-case.
+        self.assertEqual(board_lever_status(NEAR_EVEN), "active")
         opps = [75, 72, 70, 68, 66, 64, 62, 60]
         st = {f"opp{i:02d}": p for i, p in enumerate(opps)}
         st["us"] = 58
         r = expected_prizes_placement(st, "us", _boards(3), k=3, sigma_opp=SIGMA,
                                       n_sims=30000, seed=DEFAULT_SEED)
         self.assertGreater(r["delta_E_prize"], 0.0,
-                           f"trailing: expected Delta E > 0, got {r['delta_E_prize']}")
+                           f"trailing+lever-active: expected Delta E > 0, got {r['delta_E_prize']}")
         self.assertGreater(r["treatment"]["p_top3"], r["control"]["p_top3"])
 
     def test_iii_leading_delta_nonpositive(self):
-        # us comfortably 1st (the top 0.6 prize): one chaser modestly behind, the rest far below. Added
-        # decorrelation variance can only REGRESS us off the top prize (no upside above 1st) and the EV
-        # sacrifice compounds it -> Delta E <= 0.
+        # CONDITIONAL (lever-active): us comfortably 1st (the top 0.6 prize): one chaser modestly behind,
+        # the rest far below. Added decorrelation variance can only REGRESS us off the top prize (no upside
+        # above 1st) and the EV sacrifice compounds it -> Delta E <= 0.
         opps = [80, 48, 47, 46, 45, 44, 43, 42]
         st = {f"opp{i:02d}": p for i, p in enumerate(opps)}
         st["us"] = 92                                   # clear 1st; chaser 80, cluster <=48 far below
         r = expected_prizes_placement(st, "us", _boards(3), k=3, sigma_opp=SIGMA,
                                       n_sims=30000, seed=DEFAULT_SEED)
         self.assertLessEqual(r["delta_E_prize"], 0.0,
-                             f"leading: expected Delta E <= 0, got {r['delta_E_prize']}")
+                             f"leading+lever-active: expected Delta E <= 0, got {r['delta_E_prize']}")
+
+    def test_inverting_regime_trailing_can_be_negative(self):
+        # LEVER-INVERTED board: us_baseline = EV-argmax = 1-1 != field modal = 1-0, decorrelating = 0-1 is
+        # BOTH lower-EV AND lower-relative-to-field-variance. Then even TRAILING, differentiating HURTS
+        # (Delta E <= 0). This is the P1.1 counter-case: trailing->+ is CONDITIONAL on lever-eligibility.
+        inv = {"matrix": _toy_matrix(0.40, 0.38, 0.22), "modal": (1, 0),
+               "us_baseline": (1, 1), "decorrelating": (0, 1)}
+        self.assertEqual(board_lever_status(inv), "inverted-risk")
+        opps = [75, 72, 70, 68, 66, 64, 62, 60]
+        st = {f"opp{i:02d}": p for i, p in enumerate(opps)}
+        st["us"] = 58                                   # same trailing field as (ii), but lever inverted
+        r = expected_prizes_placement(st, "us", [dict(inv) for _ in range(3)], k=3, sigma_opp=SIGMA,
+                                      n_sims=30000, seed=DEFAULT_SEED)
+        self.assertLessEqual(r["delta_E_prize"], 0.0,
+                             f"inverted+trailing: expected Delta E <= 0, got {r['delta_E_prize']}")
 
     def test_iv_determinism(self):
         st = {f"opp{i:02d}": 60 for i in range(8)}
@@ -133,6 +151,44 @@ class TestPlacementMC(unittest.TestCase):
         self.assertEqual(out["sweep"][0]["delta_E_prize"], 0.0)         # k=0 in sweep is the identity
         self.assertIn("adverse_corner", out)
         self.assertIsInstance(out["fire"], bool)
+
+    def test_recommend_diagnostics_surfaced(self):
+        # P1.2 lever eligibility + P2.3 eps_min HITL flag + P2.5 sigma-grid top are all surfaced.
+        opps = [75, 72, 70, 68, 66, 64, 62, 60]
+        st = {f"opp{i:02d}": p for i, p in enumerate(opps)}
+        st["us"] = 58
+        # default eps_min -> demo-flagged; lever-active boards -> 0 ineligible; default grid top = 19.5
+        out = recommend_placement(st, "us", _boards(2), sigma_opp=SIGMA, n_sims=6000, n_bootstrap=300)
+        self.assertTrue(out["eps_min_is_demo"])
+        self.assertEqual(out["eps_min"], 0.02)
+        self.assertTrue(all(lv["eligible"] for lv in out["board_levers"]))
+        self.assertEqual(out["n_ineligible_boards"], 0)
+        self.assertEqual(out["sigma_grid_top"], 19.5)
+        # inverted board -> flagged ineligible; HITL eps_min + sigma_top_extra honored
+        inv = {"matrix": _toy_matrix(0.40, 0.38, 0.22), "modal": (1, 0),
+               "us_baseline": (1, 1), "decorrelating": (0, 1)}
+        out2 = recommend_placement(st, "us", [dict(inv)], sigma_opp=SIGMA, n_sims=6000, n_bootstrap=300,
+                                   eps_min=0.05, sigma_top_extra=25.0)
+        self.assertEqual(out2["n_ineligible_boards"], 1)
+        self.assertFalse(out2["board_levers"][0]["eligible"])
+        self.assertFalse(out2["eps_min_is_demo"])
+        self.assertEqual(out2["eps_min"], 0.05)
+        self.assertEqual(out2["sigma_grid_top"], 25.0)
+
+    def test_bubble_internal_consistency(self):
+        # PODIUM BUBBLE: us fighting for 3rd against a cluster straddling the cut. Variance is double-edged
+        # here, so NO a-priori sign on Delta E. Assert only INTERNAL CONSISTENCY of the fire decision.
+        opps = [90, 85, 67, 66, 65, 64, 63, 62]
+        st = {f"opp{i:02d}": p for i, p in enumerate(opps)}
+        st["us"] = 66                                   # mid-cluster, on the 3rd-place bubble
+        out = recommend_placement(st, "us", _boards(3), sigma_opp=SIGMA, n_sims=12000, n_bootstrap=600)
+        adv = out["adverse_corner"]
+        self.assertLessEqual(adv["ci_lo"], adv["ci_hi"])                 # CI well-formed
+        # fire is EXACTLY its own gate predicate (adverse CI_lo>0 AND adverse Delta p_top3 >= eps_min)
+        expected = bool(adv["ci_lo"] > 0.0 and adv["delta_p_top3"] >= out["eps_min"])
+        self.assertEqual(out["fire"], expected)
+        # adverse corner is the grid-min Delta E (worst sigma for the treatment)
+        self.assertEqual(adv["delta_E_prize"], min(g["delta_E_prize"] for g in out["sigma_grid"]))
 
 
 if __name__ == "__main__":
