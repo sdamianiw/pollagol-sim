@@ -466,3 +466,24 @@ model-discipline. The only thing that may flip a recommendation off fresh EV is 
 single-book odds), never a preferred scoreline. Extends L28/L31 and the I-NOTILT cadence invariant down to the
 human entry layer.
 
+
+## L33 — A flip's EV-gap must be compared to the noise-floor band EDGES; a near-lock "hold" is anti-churn / finalize-at-lock, NOT "noise" (caught 2026-06-20, Sat-Sun cadence flip-check, audit N3)
+**Pattern:** On the Jun-20 fresh-odds cross-check NED-SWE flipped 1-0→2-1 with EV-gap **0.0410** and it was
+labeled "at/under the ~0.03–0.04 noise floor → noise → hold." But **0.0410 > 0.040 (the band ceiling)**: by
+the project's own KOR-CZE rule that is SIGNAL, so the engine's current pick IS 2-1. It was conflated with
+GER-CIV (**0.0301**, at the floor → genuinely sub-threshold). Under EV-argmax PURE (I-NOTILT) there is no
+"holding the old argmax" — the live pick is always the fresh argmax; the legitimate reason to keep the baseline
+~9 h before a lock is **anti-churn / finalize-at-the-10-min-pre-KO lock** (totals wiggle intra-window), NOT
+"the gap is noise." Mislabeling a timing-hold as a noise-hold causes a WRONG action AT the lock: holding 1-0
+even if 2-1 still leads ≥0.04 = anti-EV inertia. (Also: GER-CIV's line moved 2.5→3.5 but it was the SAME book
+`pmu_fr` relisting, and μ_eff stayed ~3.1 — the engine normalized it; the "book-swap artifact" hypothesis was
+wrong, the flip is just a near-tie tipping by 0.030.)
+**Rule:** (1) State the noise floor as a band [floor≈0.030, ceiling≈0.040] and compare the gap to the relevant
+EDGE: gap>ceiling = signal, gap<floor = noise, between = ambiguous — never collapse to "at the floor." (2) Near
+a lock, frame a non-switch as "defer-and-recheck, finalize at 10-min-pre-KO," and PRE-COMMIT the switch rule
+("if the fresh argmax still leads ≥ceiling at the lock → SWITCH"). (3) A totals-driven flip with unchanged
+favorite/outcome is still a real EV move; distinguish a within-same-book market move (μ_eff shifts) from an x.5
+line relisting the engine already normalizes (μ_eff stable). (4) Process: a threshold-read / HOLD-vs-SWITCH
+verdict is a JUDGMENT task — do NOT run it under a self-certifying `/goal` loop (it can rationalize "Goal
+achieved"); present the per-fixture EV-gaps and STOP, leaving the umbral cut to HITL. Extends L32/I-NOTILT to
+the refresh/flip layer.
