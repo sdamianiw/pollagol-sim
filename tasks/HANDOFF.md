@@ -16,7 +16,7 @@
 > **PART 0 — ingest/record (8 MD4/MD5 played games, dual-track):** GER-CUW 7-1, NED-JPN 2-2, CIV-ECU 1-0,
 > SWE-TUN 5-1, ESP-CPV 0-0, BEL-EGY 1-1, KSA-URU 1-1, IRN-NZL 2-2. Entered = baseline for all except **NED-JPN
 > entered 1-1 (override +4)**; **GER-CUW entered 3-0** (the Jun-14 4-0→3-0 revert held). **Cumulative n=16:
-> Σus_model=28, Σus_entered=28, override=+0** = the observed pollaya board (us=28, rank 21/27) → **L25
+> Σus_model=28, Σus_entered=28, override=+0** [running override tally SUPERSEDED -> canonical: tasks/override_ledger.md] = the observed pollaya board (us=28, rank 21/27) → **L25
 > cross-check PASS**. **NED-JPN "fix" premise was FALSE** — its `result` was BLANK, never 1-1 (recorded 2-2;
 > Gate-7 = the blank cell). **Standings S3 (Jun-16) ingested** (`standings/2026-06-16/standings.json`, board
 > read off screenshots; us=28, rank 21/27, leader 44, podium_cut 42, gap_podium −14, override 0) →

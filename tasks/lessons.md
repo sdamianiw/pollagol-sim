@@ -454,6 +454,7 @@ near-even matches (correlated contrarian, L27/L28), evaluated on calibrated prob
 NOT a reactive draw-lean. Sibling of L28 (right defect, wrong layer) and the I-NOTILT cadence invariant.
 
 ## L32 — Deviating from EV-argmax to a gut scoreline on low-confidence near-even games strictly lowers E[pts] and never gains (caught 2026-06-19, Ronda-1/MD2 ingest)
+> _The -9 override tally cited below is SUPERSEDED -> canonical running ledger: tasks/override_ledger.md (total -3 / tilt-only -4 as of 2026-06-21)._
 **Pattern:** Over the 12 Jun-16→18 fixtures Sebas deviated from the EV-argmax pick on 9, and the realized
 override came to **−9 pts** (Σus_entered=65 vs Σus_model=74) — almost exactly the gap between his real rank
 (21/27) and where strict EV-discipline would have placed him. The cost concentrated where the EV pick hit the
@@ -487,3 +488,17 @@ line relisting the engine already normalizes (μ_eff stable). (4) Process: a thr
 verdict is a JUDGMENT task — do NOT run it under a self-certifying `/goal` loop (it can rationalize "Goal
 achieved"); present the per-fixture EV-gaps and STOP, leaving the umbral cut to HITL. Extends L32/I-NOTILT to
 the refresh/flip layer.
+
+
+## L34 — Resolve fixture identity from decisions.csv's full team strings, NEVER a relayed 3-letter code (caught 2026-06-21, MD-2 reconcile; Sebas correction)
+**Pattern:** An inherited contract line instructed "resolve RCH-RSA as CHILE (not Czechia)". RCH in this sim =
+**Czech Republic** (`decisions.csv` row 26 home="Czech Republic"); Chile never qualified. The relayed pollaya
+3-letter code was ambiguous AND wrong, and contradicted the CSV's own team name — accepting it (even under an
+autonomy grant) would have mismatched the fixture_id. The same board showed "CRS" = South Korea (row 29), not
+Costa Rica: pollaya display codes are NOT 1:1 with FIFA codes in this sim. The error was caught pre-write only
+because Sebas intervened; #3 (no invented facts / cross-check) and #7 (push-back) should have flagged the
+code-vs-CSV contradiction first.
+**Rule:** Match every fixture to its `decisions.csv` row by the CSV home/away **full strings** + kickoff UTC +
+score triangulation — never by a relayed/screenshot 3-letter code. If any instruction's code contradicts the
+CSV name, STOP and PUSH-BACK before any write, autonomy grant notwithstanding. Codes are display-only. Extends
+CLAUDE.md #3/#7 down to the fixture-resolution layer.
