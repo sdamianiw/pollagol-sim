@@ -11,6 +11,7 @@
 - CIV-ECU `0-1` / SWE-TUN `1-0`: model-aligned, no change.
 
 ## Dual-track standing (n=8 played)
+> **Override tally below (-4) is a Jun-14 snapshot. SUPERSEDED -> canonical running ledger: tasks/override_ledger.md.**
 **us_entered 15 / us_model 19 / B1 23 / B2 17 · field median 19 · rank 20/27 · override −4.**
 `us_entered` is the REAL pollaya total (independently confirmed by the standings screenshots). Following the model (19) would sit at the **field median** (≈ rank 13–14). The override cost is essentially one fixture.
 

@@ -8,7 +8,7 @@
 **Generated:** 2026-06-17T16:40:30Z (deterministic from the snapshot; engine git-clean on the 6 frozen paths).
 
 ## Standing context (post-MD4/MD5 — info only, does NOT alter picks)
-Cumulative n=16: **us = 28 pts**, override **+0** (us_model = us_entered = 28 = observed pollaya board). **Rank 21/27**, leader 44, podium cut 42, **gap to podium −14**. Field-differentiation is the gated post-MD3 lever; this slate stays chalk-disciplined EV-argmax.
+Cumulative n=16: **us = 28 pts**, override **+0** (us_model = us_entered = 28 = observed pollaya board). **[Override tally SUPERSEDED -> canonical: tasks/override_ledger.md.]** **Rank 21/27**, leader 44, podium cut 42, **gap to podium −14**. Field-differentiation is the gated post-MD3 lever; this slate stays chalk-disciplined EV-argmax.
 
 ## SYSTEMATIC VERDICT — per-fixture EV-argmax recommendation (13 fixtures)
 
