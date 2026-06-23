@@ -502,3 +502,23 @@ code-vs-CSV contradiction first.
 score triangulation — never by a relayed/screenshot 3-letter code. If any instruction's code contradicts the
 CSV name, STOP and PUSH-BACK before any write, autonomy grant notwithstanding. Codes are display-only. Extends
 CLAUDE.md #3/#7 down to the fixture-resolution layer.
+
+## L35 — An EV-UPDATE classification must be GROUNDED by re-deriving the pre-lock snapshot argmax; a TILT that HIT on variance is still a TILT (caught 2026-06-23, MD-2 reconcile, audit F-ARG/F2)
+**Pattern:** the Jun-23 reconcile classified two Jun-22 entry deviations (entered ≠ baseline `pick`): FRA-IRQ
+3-0 (vs base 2-0) = **EV-UPDATE** and ARG-AUT 2-0 (vs base 1-0) = **TILT**. The first was grounded — re-deriving
+the frozen engine on the pre-lock snapshot `md1_2026-06-22T16-57-21Z.json` showed FRA-IRQ argmax flipped to 3-0
+(gap +0.047 > 0.040 = SIGNAL), so the entry FOLLOWED the engine = a disciplined fresh-argmax switch. The second
+was initially only ASSERTED ("entered the modal, no engine flip"); the audit (F-ARG) correctly demanded the same
+re-derivation. Re-running ARG-AUT on the same snapshot: argmax stayed **1-0** (= baseline, NO flip), modal 2-0,
+and EV(entered 2-0)=3.277 was **−0.042 BELOW** EV(argmax 1-0)=3.319 — a discretionary move *away* from the
+EV-optimal pick. Both ARG-AUT and FRA-IRQ HIT exact (9 pts each, +5 override), so by realized points they look
+identical — but FRA-IRQ earned its EV-UPDATE label and ARG-AUT did not. The TILT/EV-UPDATE split is what sets
+the L32 tilt-only metric (here: TILT → tilt-only 0; had ARG-AUT been mislabeled EV-UPDATE → −5), so the
+classification is load-bearing, not cosmetic.
+**Rule:** classify an `entered != pick` deviation as EV-UPDATE **only if** the pre-lock snapshot's frozen-engine
+argmax == the entered pick (i.e. the human followed a real fresh-argmax flip, gap > noise ceiling); otherwise it
+is TILT-OVERRIDE — including when it HIT. A variance hit never promotes a discretionary pick to EV-UPDATE (L8
+symmetry: a winning override carries the same bias risk as a losing one; outcome ≠ process). Ground BOTH sides of
+the split by re-derivation from the artifact (I-NOFAB), never by narrative assertion — the same rigor on the
+TILT call as on the EV-UPDATE call. Sibling of L32 (entry-discipline = model-discipline) and L28/L31 (don't
+convert realized variance into a label/objective change).
