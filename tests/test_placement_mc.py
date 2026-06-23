@@ -18,7 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from pool.placement_mc import (  # noqa: E402
     expected_prizes_placement, recommend_placement, is_coinflip, board_lever_status,
-    _toy_matrix, _draw_results, _cell, _POINTS_TABLE, MAX_GOALS,
+    _gate_decision, _toy_matrix, _draw_results, _cell, _POINTS_TABLE, MAX_GOALS,
 )
 from pool.pool_montecarlo import DEFAULT_SEED  # noqa: E402
 
@@ -184,11 +184,89 @@ class TestPlacementMC(unittest.TestCase):
         out = recommend_placement(st, "us", _boards(3), sigma_opp=SIGMA, n_sims=12000, n_bootstrap=600)
         adv = out["adverse_corner"]
         self.assertLessEqual(adv["ci_lo"], adv["ci_hi"])                 # CI well-formed
-        # fire is EXACTLY its own gate predicate (adverse CI_lo>0 AND adverse Delta p_top3 >= eps_min)
-        expected = bool(adv["ci_lo"] > 0.0 and adv["delta_p_top3"] >= out["eps_min"])
+        # fire is EXACTLY its own corner-by-corner gate predicate (#1 + #3): worst-case CI_lo > 0 AND
+        # Delta p_top3 >= eps_min at ITS OWN worst corner AND every board lever-active.
+        worst_ci_lo = min(g["ci_lo"] for g in out["sigma_grid"])
+        adv_p3 = min(out["sigma_grid"], key=lambda g: g["delta_p_top3"])
+        expected = bool(worst_ci_lo > 0.0 and adv_p3["delta_p_top3"] >= out["eps_min"]
+                        and out["n_ineligible_boards"] == 0)
         self.assertEqual(out["fire"], expected)
-        # adverse corner is the grid-min Delta E (worst sigma for the treatment)
+        # adverse_corner is the grid-min Delta E (worst sigma for the treatment); adverse_corner_p3 the
+        # grid-min Delta p_top3 (the corner that binds the effect-size floor).
         self.assertEqual(adv["delta_E_prize"], min(g["delta_E_prize"] for g in out["sigma_grid"]))
+        self.assertEqual(out["adverse_corner_p3"]["delta_p_top3"],
+                         min(g["delta_p_top3"] for g in out["sigma_grid"]))
+
+
+class TestFireGateCornerByCorner(unittest.TestCase):
+    """Regression for findings #1 (P(top-3) floor at its OWN worst corner, not the min-Delta-E corner)
+    and #3 (n_ineligible == 0 wired into `fire`). Uses synthetic grids -> tests the pure gate logic."""
+
+    # divergent grid: min(Delta_E) corner (sigma=19.5) PASSES the floor, but a different corner
+    # (sigma=6, min Delta_p_top3) shows the treatment REDUCING P(top-3) by 5pp. The old single-corner
+    # gate fired here; the corner-by-corner gate must NOT.
+    DIVERGENT = [
+        {"sigma": 6.0,  "delta_E_prize": +0.002, "ci_lo": +0.003, "ci_hi": +0.02, "delta_p_top3": -0.05},
+        {"sigma": 19.5, "delta_E_prize": +0.001, "ci_lo": +0.002, "ci_hi": +0.02, "delta_p_top3": +0.05},
+    ]
+    ALL_PASS = [
+        {"sigma": 6.0,  "delta_E_prize": +0.010, "ci_lo": +0.004, "ci_hi": +0.03, "delta_p_top3": +0.03},
+        {"sigma": 19.5, "delta_E_prize": +0.008, "ci_lo": +0.002, "ci_hi": +0.03, "delta_p_top3": +0.04},
+    ]
+
+    def test_divergent_grid_blocks_fire(self):
+        g = _gate_decision(self.DIVERGENT, eps_min=0.02, n_ineligible=0)
+        self.assertFalse(g["fire"], "min-DeltaE corner passes but min-p_top3 corner (-0.05) must block")
+        self.assertEqual(g["adverse_corner_p3"]["sigma"], 6.0)          # the binding (worst-p3) corner
+        self.assertEqual(g["adverse_corner"]["sigma"], 19.5)            # min-Delta-E corner (reporting)
+
+    def test_old_single_corner_would_have_fired(self):
+        # documents the bug: at the min-Delta-E corner alone, both old conditions pass.
+        adv_E = min(self.DIVERGENT, key=lambda x: x["delta_E_prize"])
+        old_fire = bool(adv_E["ci_lo"] > 0.0 and adv_E["delta_p_top3"] >= 0.02)
+        self.assertTrue(old_fire)                                      # the latent false-fire
+        self.assertFalse(_gate_decision(self.DIVERGENT, 0.02, 0)["fire"])   # fixed
+
+    def test_all_corners_pass_fires(self):
+        self.assertTrue(_gate_decision(self.ALL_PASS, eps_min=0.02, n_ineligible=0)["fire"])
+
+    def test_worst_ci_lo_blocks(self):
+        grid = [dict(g) for g in self.ALL_PASS]
+        grid[0]["ci_lo"] = -0.001                                      # one corner's CI dips below 0
+        self.assertFalse(_gate_decision(grid, eps_min=0.02, n_ineligible=0)["fire"])
+
+    def test_ineligible_board_blocks_fire(self):
+        # finding #3: every metric passes, but a lever-ineligible board is present -> no fire.
+        self.assertTrue(_gate_decision(self.ALL_PASS, eps_min=0.02, n_ineligible=0)["fire"])
+        self.assertFalse(_gate_decision(self.ALL_PASS, eps_min=0.02, n_ineligible=1)["fire"])
+
+    def test_recommend_ineligible_does_not_fire(self):
+        # end-to-end: an inverted (ineligible) board can never produce fire=True regardless of metrics.
+        inv = {"matrix": _toy_matrix(0.40, 0.38, 0.22), "modal": (1, 0),
+               "us_baseline": (1, 1), "decorrelating": (0, 1)}
+        opps = [75, 72, 70, 68, 66, 64, 62, 60]
+        st = {f"opp{i:02d}": p for i, p in enumerate(opps)}
+        st["us"] = 58
+        out = recommend_placement(st, "us", [dict(inv)], sigma_opp=SIGMA, n_sims=6000, n_bootstrap=300)
+        self.assertEqual(out["n_ineligible_boards"], 1)
+        self.assertFalse(out["fire"], "ineligible board must force fire=False (#3)")
+
+
+class TestValidateShape(unittest.TestCase):
+    """Finding #4: _validate must reject a non-9x9 board matrix (the flat-cell decode assumes 9x9)."""
+
+    def test_non_9x9_matrix_rejected(self):
+        bad = {"matrix": np.ones((8, 8)) / 64.0, "modal": (1, 0),
+               "us_baseline": (1, 0), "decorrelating": (1, 1)}
+        with self.assertRaises(ValueError):
+            expected_prizes_placement({"us": 50, "opp": 60}, "us", [bad], k=1,
+                                      sigma_opp=SIGMA, n_sims=100, seed=DEFAULT_SEED)
+
+    def test_9x9_matrix_accepted(self):
+        ok = dict(NEAR_EVEN)                                           # _toy_matrix -> (9,9)
+        r = expected_prizes_placement({"us": 50, "opp": 60}, "us", [ok], k=1,
+                                      sigma_opp=SIGMA, n_sims=100, seed=DEFAULT_SEED)
+        self.assertIn("delta_E_prize", r)
 
 
 if __name__ == "__main__":

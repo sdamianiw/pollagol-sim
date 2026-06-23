@@ -145,6 +145,11 @@ def _validate(standings, us_id, boards, k):
         for key in ("matrix", "modal", "us_baseline", "decorrelating"):
             if key not in b:
                 raise ValueError(f"board missing required key {key!r}")
+        # finding #4: the flat-cell encode/decode (_cell, idx//9, idx%9) assumes a 9x9 board; a
+        # different shape would silently mis-map cells to wrong rubric points. Fail loud instead.
+        if np.asarray(b["matrix"], dtype=np.float64).shape != (MAX_GOALS, MAX_GOALS):
+            raise ValueError(f"board matrix must be {MAX_GOALS}x{MAX_GOALS}; "
+                             f"got {np.asarray(b['matrix']).shape}")
 
 
 def _arm_stats(rank):
@@ -264,6 +269,24 @@ def _bootstrap_ci_diff(prize_trt, prize_ctrl, *, n_bootstrap=5000, alpha=0.05, b
             float(d.mean()))
 
 
+def _gate_decision(grid, eps_min, n_ineligible) -> dict:
+    """Corner-by-corner FIRE gate (findings #1 + #3). delta_E_prize and delta_p_top3 need NOT
+    co-minimize over the sigma grid (a sigma can be benign for E[prize] yet push P(top-3) below
+    eps_min), so each condition is checked at ITS OWN most-adverse corner — NOT at the single
+    min-delta_E corner (the latent bug: it let a benign-E sigma mask a P(top-3)-harmful sigma).
+    Fire iff ALL hold:
+      (a) worst-case CI_lo over the grid > 0                 (E[prize] gain robust at its worst sigma)
+      (b) delta_p_top3 >= eps_min at min(grid, delta_p_top3) (effect-size floor at ITS worst sigma)
+      (c) n_ineligible == 0                                  (every differentiated board is lever-active)
+    Pure (no sims) -> unit-testable with a synthetic divergent grid. Returns both adverse corners."""
+    worst_ci_lo = min(g["ci_lo"] for g in grid)
+    adverse_E = min(grid, key=lambda g: g["delta_E_prize"])         # worst sigma for E[prize] (reporting)
+    adverse_p3 = min(grid, key=lambda g: g["delta_p_top3"])         # worst sigma for P(top-3) (binds floor)
+    fire = bool(worst_ci_lo > 0.0 and adverse_p3["delta_p_top3"] >= eps_min and n_ineligible == 0)
+    return {"fire": fire, "worst_ci_lo": worst_ci_lo,
+            "adverse_corner": adverse_E, "adverse_corner_p3": adverse_p3}
+
+
 def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
                         n_sims: int = DEFAULT_N_SIMS, seed: int = DEFAULT_SEED,
                         n_bootstrap: int = 5000, alpha: float = 0.05,
@@ -275,9 +298,11 @@ def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
 
     HEADLINE = absolute P(top-3) per arm (a positive Delta E can be true-but-trivial, e.g. 0.2%->0.4%).
     FIRE GATE (for P4): k is PRE-REGISTERED = k_fire (default = differentiate on ALL candidate boards), NOT
-    the argmax-k of the sweep (winner's-curse over nested correlated estimates). Fire iff, at the ADVERSE
-    corner = min Delta E over the sigma grid {0.75s,s,1.25s} U {6,8,13.78,19.5} evaluated under
-    p_field_modal=gate_p_field_modal (0.85): adverse CI_lo > 0 AND adverse Delta P(top-3) >= eps_min.
+    the argmax-k of the sweep (winner's-curse over nested correlated estimates). Over the sigma grid
+    {0.75s,s,1.25s} U {6,8,13.78,19.5} (p_field_modal=gate_p_field_modal (0.85)), fire iff ALL hold:
+    (a) the WORST-case CI_lo over the grid > 0; (b) Delta P(top-3) >= eps_min at ITS OWN worst corner =
+    min(grid, key=delta_p_top3) — NOT the min-Delta-E corner, since the two metrics need not co-minimize
+    (finding #1); (c) n_ineligible_boards == 0 — every differentiated board is lever-active (finding #3).
     The bootstrap CI is MC-error only (~1/sqrt(n_sims)); the sigma swing dominates -> gate on the corner.
 
     eps_min: None -> DEMO_EPS_MIN (0.02) with `eps_min_is_demo=True` surfaced; at P4 the HITL passes an
@@ -332,8 +357,10 @@ def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
                                           n_bootstrap=n_bootstrap, alpha=alpha)
         grid.append({"sigma": s, "delta_E_prize": r["delta_E_prize"], "ci_lo": lo, "ci_hi": hi,
                      "delta_p_top3": r["delta_p_top3"]})
-    adverse = min(grid, key=lambda g: g["delta_E_prize"])          # worst sigma for the treatment
-    fire = bool(adverse["ci_lo"] > 0.0 and adverse["delta_p_top3"] >= eps_min)
+    # corner-by-corner gate (#1: floor at its OWN worst corner; #3: require board eligibility)
+    gate = _gate_decision(grid, eps_min, n_ineligible)
+    adverse = gate["adverse_corner"]                               # min-Delta-E corner (E[prize] reporting)
+    fire = gate["fire"]
 
     return {"headline": {"k_fire": k_fire,
                          "p_top3_ctrl": head["control"]["p_top3"],
@@ -342,6 +369,7 @@ def recommend_placement(standings, us_id, boards, *, sigma_opp=None,
                          "control": head["control"], "treatment": head["treatment"]},
             "sweep": sweep, "argmax_k_exploratory": argmax_k,
             "sigma_grid": grid, "adverse_corner": adverse,
+            "adverse_corner_p3": gate["adverse_corner_p3"], "worst_ci_lo": gate["worst_ci_lo"],
             "sigma_grid_top": max(g["sigma"] for g in grid),
             "sigma_grid_top_note": ("HITL sigma_top_extra supplied" if sigma_top_extra is not None
                                     else "default top=19.5; sigma>19.5 is OUT-OF-COVERAGE (set sigma_top_extra at P4)"),
