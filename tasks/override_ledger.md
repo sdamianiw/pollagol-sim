@@ -17,11 +17,16 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
-## Running tally — as of 2026-06-21 (post-MD-2 reconcile)
-- **total dual-track gap = −3**  — `== script` (`cumulative()["override_value"]`, verified TA4 ingest + TA6 summary).
-- **tilt-only override cost = −4**  — L32 headline metric `= total(−3) − NED-SWE EV-UPDATE(+1)`; the EV-UPDATE
-  is a disciplined fresh-argmax switch, not tilt, so it is excluded from the tilt cost.
-- reconciliation: **prior(≤Jun-19) −9  +  this period +6  =  −3**   (both CSV-backed — see tables).
+## Running tally — as of 2026-06-23 (post Jun-21→23 reconcile)
+- **total dual-track gap = +6**  — `== script` (`cumulative()["override_value"]`, verified TA4 ingest printed
+  `override_value=6` + TA6 summary). The dual-track FLIPPED sign vs Jun-21 (was −3, model ahead → now +6, entered ahead).
+- **tilt-only override cost = 0**  — L32 headline metric `= total(+6) − EV-UPDATE cumulative(+6: NED-SWE +1 +
+  FRA-IRQ +5)`; EV-UPDATEs are disciplined fresh-argmax switches, excluded from the tilt cost.
+- reconciliation: **prior(as of Jun-21) −3  +  this period (Jun-21→23) +9  =  +6**   (all CSV-backed — see tables).
+- ⚠ HONEST READ (L8/L32): the +9 period = FRA-IRQ +5 (legit EV-UPDATE, engine flip) + ARG-AUT +5 (discretionary
+  TILT that HIT on variance) + BEL-IRN −1 (tilt lost) + NOR-SEN 0. tilt-only returned to 0 driven by ONE lucky
+  hit (ARG-AUT), not skill — a winning override carries the same bias risk as a losing one. **L32 stands.**
+- prior Jun-21 snapshot (retained): total −3 / tilt −4 = prior(≤Jun-19) −9 + MD-2(Jun-19→21) +6.
 
 ## This period — MD-2 (Jun-19 → Jun-21), 8 played fixtures
 | fixture  | entered | model pick (base) | actual | pts_ent | pts_model | override | flag |
@@ -35,6 +40,30 @@
 | ECU-CUW  | 2-0 | 2-0 | 0-0 | 1 | 1 | 0 | none (EV-pick; 0.87-fav drew) |
 | TUN-JAP  | 0-1 | 0-1 | 0-4 | 4 | 4 | 0 | none (EV-pick) |
 | **period total** | | | | **35** | **29** | **+6** | TILT +5 · EV-UPDATE +1 · none 0 |
+
+## This period — Jun-21 → Jun-23 (8 played fixtures, rows 38-45)
+> OCR-confirmed vs the Jun-23 pollaya board (`PICKS VS ACTUAL RESULTS/` screenshots 073151+073201, format
+> `ENTERED(actual)`); recompute green (TA2 16/16); us_entered gate 133==board (TA6). Resolved by full team
+> strings (L34); JOR opponent = Algeria (green/crescent flag), NOT the board "ARG" code.
+| fixture  | entered | model pick (base) | actual | pts_ent | pts_model | override | flag |
+|----------|:-------:|:-----------------:|:------:|:-------:|:---------:|:--------:|------|
+| ESP-KSA  | 2-0 | 2-0 | 4-0 | 4 | 4 | 0 | none (EV-pick) |
+| BEL-IRN  | 2-1 | 1-0 | 0-0 | 0 | 1 | **−1** | TILT-OVERRIDE (lost; Iran held 0-0) |
+| URU-CPV  | 1-0 | 1-0 | 2-2 | 0 | 0 | 0 | none (EV-pick; Cape Verde drew) |
+| NZL-EGY  | 0-1 | 0-1 | 1-3 | 3 | 3 | 0 | none (EV-pick) |
+| ARG-AUT  | 2-0 | 1-0 | 2-0 | 9 | 4 | **+5** | TILT-OVERRIDE (entered modal 2-0, no engine flip; HIT) |
+| FRA-IRQ  | 3-0 | 2-0 | 3-0 | 9 | 4 | **+5** | EV-UPDATE (Jun-22 cadence flip 2-0→3-0, gap +0.047 SIGNAL; HIT) |
+| NOR-SEN  | 2-1 | 1-0 | 3-2 | 4 | 4 | 0 | TILT-OVERRIDE (neutral) |
+| JOR-ALG  | 0-1 | 0-1 | 1-2 | 4 | 4 | 0 | none (EV-pick) |
+| **period total** | | | | **33** | **24** | **+9** | TILT +4 · EV-UPDATE +5 · none 0 |
+
+Both Jun-22 deviations are artifact-grounded from the same pre-lock snapshot `md1_2026-06-22T16-57-21Z.json`
+(fetched 16:57Z, ~3min before ARG-AUT KO; the last pre-lock read), re-derived with the frozen engine:
+- **FRA-IRQ = EV-UPDATE**: argmax=3-0 (modal 3-0), EV 4.053 vs baseline-2-0 EV 4.006, gap **+0.047 > 0.040**
+  floor — a disciplined fresh-argmax switch Sebas followed.
+- **ARG-AUT = TILT**: argmax stayed **1-0** (= baseline; no flip), modal 2-0. Sebas entered the modal 2-0,
+  whose EV 3.277 is **−0.042 BELOW** the argmax EV 3.319 — a discretionary move away from the EV-optimal pick,
+  not an engine signal. (It HIT on variance; that does not make it EV-UPDATE — L8 symmetry.)
 
 ## Historical (rows played ≤ Jun-19) — CSV-backed, sums to prior −9
 Non-zero override rows (`override = pts_entered − points_actual`; all other dual rows = 0):
@@ -53,7 +82,9 @@ Non-zero override rows (`override = pts_entered − points_actual`; all other du
 
 ## Provenance / invariants
 - Every entry traces to `predictions/decisions.csv` (`entered_pick`/`pts_entered`/`points_actual`) +
-  the OCR-confirmed Jun-21 picks-vs-actual screenshots (TA1, 12/12).
+  the OCR-confirmed picks-vs-actual screenshots (Jun-21 TA1 12/12; Jun-23 `PICKS VS ACTUAL RESULTS/`
+  073151+073201, all 8 legible, format `ENTERED(actual)`).
 - **I-3 intact** — this ledger READS results + picks and computes numbers; it never writes a model parameter.
-- Verified against the script: `cumulative()["override_value"] = −3` (TA4 ingest printed `override_value=-3`;
-  re-confirmed at TA6 `summary`). If a future reconcile disagrees with the script, the script wins.
+- Verified against the script: `cumulative()["override_value"] = +6` (Jun-23 TA4 ingest printed
+  `override_value=6`; re-confirmed at TA6 `summary`). If a future reconcile disagrees with the script, the
+  script wins. (Jun-21 snapshot was −3.)
