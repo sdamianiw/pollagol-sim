@@ -17,15 +17,17 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
-## Running tally — as of 2026-06-23 (post Jun-21→23 reconcile)
-- **total dual-track gap = +6**  — `== script` (`cumulative()["override_value"]`, verified TA4 ingest printed
-  `override_value=6` + TA6 summary). The dual-track FLIPPED sign vs Jun-21 (was −3, model ahead → now +6, entered ahead).
-- **tilt-only override cost = 0**  — L32 headline metric `= total(+6) − EV-UPDATE cumulative(+6: NED-SWE +1 +
-  FRA-IRQ +5)`; EV-UPDATEs are disciplined fresh-argmax switches, excluded from the tilt cost.
-- reconciliation: **prior(as of Jun-21) −3  +  this period (Jun-21→23) +9  =  +6**   (all CSV-backed — see tables).
-- ⚠ HONEST READ (L8/L32): the +9 period = FRA-IRQ +5 (legit EV-UPDATE, engine flip) + ARG-AUT +5 (discretionary
-  TILT that HIT on variance) + BEL-IRN −1 (tilt lost) + NOR-SEN 0. tilt-only returned to 0 driven by ONE lucky
-  hit (ARG-AUT), not skill — a winning override carries the same bias risk as a losing one. **L32 stands.**
+## Running tally — as of 2026-06-24 (post Jun-23→24 tail reconcile)
+- **total dual-track gap = +1**  — `== script` (`cumulative()["override_value"] = +1`, TA6 summary verified;
+  `us_entered = 151 == board`). FLIPPED back toward neutral vs Jun-23 (+6 → +1) on the PAN-CRO tilt loss.
+- **tilt-only override cost = −5**  — L32 headline metric `= total(+1) − EV-UPDATE cumulative(+6: NED-SWE +1 +
+  FRA-IRQ +5)`; flipped 0 → −5, driven ENTIRELY by PAN-CRO (−5).
+- reconciliation: **prior(as of Jun-23) +6  +  this period (Jun-23→24) −5  =  +1**   (all CSV-backed — see tables).
+- ⚠ HONEST READ (L8/L32 — now EMPIRICAL, not asserted): PAN-CRO −5 (TILT lost) is the **symmetric twin** of
+  ARG-AUT +5 (TILT won) — same |5|, opposite sign, both discretionary deviations from the EV-optimal pick. The
+  two net to ~0, leaving only the **variance + bias risk** L32 warns about. **L32 confirmed empirically: tilt is
+  zero-mean noise, not skill → NO tilt in MD-3** (the systematic version of this is the gated field-diff, not gut).
+- prior Jun-23 snapshot (retained): total +6 / tilt 0 = prior(≤Jun-21) −3 + MD-2-late(Jun-21→23) +9.
 - prior Jun-21 snapshot (retained): total −3 / tilt −4 = prior(≤Jun-19) −9 + MD-2(Jun-19→21) +6.
 
 ## This period — MD-2 (Jun-19 → Jun-21), 8 played fixtures
@@ -65,6 +67,24 @@ Both Jun-22 deviations are artifact-grounded from the same pre-lock snapshot `md
   whose EV 3.277 is **−0.042 BELOW** the argmax EV 3.319 — a discretionary move away from the EV-optimal pick,
   not an engine signal. (It HIT on variance; that does not make it EV-UPDATE — L8 symmetry.)
 
+## This period — Jun-23 → Jun-24 (4 played fixtures, rows 46-49)
+> MD-2 tail. entered/actual per the Jun-24 reconcile; recompute green via `record` (recomputed by
+> `src.optimizer.points`); us_entered gate 151==board (TA6 summary). Standings board:
+> `standings/standings 24-06-2026/` 074954+075011 (us=151, rank 6/27, leader 164, podium_cut 162).
+| fixture  | entered | model pick (base) | actual | pts_ent | pts_model | override | flag |
+|----------|:-------:|:-----------------:|:------:|:-------:|:---------:|:--------:|------|
+| POR-UZB  | 2-0 | 2-0 | 5-0 | 4 | 4 | 0 | none (EV-pick) |
+| ENG-GHA  | 2-0 | 2-0 | 0-0 | 1 | 1 | 0 | none (EV-pick; Ghana held 0-0) |
+| PAN-CRO  | 0-2 | 0-1 | 0-1 | 4 | 9 | **−5** | TILT-OVERRIDE (lost; model 0-1 hit exact 9) |
+| COL-COD  | 1-0 | 1-0 | 1-0 | 9 | 9 | 0 | none (EV-pick, exact HIT) |
+| **period total** | | | | **18** | **23** | **−5** | TILT −5 · EV-UPDATE 0 · none 0 |
+
+PAN-CRO is the **symmetric twin** of ARG-AUT (prior period): the EV-argmax 0-1 was exact (9 pts); Sebas
+deviated to the "exciting" 0-2 (away-by-2), which scored 4 (correct outcome, one team's goals). A move
+toward MORE goals than the EV pick — the same tilt direction as ARG-AUT, here it LOST. (cf. the MD-3
+field-diff refinement: the valid systematic override is toward FEWER goals / the field-avoided draw, NEVER
+toward more — that direction is exactly this tilt.)
+
 ## Historical (rows played ≤ Jun-19) — CSV-backed, sums to prior −9
 Non-zero override rows (`override = pts_entered − points_actual`; all other dual rows = 0):
 | fixture | override | note |
@@ -85,6 +105,6 @@ Non-zero override rows (`override = pts_entered − points_actual`; all other du
   the OCR-confirmed picks-vs-actual screenshots (Jun-21 TA1 12/12; Jun-23 `PICKS VS ACTUAL RESULTS/`
   073151+073201, all 8 legible, format `ENTERED(actual)`).
 - **I-3 intact** — this ledger READS results + picks and computes numbers; it never writes a model parameter.
-- Verified against the script: `cumulative()["override_value"] = +6` (Jun-23 TA4 ingest printed
-  `override_value=6`; re-confirmed at TA6 `summary`). If a future reconcile disagrees with the script, the
-  script wins. (Jun-21 snapshot was −3.)
+- Verified against the script: `cumulative()["override_value"] = +1` (Jun-24 TA6 `summary` printed
+  `override_value=+1`, `us_entered=151`). If a future reconcile disagrees with the script, the script wins.
+  (Jun-23 snapshot was +6; Jun-21 was −3.)
