@@ -50,7 +50,7 @@ def _hdr(headers: dict, name: str):
 
 
 def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,totals",
-              win_hi: datetime = WIN_HI, expect: int = 8) -> int:
+              win_lo: datetime = WIN_LO, win_hi: datetime = WIN_HI, expect: int = 8) -> int:
     _load_dotenv()
     key = os.environ.get("THE_ODDS_API_KEY") or os.environ.get("ODDS_API_KEY")
     if not key:
@@ -71,8 +71,8 @@ def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,to
 
     events = r["body"]
     print(f"events returned: {len(events)}")
-    inwin = filter_window(events, WIN_LO, win_hi)
-    print(f"events in MD1 window [{WIN_LO:%Y-%m-%dT%H:%MZ}, {win_hi:%Y-%m-%dT%H:%MZ}]: {len(inwin)}")
+    inwin = filter_window(events, win_lo, win_hi)
+    print(f"events in window [{win_lo:%Y-%m-%dT%H:%MZ}, {win_hi:%Y-%m-%dT%H:%MZ}]: {len(inwin)}")
     print("-" * 88)
     for e in inwin:
         print(f"  {e['commence_time']}  {e['home_team']:<16} vs {e['away_team']:<20}  id={e['id']}")
@@ -80,7 +80,7 @@ def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,to
 
     prov = {"source": "The Odds API", "sport": SPORT, "fmt": fmt, "regions": regions, "markets": markets,
             "fetched_utc": fetched_utc, "x_requests_remaining": rem, "x_requests_used": used,
-            "window": [WIN_LO.isoformat(), win_hi.isoformat()], "n_events_total": len(events)}
+            "window": [win_lo.isoformat(), win_hi.isoformat()], "n_events_total": len(events)}
     path = snapshot({"events": inwin, "provenance": prov}, "md1")
     print(f"snapshot written: {path}")
     if len(inwin) != expect:
@@ -97,11 +97,16 @@ def _parse_iso_utc(s: str) -> datetime:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="MD1 enumeration + single fresh fetch (Track B, HITL).")
+    ap.add_argument("--win-lo", default=None,
+                    help="lower window bound, ISO UTC (default 2026-06-11T00:00Z = the frozen MD1 window, "
+                         "byte-identical replay). Set to the MD-N slate start to scope a later matchday, "
+                         "e.g. 2026-06-24T03:00Z to exclude already-recorded MD-2 (L25 calendar-scoping).")
     ap.add_argument("--win-hi", default=None,
                     help="upper window bound, ISO UTC (default 2026-06-14T06:00Z = the frozen MD1 window). "
                          "Widen to capture later MD1 fixtures the API now serves, e.g. 2026-06-15T23:00Z.")
     ap.add_argument("--expect", type=int, default=8,
                     help="HITL count-guard: STOP (exit 2) unless exactly this many fixtures land in-window.")
     a = ap.parse_args()
+    win_lo = _parse_iso_utc(a.win_lo) if a.win_lo else WIN_LO
     win_hi = _parse_iso_utc(a.win_hi) if a.win_hi else WIN_HI
-    sys.exit(fetch_md1(win_hi=win_hi, expect=a.expect))
+    sys.exit(fetch_md1(win_lo=win_lo, win_hi=win_hi, expect=a.expect))
