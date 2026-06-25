@@ -8,6 +8,7 @@ DoD checks covered:
   (11) determinism (no RNG, 2x identical)           + synthesized-pair detection.
 """
 from __future__ import annotations
+import itertools
 import os
 import sys
 import unittest
@@ -17,7 +18,8 @@ sys.path.insert(0, ROOT)
 
 from pool.qual_state import (  # noqa: E402
     build_groups, build_group_table, _integrity_check, find_md3_pairs,
-    _classify, qualification_states, fixture_tags, analyze_group,
+    _classify, qualification_states, fixture_tags, analyze_group, analyze_all,
+    _remaining_pair_count,
 )
 
 
@@ -143,6 +145,36 @@ class TestGroupStructure(unittest.TestCase):
         self.assertTrue(all(p["synthesized"] for p in pairs))
         got = {tuple(sorted((p["home"], p["away"]))) for p in pairs}
         self.assertEqual(got, {("A", "D"), ("B", "C")})
+
+
+class TestCompletedGroupSkip(unittest.TestCase):
+    """MD-3 completed-group fix: analyze_all skips 0-remaining groups; find_md3_pairs keeps its assert."""
+
+    def test_remaining_pair_count(self):
+        teams = frozenset({"Alpha", "Bravo", "Charlie", "Delta"})
+        played4 = [_row("Alpha", "Charlie", "1-0"), _row("Alpha", "Delta", "1-0"),
+                   _row("Bravo", "Charlie", "1-0"), _row("Bravo", "Delta", "1-0")]
+        self.assertEqual(_remaining_pair_count(played4, teams), 2)               # 2 pairs unplayed
+        self.assertEqual(_remaining_pair_count([], teams), 6)                    # nothing played
+        all6 = [_row(h, a, "1-0") for h, a in itertools.combinations(sorted(teams), 2)]
+        self.assertEqual(_remaining_pair_count(all6, teams), 0)                  # complete
+
+    def test_find_md3_pairs_complete_group_still_raises(self):
+        teams = frozenset({"Alpha", "Bravo", "Charlie", "Delta"})
+        all6 = [_row(h, a, "1-0") for h, a in itertools.combinations(sorted(teams), 2)]
+        with self.assertRaises(ValueError):                                      # 0 remaining -> assert intact
+            find_md3_pairs(all6, teams)
+
+    def test_analyze_all_skips_complete_group(self):
+        complete = ["Alpha", "Bravo", "Charlie", "Delta"]
+        rows = [_row(h, a, "1-0") for h, a in itertools.combinations(complete, 2)]  # 6 played -> complete
+        # incomplete group: 4 played + 2 DISJOINT remaining (a valid simultaneous final round)
+        rows += [_row("Echo", "Golf", "1-0"), _row("Echo", "Hotel", "1-0"),
+                 _row("Foxtrot", "Golf", "1-0"), _row("Foxtrot", "Hotel", "1-0")]
+        rows += [_row("Echo", "Foxtrot"), _row("Golf", "Hotel")]                 # empty -> the 2 remaining
+        result = analyze_all(rows)                                               # must NOT raise
+        self.assertEqual(set(result.keys()), {tuple(sorted(["Echo", "Foxtrot", "Golf", "Hotel"]))})
+        self.assertNotIn(tuple(sorted(complete)), result)
 
 
 class TestDeterminism(unittest.TestCase):
