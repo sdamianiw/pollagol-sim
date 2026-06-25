@@ -182,6 +182,16 @@ def find_md3_pairs(rows: list[dict], members: frozenset) -> list[dict]:
     return out
 
 
+def _remaining_pair_count(rows: list[dict], members: frozenset) -> int:
+    """How many of the group's 6 round-robin pairs have no recorded result yet. 0 == the group is complete
+    (its simultaneous MD-3 round is played) -> analyze_all skips it. This is the GATE that decides whether to
+    call find_md3_pairs; it does NOT assert (find_md3_pairs keeps its 'exactly 2' guard for upcoming groups)."""
+    all_pairs = set(itertools.combinations(sorted(members), 2))
+    played = {tuple(sorted((r["home"], r["away"]))) for r in rows
+              if r.get("home") in members and r.get("away") in members and (r.get("result") or "").strip()}
+    return len(all_pairs - played)
+
+
 # --- the brute-force ------------------------------------------------------------------------------
 def _classify(p_t: int, others: list[int]) -> str:
     """Exhaustive (s,t) per-outcome classifier. Returns ELIMINATED | TOP2-GUARANTEED | TOP2-TIEBREAK."""
@@ -339,10 +349,14 @@ def analyze_group(members: frozenset, rows: list[dict]) -> dict:
 
 
 def analyze_all(rows: list[dict]) -> dict:
-    """Analyze all 12 groups. Keyed by the sorted-members tuple (deterministic order)."""
+    """Analyze the INCOMPLETE groups, keyed by the sorted-members tuple (deterministic order). A group whose
+    simultaneous MD-3 round is already PLAYED has 0 remaining pairs and nothing left to tag -> it is SKIPPED
+    (find_md3_pairs would otherwise raise its 'exactly 2' guard)."""
     groups = build_groups(rows)
     result = {}
     for members in sorted(groups.values(), key=lambda m: tuple(sorted(m))):
+        if _remaining_pair_count(rows, members) == 0:      # completed group: no MD-3 fixture to tag
+            continue
         result[tuple(sorted(members))] = analyze_group(members, rows)
     return result
 
