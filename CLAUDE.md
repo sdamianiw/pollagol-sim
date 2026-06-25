@@ -32,6 +32,19 @@ calibrated scoreline distribution and the single scoreline that **maximizes expe
 7. **Sparring/PUSH-BACK.** Challenge assumptions with evidence before building.
 8. **GOAL-DRIVEN EXECUTION**. Every task → verifiable goal with a check: 1. [step] → verify: [check].
 
+### Review Gate (code changes only)
+- **requesting-code-review:** after any code-writing/editing task, run `/code-review` on the staged diff BEFORE
+  commit (`/code-review --fix` for cleanups). Frozen/proven-path diff → MANDATORY. Data-ops / cadence /
+  re-running validated code → N/A (no code diff).
+- **receiving-code-review:** verify each finding against the actual code before adopting; push back with
+  technical reasoning when a suggestion is wrong; no performative agreement (extends #7 Sparring/PUSH-BACK).
+- **Scope:** CODE quality only. Complements, does NOT replace, the external Audit OS (claude.ai numpy-reconciled).
+  Does NOT trigger R7 (R7 bans subagents for DETERMINISTIC STATS decisions; code-review is code-quality = a
+  different domain; forecast/stats decisions stay single-pass/deterministic).
+- **Self-improving loop** (formalizes the existing L# system; NO new file): after each code-change execution,
+  append ONE line to `tasks/lessons.md` {what changed · gate result · any new failure-mode}; when the execution
+  touches an eval/backtest/spec, grade it against the 8 Anthropic-evals criteria. Review lessons at session start.
+
 ## Objective function
 Optimize **E[competition points]** under the rubric in `memory/rules.md` — NOT P(exact score). See that
 file for the locked rubric and its 4 unit tests (R5 mitigation). **Exact-score weight = 3, max/match = 9**
