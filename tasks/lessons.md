@@ -569,5 +569,21 @@ PARKED (portfolio BUILD, not FIRE). Re-evaluate a variance lever ONLY if we fall
 max-parity dead-rubber, where added variance is the only positive-EV move. Sibling of L28 (the binding constraint
 is the objective; differentiation is for when you're BEHIND, not protecting a near-podium).
 
+## L43 — qual_state MUTUAL-DRAW-SECURES must split TRUE-MUTUAL from ONE-SIDED-SECURES; a SAFE-ANY team has no draw incentive (caught 2026-06-26, Colombia-Portugal best-third cross-check)
+**Pattern:** the tag MUTUAL-DRAW-SECURES (precedence 4) fires when BOTH teams have `draw_secures=True` (state in
+{SAFE-ANY, DRAW-SUFFICIENT}) — but that conflates two incentive-distinct cases. **TRUE-MUTUAL** = both
+DRAW-SUFFICIENT: both NEED ≥ a draw (a loss risks 3rd) → both fear losing → a mutual draw is a genuine
+non-aggression equilibrium (SUI-CAN, PAR-AUS). **ONE-SIDED-SECURES** = one SAFE-ANY + one DRAW-SUFFICIENT: a
+draw mathematically secures both, but the SAFE-ANY team is through even on a loss → free to rotate / chase the
+top seed / indifferent → the draw is NOT a mutual pact (Colombia-Portugal Jun-27: COL SAFE-ANY 6 pts, POR
+DRAW-SUFFICIENT). The DRAW-EXCEPTION signal is materially WEAKER in the one-sided case, yet v1 tags both
+identically — and the engine already flagged Col-Por LIVE-ELIGIBLE on price alone, which over-states it.
+**Rule:** before firing a DRAW-EXCEPTION on a MUTUAL-DRAW-SECURES board, manually check TRUE-MUTUAL (both
+DRAW-SUFFICIENT) vs ONE-SIDED-SECURES (one SAFE-ANY); only TRUE-MUTUAL is a strong draw signal. **ENHANCEMENT
+(PARKED, own GO — like the cross-group best-third manual step; qual_state is non-frozen but untouched here
+beyond a docstring note):** sub-classify the tag into {TRUE-MUTUAL, ONE-SIDED-SECURES} from the already-computed
+per-team states (both DRAW-SUFFICIENT vs one SAFE-ANY) — no new data needed. Sibling of the Paraguay-Australia
+best-third mis-tag finding; complements L40/L33 (don't fire a weak signal as if it were strong).
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.

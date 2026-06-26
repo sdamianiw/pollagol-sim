@@ -44,6 +44,16 @@ SIGNAL TAXONOMY:
 NOTE: STRICT-DEAD-RUBBER means neither team's QUALIFICATION (top-2) can change - NOT that neither team
 cares (seeding is out of scope). MUTUAL-DRAW-SECURES is the draw signal, not it.
 
+NOTE (PARKED ENHANCEMENT, own GO - mirrors the cross-group best-third manual caveat above): the
+MUTUAL-DRAW-SECURES tag (precedence 4 = both draw_secures) does NOT yet distinguish TRUE-MUTUAL (both
+DRAW-SUFFICIENT -> both fear a loss -> the genuine non-aggression draw, e.g. SUI-CAN, PAR-AUS) from
+ONE-SIDED-SECURES (one SAFE-ANY + one DRAW-SUFFICIENT -> a draw secures both, but the SAFE-ANY team is
+through even on a loss = free to rotate / chase the top seed, so the draw is NOT a mutual pact - e.g.
+Colombia-Portugal Jun-27: COL SAFE-ANY / POR DRAW-SUFFICIENT). The split needs NO new data (both
+DRAW-SUFFICIENT vs one SAFE-ANY is already in the per-team states); v1 conflates them. Until split, a
+ONE-SIDED-SECURES board's draw signal is WEAKER -> confirm the incentive manually before any DRAW-EXCEPTION.
+See tasks/lessons.md L43.
+
 I3 (cardinal invariant) holds: this module READS results to compute standings (the permitted one-way
 decisions.csv -> read-only scoring flow) and writes NO model parameter. It changes NO pick, edits NO frozen
 file, only RECOMMENDS; the human types/locks (I-HITL). Determinism: pure integer combinatorics, no RNG.
