@@ -585,5 +585,21 @@ beyond a docstring note):** sub-classify the tag into {TRUE-MUTUAL, ONE-SIDED-SE
 per-team states (both DRAW-SUFFICIENT vs one SAFE-ANY) — no new data needed. Sibling of the Paraguay-Australia
 best-third mis-tag finding; complements L40/L33 (don't fire a weak signal as if it were strong).
 
+## L44 — A council/subagent's quantitative E[pts] claim must be adjudicated by the frozen engine, never adopted on its hand-estimate (caught 2026-06-26, Phase B H/G coinflip council)
+**Pattern:** the H/G close-call council (4 lenses on Cape Verde-SA + Egypt-Iran) had its rubric-floor lens vote
+GO-DRAW on Egypt-Iran with a quantitative claim — `1-1 EV 3.14 > 1-0 EV 2.58` — and claim Cape Verde-SA's `0-1`
+carries a 33% zero-floor vs 1-1's 20%. Both were hand-rolled from *estimated* scoreline masses. The frozen
+engine (Dixon-Coles → `expected_points` over the full joint distribution) refuted both: Egypt-Iran `1-0=2.473 >
+1-1=2.365` (the dissent inverted the ranking — 1-1 is NOT the E[pts]-max), and Cape Verde-SA `0-1` has the BEST
+floor (P0 0.277 vs 1-1 0.280), not the worst (the agent forgot partial credit on near-scorelines, e.g. 0-1 scores
++1 on 2-1). Adopting the subagent's GO-DRAW would have overridden the engine's argmax on an arithmetic error.
+**Rule:** a council/subagent is an ADVISORY judgment layer (incentives, market-read, adversarial refutation,
+floor intuition) — it does NOT recompute E[points]. Any quantitative claim it makes (an EV value, a scoreline
+mass, a zero-floor) must be re-derived from the frozen engine before it can move a pick; if the engine disagrees,
+the engine wins. The council's value is hypotheses + perspective, not arithmetic — **confirm deterministically.**
+Direct corollary of R7 (deterministic stats decisions stay single-pass/engine) + L35 (ground claims by
+re-derivation, never narrative); complements [[subagent-strategy]] (subagents for research/judgment, never for the
+deterministic forecast/stats decision).
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
