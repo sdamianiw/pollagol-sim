@@ -522,3 +522,52 @@ symmetry: a winning override carries the same bias risk as a losing one; outcome
 the split by re-derivation from the artifact (I-NOFAB), never by narrative assertion — the same rigor on the
 TILT call as on the EV-UPDATE call. Sibling of L32 (entry-discipline = model-discipline) and L28/L31 (don't
 convert realized variance into a label/objective change).
+
+> (L36 override-decomp · L37 draw-bar · L38 token≠repo remain reserved candidates per the Jun-26 contract;
+> canonicalize when written. L39–L42 below are the MD-3 day-3 batch, 2026-06-26.)
+
+## L39 — The rubric is empirically exact=3 (max 9); a DOC that says exact=2 is the silent corruptor — fix the doc, never the engine (confirmed 2026-06-26, MD-3 day-3 TA8)
+**Pattern:** the Jun-26 contract's TA8 ordered a sync of `MASTER_PROMPT_CONTRACT…§2` from a stale exact=2/max-8
+to exact=3. Forensics: that file is not in-repo, and the in-repo rubric (`memory/rules.md:8,18`) was ALREADY
+exact=3/max-9 with correct unit tests — nothing to fix. The proof is the reconciliation itself: prior 168 + this
+batch's 24 = **192 == board ONLY under exact=3**; under exact=2 the six fixtures sum to 22 → 190 ≠ 192, falsifying
+exact=2. The engine (`src/optimizer.py:17`) has been correct; the risk was a governing doc drifting out of sync.
+**Rule:** the engine is the source of truth for the rubric — verify docs against it, never the reverse (I-3 /
+FROZEN). When a contract says "fix the rubric doc", first confirm WHICH artifact is stale; if engine and in-repo
+rules already agree, the task is verify-only + cite the empirical reconciliation, and an external template is the
+human's to update (outside the repo write-set). An objective-function doc contradicting the engine is the
+silent-corruptor; catch it at plan-preflight.
+
+## L40 — A lock that drifts off the T-1h argmax is TILT even when it nets zero; net-0 does not launder the count (confirmed 2026-06-26, MD-3 day-2 JAP-SUE/TUN-NED)
+**Pattern:** two day-2 locks diverged from their EV-baselines — JAP-SUE entered 2-1 (base 1-0), TUN-NED entered
+0-3 (base 0-2). Re-running the frozen engine on the T-1h lock snapshot `md1_2026-06-25T22-07-56Z` showed the
+argmax HELD at the baselines (1-0, 0-2) → the entries were flicker-takes off the EV-optimal pick = TILT-OVERRIDE.
+Both scored identically to the baseline (1 and 4) → net-0 points, so by realized points they vanish — but the
+tilt PATTERN is real and the COUNT must increment (L35: process ≠ outcome).
+**Rule:** at lock, if |EV-gap| < the 0.040 floor the disciplined pick is the BASELINE, not the flicker (L33).
+When a lock diverged anyway, classify it by re-deriving the lock-time argmax (L35) and increment the tilt count
+even on net-0 — net-0 is luck, not discipline. The only sanctioned systematic override is the gated field-diff,
+never a gut flicker (L32). Sibling of L32/L33/L35.
+
+## L41 — "Grid-invariant" ≠ "upset-safe": a perturbation grid tests market MOVEMENT, not the irreducible tail (confirmed 2026-06-26, Turkey-USA 3-2)
+**Pattern:** the Group-D blind-lock panel called Turkey-USA "USA-win invariant across the perturbation grid /
+robust" — and it was, to market drift. Actual: Turkey 3-2 (home upset). The grid perturbed de-vig 1X2 / totals
+mass and re-ran the engine; it never modeled the rotation/upset tail (USA 3RD-PENDING/safe → rotation risk,
+flagged as unhedgeable). The blind-lock priced that tail acceptable and PAR-AUS's pleno (9) more than offset the
+1-pt TUR-USA miss → Group D net **+10**.
+**Rule:** don't over-claim "invariant/robust" from a grid sweep — say "robust to the modeled market movement" and
+keep the separately-flagged upset/rotation tail visible in the recommendation. A grid that holds is necessary,
+not sufficient; the tail is real and is absorbed by the portfolio (other picks' plenos), not eliminated by the grid.
+
+## L42 — Chalk closes gaps near the podium; a variance/field-diff lever is net-negative E[prize] there → keep placement_mc PARKED (confirmed 2026-06-26, gap −9 → −4)
+**Pattern:** the podium gap closed −9 → −4 over MD-3 day-1→day-3 with `placement_mc` PARKED (zero field-diff
+flips) — pure chalk EV-picks landing plenos (PAR-AUS, CUW-CIV). At gap −4 with a full late wave ahead and a
+compressed top (1st→5th = 8 pts), a field-differentiation/variance lever is NET-NEGATIVE E[prize]: variance could
+as easily drop us to 4th/5th ($0) as lift us to 3rd.
+**Rule:** near the podium with chalk already closing the gap, chalk-protect dominates — `placement_mc` stays
+PARKED (portfolio BUILD, not FIRE). Re-evaluate a variance lever ONLY if we fall well below the cut at a
+max-parity dead-rubber, where added variance is the only positive-EV move. Sibling of L28 (the binding constraint
+is the objective; differentiation is for when you're BEHIND, not protecting a near-podium).
+
+## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
+- 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
