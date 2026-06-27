@@ -3,7 +3,7 @@
 ONE live call to The Odds API (soccer_fifa_world_cup, eu, h2h+totals, american) -> prints the quota
 headers (x-requests-remaining/used, which ingest.fetch_live drops), lists every event, FILTERS to the
 matchday-1 window [2026-06-11T00:00Z, 2026-06-14T06:00Z], and writes ONE multi-event snapshot
-data/snapshots/md1_<UTC>.json for the 8 per-fixture replay runs (P3). ~2 credits (h2h,totals x eu).
+data/snapshots/md{N}_<UTC>.json (prefix from --md) for the per-fixture replay runs (P3). ~2 credits (h2h,totals x eu).
 
 Reuses src.probe_oddssource._get/_load_dotenv and src.ingest.snapshot - no second HTTP/snapshot copy.
 On a non-OK response it prints the failure and exits non-zero (P2 STOP; fall back per the contract §6).
@@ -50,7 +50,8 @@ def _hdr(headers: dict, name: str):
 
 
 def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,totals",
-              win_lo: datetime = WIN_LO, win_hi: datetime = WIN_HI, expect: int = 8) -> int:
+              win_lo: datetime = WIN_LO, win_hi: datetime = WIN_HI, expect: int = 8,
+              matchday: int = 1) -> int:
     _load_dotenv()
     key = os.environ.get("THE_ODDS_API_KEY") or os.environ.get("ODDS_API_KEY")
     if not key:
@@ -81,7 +82,7 @@ def fetch_md1(fmt: str = "american", regions: str = "eu", markets: str = "h2h,to
     prov = {"source": "The Odds API", "sport": SPORT, "fmt": fmt, "regions": regions, "markets": markets,
             "fetched_utc": fetched_utc, "x_requests_remaining": rem, "x_requests_used": used,
             "window": [win_lo.isoformat(), win_hi.isoformat()], "n_events_total": len(events)}
-    path = snapshot({"events": inwin, "provenance": prov}, "md1")
+    path = snapshot({"events": inwin, "provenance": prov}, f"md{matchday}")
     print(f"snapshot written: {path}")
     if len(inwin) != expect:
         print(f"⚠ EXPECTED {expect} MD1 fixtures, got {len(inwin)} -> STOP for HITL (do not guess). "
@@ -106,7 +107,9 @@ if __name__ == "__main__":
                          "Widen to capture later MD1 fixtures the API now serves, e.g. 2026-06-15T23:00Z.")
     ap.add_argument("--expect", type=int, default=8,
                     help="HITL count-guard: STOP (exit 2) unless exactly this many fixtures land in-window.")
+    ap.add_argument("--md", type=int, required=True,
+                    help="matchday number -> snapshot filename prefix md{N}_ (e.g. --md 3 -> md3_<UTC>.json).")
     a = ap.parse_args()
     win_lo = _parse_iso_utc(a.win_lo) if a.win_lo else WIN_LO
     win_hi = _parse_iso_utc(a.win_hi) if a.win_hi else WIN_HI
-    sys.exit(fetch_md1(win_lo=win_lo, win_hi=win_hi, expect=a.expect))
+    sys.exit(fetch_md1(win_lo=win_lo, win_hi=win_hi, expect=a.expect, matchday=a.md))
