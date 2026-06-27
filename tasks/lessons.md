@@ -645,5 +645,21 @@ otherwise it is COUNTED (pick stays at baseline, override = the gap, labeled EV-
 engine-adjudicated either way (L44). OPEN: the FRA-IRQ row was booked the other way and is NOT re-opened here -
 pick ONE convention and reconcile retroactively before end-of-tournament scoring. Builds on L35 + L44.
 
+## L49 - Bind every fixture by full team string + fixture_id, never by 3-letter code or internal/contract group letter (caught 2026-06-28, the Argentina-group mislabel)
+**Pattern:** in the final MD-3 cadence I labeled groups by the CONTRACT's arbitrary letters (it called
+Croatia-Ghana "Group J") instead of the official pollaya/FIFA source. On a "fetch groups J-K" ping I then
+fetched the already-kicked-off Croatia-Ghana group as "J" - the DEAD, unlockable group - instead of the real
+upcoming ARGENTINA group (Algeria-Austria + Jordan-Argentina, KO 02:00Z). The pollaya app compounds the trap:
+Algeria AND Argentina are BOTH coded "ARG" (distinguished only by flag - green-crescent vs light-blue-sun) and
+Austria is "ATR". A 3-letter code is NOT a unique key; an internal/contract group letter is an arbitrary label
+that can silently disagree with the official source and route a pick to the wrong (or already-played) fixture.
+**Rule:** never identify a fixture by a 3-letter code or an internal/contract group letter. Bind every pick by
+FULL team string + fixture_id + flag, cross-checked against the official app / FIFA schedule, BEFORE any fetch /
+present / lock. Deterministic procedure: map the official-source slate -> predictions/decisions.csv rows by full
+home/away string + fixture_id (those strings are unambiguous; the codes are not); resolve any code collision by
+flag. Drop internal group letters from cadence presentations - name the teams. Extends L34 (full-string
+resolution); the ARG=Algeria/Argentina, ATR=Austria collision is the canonical instance. See memory
+[[bind-fixtures-full-string]].
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
