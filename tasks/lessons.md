@@ -601,5 +601,49 @@ Direct corollary of R7 (deterministic stats decisions stay single-pass/engine) +
 re-derivation, never narrative); complements [[subagent-strategy]] (subagents for research/judgment, never for the
 deterministic forecast/stats decision).
 
+## L45 - Reconcile the batch sum to the independent standings delta BEFORE writing; the I-NOFAB confirm-gate is load-bearing, not ceremony (caught 2026-06-27, MD-3 day-4 paren near-miss)
+**Pattern:** the day-4 auditor's first screenshot decode mis-read 4 of 6 `(actual)` parens as == the pick, nearly
+logging 5 false plenos (+49 vs the true +25). It was caught ONLY by reconciling the batch sum (Sigma pts_entered)
+against the independent standings delta (board 217 - prior 192 = 25). The CONFIRM-GATE (re-read each paren
+independently) + this arithmetic cross-check are the controls that catch a transcription error before it corrupts
+an immutable row (record's retcon-guard forbids a second attempt). When the screenshot is NOT in-repo (as here),
+the reconcile + explicit HITL "confirmado" IS the I-NOFAB gate - there is no OCR fallback.
+**Rule:** never write a transcribed result batch until (a) the human has confirmed the re-read table verbatim AND
+(b) Sigma(entered points) == the independent standings delta. A batch sum that does not match the board delta is a
+STOP (FM-paren), not a number to be reconciled away. Extends [[always-use-task-manager-and-gates]]; complements
+L34 (full-string resolution).
+
+## L46 - A winning override is still an override; the gain is variance, not edge (confirmed 2026-06-27, Cape Verde-Saudi)
+**Pattern:** Cape Verde-Saudi was locked at the MODAL 1-1 over the EV-argmax 1-0 (a sub-floor-margin near-coinflip)
+and gained +3 because the game drew (4 vs 1). By L8 symmetry this winning override carries the SAME bias risk as a
+losing one - it is the mirror of PAN-CRO -5 / ARG-AUT +5. The +3 must NOT be read as evidence that overrides work.
+**Rule:** classify and log a winning override identically to a losing one - TILT-OVERRIDE, tilt-count increments,
+the points delta goes to the tilt-only tally. Do NOT relabel it skill, and do not let the +3 launder the no-tilt
+rule. (Mitigant: on a true coinflip EV ~= modal within the floor -> expected cost ~0 -> low-stakes, still logged.)
+Direct application of L8/L32 symmetry.
+
+## L47 - IN the podium -> chalk-protect; field-diff CLOSED (confirmed 2026-06-27, rank 2 gap_podium +1; extends L42)
+**Pattern:** we crossed INTO the podium this MD (rank 2/27, gap_podium +1) on chalk EV + variance, placement_mc
+still PARKED. Top-4 are within 4 pts and only 6 games remain -> the outcome is now Tier-3 luck-dominated.
+Introducing discretionary variance now (field-diff, draw-exceptions, modal hedges) RISKS the podium we earned;
+with the top-heavy 60/20/10 payout, dropping to 4th = $0 is the dominant risk, which dwarfs the upside of chasing 1st.
+**Rule:** when IN the podium with few games left, run pure chalk EV on every remaining fixture - do NOT
+differentiate, do NOT chase 1st with variance, do NOT fire draw-exceptions. Strengthens L42 (near-podium -> chalk
+closes gaps): now that we are IN it the lever is not just net-negative, it is podium-threatening. placement_mc stays PARKED.
+
+## L48 - An EV-UPDATE flip can be booked two ways (absorb-into-pick = override 0, vs count-the-gap = override +N); choose by engine-verified argmax + human intent, apply consistently (caught 2026-06-27, Norway-France vs the FRA-IRQ precedent)
+**Pattern:** Norway-France's recorded `pick` was the stale Jun-24 baseline 0-1, but the engine's argmax on the
+final pre-KO snapshot (`md1_2026-06-26T18-17-02Z`) was 1-2 (E[pts]=3.045, verified) - a genuine flip-switch, and
+Sebas entered the flipped 1-2. Two bookings give different totals: (A) ABSORB - update `pick` 0-1->1-2 to the
+verified argmax, entered==pick, override 0, cumulative +1; (B) COUNT - keep `pick` at baseline 0-1, entered 1-2
+differs, override +1 EV-UPDATE, cumulative +2. The Jun-23 FRA-IRQ EV-UPDATE was booked (B) (pick stayed 2-0, +5
+counted); NOR-FRA was booked (A) per Sebas's explicit directive + engine verification. Same phenomenon, opposite
+accounting - a latent inconsistency.
+**Rule:** an EV-UPDATE is ABSORBED (update `pick` to the engine's verified final pre-KO argmax -> override 0) iff
+(i) the engine's argmax verifiably flipped on the pre-KO snapshot AND (ii) the human entered that flipped argmax;
+otherwise it is COUNTED (pick stays at baseline, override = the gap, labeled EV-UPDATE not tilt). The number is
+engine-adjudicated either way (L44). OPEN: the FRA-IRQ row was booked the other way and is NOT re-opened here -
+pick ONE convention and reconcile retroactively before end-of-tournament scoring. Builds on L35 + L44.
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
