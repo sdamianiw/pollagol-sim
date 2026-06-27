@@ -17,27 +17,24 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
-## Running tally — as of 2026-06-26 (post MD-3 day-2/3 reconcile, 12 MD-3 fixtures played)
-- **total dual-track gap = −2**  — `== script` (`cumulative()["override_value"] = -2`, TA7 summary verified
-  2026-06-26; `us_entered = 192 == board`, `us_model = 194`). UNCHANGED from Jun-25: the MD-3 day-2/3 batch is
-  net-0 (all 6 overrides +0); the −2 is the day-1 SUI-CAN draw-exception (−3).
-- **tilt-only override cost = −5 (points)**  — UNCHANGED in points; **tilt COUNT +2** this batch: JAP-SUE (entered
-  2-1) + TUN-NED (entered 0-3), both locked OFF the T-1h lock-argmax (1-0 / 0-2, verified on snapshot
-  `md1_2026-06-25T22-07-56Z`) → TILT-OVERRIDE but both **net-0** in points (L40 flicker-take). L32 holds — no EV-cost tilt.
-- **EV-UPDATE cumulative = +6**  — UNCHANGED (NED-SWE +1, FRA-IRQ +5).
-- **DRAW-EXCEPTION cumulative = −3**  — NEW category. First live fire of the qual_state MUTUAL-DRAW-SECURES
-  draw-signal: SUI-CAN entered 1-1 vs model pick 1-0, actual 2-1 (−3, MISS). Sanctioned, NOT discretionary tilt.
-- reconciliation: **tilt(−5) + EV-UPDATE(+6) + DRAW-EXCEPTION(−3) + none(0) = −2 == script.**
-- 🚩 the Jun-25 contract's TA5 "−12" is **SUPERSEDED**: it reused the stale ≤Jun-19 "−9 prior" + −3, ignoring the
-  intervening periods that rolled the cumulative to +1. Per FM-cum-mismatch + "the script wins", the value is **−2**.
-- ⚠ HONEST READ (L8/L32 — now EMPIRICAL, not asserted): PAN-CRO −5 (TILT lost) is the **symmetric twin** of
-  ARG-AUT +5 (TILT won) — same |5|, opposite sign, both discretionary deviations from the EV-optimal pick. The
-  two net to ~0, leaving only the **variance + bias risk** L32 warns about. **L32 confirmed empirically: tilt is
-  zero-mean noise, not skill → NO tilt in MD-3** (the systematic version of this is the gated field-diff, not gut).
-- prior Jun-25 snapshot (retained): total −2 / tilt −5 = Jun-24 +1 + MD-3-day-1 SUI-CAN DRAW-EXCEPTION −3.
-- prior Jun-24 snapshot (retained): total +1 / tilt −5 = prior(≤Jun-23) +6 + MD-2-tail(Jun-23→24) −5.
-- prior Jun-23 snapshot (retained): total +6 / tilt 0 = prior(≤Jun-21) −3 + MD-2-late(Jun-21→23) +9.
-- prior Jun-21 snapshot (retained): total −3 / tilt −4 = prior(≤Jun-19) −9 + MD-2(Jun-19→21) +6.
+## Running tally - as of 2026-06-27 (post MD-3 day-4 FINAL reconcile; GROUP STAGE CLOSED, 18 MD-3 fixtures played)
+- **total dual-track gap = +1**  - `== script` (`cumulative()["override_value"] = +1`, TA7 `summary` verified
+  2026-06-27: `us_entered = 217 == board` (rank 2/27), `us_model = 216`). Moved -2 -> +1 this batch; the lone
+  override is Cape Verde-Saudi (+3, a TILT-OVERRIDE that WON).
+- **tilt-only override cost = -2 (points)**  - prior -5 + **Cape Verde-Saudi +3** (entered MODAL 1-1 over EV pick
+  1-0 on a near-coinflip; gained +3 because it drew). **tilt COUNT +1.** L46: a WINNING override carries the SAME
+  bias risk as a losing one (L8 symmetry) - the +3 is variance, NOT edge; it does NOT launder the no-tilt rule.
+- **EV-UPDATE cumulative = +6 (points)**  - UNCHANGED in points (NED-SWE +1, FRA-IRQ +5). **count +1:** Norway-France
+  is a NEW EV-UPDATE flip-switch but **override 0** - the recorded `pick` was registered 0-1 -> 1-2 (the engine's
+  final pre-KO argmax, verified on `md1_2026-06-26T18-17-02Z`, E[pts]=3.045), so the entered 1-2 followed the model.
+  Sebas-directed (2026-06-27) + engine-adjudicated (L35/L44). See the NOR-FRA consistency note in the day-4 period.
+- **DRAW-EXCEPTION cumulative = -3 (points)**  - UNCHANGED (SUI-CAN day-1, the only fire).
+- reconciliation: **tilt(-2) + EV-UPDATE(+6) + DRAW-EXCEPTION(-3) + none(0) = +1 == script.**
+- prior Jun-26 snapshot (retained): total -2 / tilt -5 = Jun-25 -2 + MD-3-day-2/3 net-0 (JAP-SUE+TUN-NED tilt count +2, points +0).
+- prior Jun-25 snapshot (retained): total -2 / tilt -5 = Jun-24 +1 + MD-3-day-1 SUI-CAN DRAW-EXCEPTION -3.
+- prior Jun-24 snapshot (retained): total +1 / tilt -5 = prior(<=Jun-23) +6 + MD-2-tail(Jun-23->24) -5.
+- prior Jun-23 snapshot (retained): total +6 / tilt 0 = prior(<=Jun-21) -3 + MD-2-late(Jun-21->23) +9.
+- prior Jun-21 snapshot (retained): total -3 / tilt -4 = prior(<=Jun-19) -9 + MD-2(Jun-19->21) +6.
 
 ## This period — MD-2 (Jun-19 → Jun-21), 8 played fixtures
 | fixture  | entered | model pick (base) | actual | pts_ent | pts_model | override | flag |
@@ -138,6 +135,33 @@ systematic override is the gated field-diff, never a gut flicker). Group D blind
 PLENO + TUR-USA 1): the flagged Turkey rotation/upset tail materialized (3-2) but PAR-AUS's pleno more than
 offset it — L41 "grid-invariant ≠ upset-safe".
 
+## This period - MD-3 day-4 / FINAL (Jun-26 -> 27), 6 played fixtures (Groups I/G/H) - GROUP STAGE CLOSED
+> Recorded 2026-06-27 from the MD-3 day-4 contract inputs (BIG=entered, (paren)=actual) + Jun-27 board (us=217
+> rank 2/27, gap_podium +1 - IN PODIUM for the first time). CONFIRM-GATE "confirmado" (Sebas). I-NOFAB gate (L45):
+> the 2026-06-27 screenshot is NOT in-repo, so the gate is Sebas confirmado + the independent reconcile
+> Sigma pts_entered = 25 == board delta (217-192). Recompute green (record -> src.optimizer.points, 6/6 both
+> tracks). Resolved by fixture_id / full team strings (L34).
+| fixture | entered | model pick (base) | actual | pts_ent | pts_model | override | flag |
+|---------|:-------:|:-----------------:|:------:|:-------:|:---------:|:--------:|------|
+| Norway-France | 1-2 | 1-2 | 1-4 | 4 | 4 | **+0** | EV-UPDATE flip-switch (pick registered 0-1->1-2, engine-verified) |
+| Senegal-Iraq | 2-0 | 2-0 | 5-0 | 4 | 4 | 0 | none (EV-pick; Senegal 5-0) |
+| New Zealand-Belgium | 0-2 | 0-2 | 1-5 | 3 | 3 | 0 | none (EV-pick; Belgium 5-1) |
+| Egypt-Iran | 1-0 | 1-0 | 1-1 | 1 | 1 | 0 | none (EV-pick; drew) |
+| Cape Verde-Saudi Arabia | 1-1 | 1-0 | 0-0 | 4 | 1 | **+3** | TILT-OVERRIDE (WON; modal hedge; L46 variance != edge) |
+| Uruguay-Spain | 0-1 | 0-1 | 0-1 | 9 | 9 | 0 | none (EV-pick, exact PLENO) |
+| **period total** | | | | **25** | **22** | **+3** | TILT +3 (Cape Verde, won) - EV-UPDATE +0 (NOR-FRA flip absorbed) - none 0 |
+
+**NOR-FRA consistency note.** Booked EV-UPDATE / override 0: the recorded `pick` was updated 0-1->1-2 to the
+engine's final pre-KO argmax (verified on `md1_2026-06-26T18-17-02Z`, neutral, rho=-0.05 frozen; E[pts]=3.045),
+so the entered 1-2 followed the model. This DIFFERS from the FRA-IRQ (Jun-23) EV-UPDATE, which kept `pick` at the
+baseline 2-0 and COUNTED the gap +5. Per Sebas's explicit 2026-06-27 directive (flip-switch != tilt; register the
+argmax change in decisions) + L44 (engine adjudicates the number), NOR-FRA reflects the verified flip. The
+historical FRA-IRQ row is NOT re-opened - the divergence is flagged here for separate adjudication.
+
+**Cape Verde (L46).** Entered MODAL 1-1 over EV-argmax 1-0 (sub-floor margin, near-coinflip), gained +3 because
+the game drew. Logged TILT-OVERRIDE that WON - by L8 symmetry a winning override carries the SAME bias risk as a
+losing one; +3 is variance, not edge.
+
 ## Historical (rows played ≤ Jun-19) — CSV-backed, sums to prior −9
 Non-zero override rows (`override = pts_entered − points_actual`; all other dual rows = 0):
 | fixture | override | note |
@@ -158,6 +182,6 @@ Non-zero override rows (`override = pts_entered − points_actual`; all other du
   the OCR-confirmed picks-vs-actual screenshots (Jun-21 TA1 12/12; Jun-23 `PICKS VS ACTUAL RESULTS/`
   073151+073201, all 8 legible, format `ENTERED(actual)`).
 - **I-3 intact** — this ledger READS results + picks and computes numbers; it never writes a model parameter.
-- Verified against the script: `cumulative()["override_value"] = -2` (Jun-26 TA7 `summary` printed
-  `override_value=-2`, `us_entered=192`, `us_model=194`). If a future reconcile disagrees with the script,
+- Verified against the script: `cumulative()["override_value"] = +1` (Jun-27 TA7 `summary` printed
+  `override_value=+1`, `us_entered=217`, `us_model=216`). If a future reconcile disagrees with the script,
   the script wins. (Jun-25 snapshot −2; Jun-24 +1; Jun-23 +6; Jun-21 −3.)
