@@ -661,5 +661,35 @@ flag. Drop internal group letters from cadence presentations - name the teams. E
 resolution); the ARG=Algeria/Argentina, ATR=Austria collision is the canonical instance. See memory
 [[bind-fixtures-full-string]].
 
+## L50 - LEADING (rank 1) -> chalk-protect MAXIMAL (group stage closed 2026-06-28; us=245 rank 1/27, +4 over a 3-way tie)
+**Pattern:** the group stage closed with us in FIRST (245, gap_2nd +4 over a 3-team tie at 241). From the front, the
+60/20/10 payout is maximally asymmetric: any discretionary variance is pure downside (a flip that misses can only drop
+us off the lead; a flip that hits barely extends an already-winning margin). The contract's earlier "field-DIFFERENTIATE
+for top-3" reflex (Clair-Letscher single-entry) is now actively WRONG - we ARE the field's ceiling.
+**Rule:** while leading, match the field's EV-argmax picks; the only remaining swing is Tier-3 pleno luck we accept. The
+ONLY acceptable override is rule-confirmed + model-grounded (e.g. a verified EV-UPDATE flip-switch), NEVER gut. Escalates
+L47 (IN-podium -> chalk-protect) one notch: podium = protect; rank-1 = protect MAXIMAL. Carries into every KO round.
+
+## L51 - The dead-rubber draw edge is GROUP-STAGE-ONLY; a winning override is NOT vindication (closed 2026-06-28)
+**Pattern:** the +7 this batch came from two DRAW-EXCEPTION overrides that WON - Colombia-Portugal (entered 1-1 vs EV 0-1,
+0-0) +3 and Algeria-Austria (entered 1-1 vs EV 0-1, 3-3) +4. The read was CORRECT: the frozen engine under-prices the
+mutual-draw incentive in a dead rubber (both teams already through / both content with a point), a real blind spot.
+**Rule:** BUT (a) per L46/L8 a winning override carries the SAME bias risk as a losing one - book it as VARIANCE, not
+skill; it does NOT launder the no-tilt rule; and (b) the edge is DEAD-RUBBER-SPECIFIC and VANISHES in the knockouts (no
+dead rubbers - both teams play to advance). The draw-override reflex STOPS at the group stage. PARKED enhancement (like
+best-third): encode the dead-rubber-draw uplift as a `qual_state`-driven §5 context modifier so the insight is
+systematic/auditable (not gut) for portfolio value + future tournaments. NOT for this KO bracket.
+
+## L52 - The KO draw-rule (90' vs 120'+pens) is a LOAD-BEARING config, not a guess (flagged 2026-06-28, pre-R32)
+**Pattern:** the frozen engine emits a 90'-regulation scoreline distribution. In the knockouts a "draw" pick's value
+depends entirely on whether the pool scores the 90' result (REG90) or the full 120'+penalties result (FULL120) - the two
+rules INVERT the KO draw EV (under FULL120 most 90' draws resolve in ET, so the engine's draw mass overstates the scored
+draw mass). The rule is pool-specific and lives in the pollaya in-app KO config - it is NOT web-resolvable.
+**Rule:** parameterize it (a `KO_SCORING` flag + a `ko_adjust(dist, rule)` POST-PROCESS wrapper - NEVER a frozen-engine
+edit) and GATE draw-picks on it. While UNCONFIRMED, run DRAW-SUPPRESSION: decisive picks are rule-robust (a decisive 90'
+pick that holds scores the same under both rules; a 90' draw your team wins in ET scores BETTER under FULL120), draw-picks
+are rule-sensitive (win only under REG90) -> as the LEADER (L50) take the rule-robust line, never lock a draw-argmax until
+the rule is confirmed. Resolve `KO_SCORING` before the first draw-relevant KO lock.
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
