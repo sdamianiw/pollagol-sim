@@ -17,6 +17,19 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-06-28 (post KNOCKOUT v1 Phase A reconcile; GROUP STAGE CLOSED - all 72 fixtures played, J/K/L recorded)
+- **total dual-track gap = +8**  - `== script` (`cumulative()["override_value"] = +8`, TA7 `summary` verified
+  2026-06-28: `us_entered = 245 == board` (**RANK 1/27**), `us_model = 237`). Moved +1 -> +8 this batch (the 6 J/K/L
+  fixtures); the two overrides are Colombia-Portugal (+3) and Algeria-Austria (+4), BOTH DRAW-EXCEPTIONS that WON.
+- **tilt-only override cost = -2 (points)**  - UNCHANGED (no tilt this batch; both J/K/L overrides are DRAW-EXCEPTION, not tilt).
+- **EV-UPDATE cumulative = +6 (points)**  - UNCHANGED (no EV-UPDATE flip this batch).
+- **DRAW-EXCEPTION cumulative = -3 -> +4 (points)**  - **+7 this batch**: Colombia-Portugal entered 1-1 (EV 0-1) vs
+  actual 0-0 = +3; Algeria-Austria entered 1-1 (EV 0-1) vs actual 3-3 = +4. Both are real engine blind-spots (under-
+  priced mutual-draw incentive in a DEAD RUBBER) that WON - but per **L51** this is VARIANCE on a now-CLOSED edge (KO
+  has no dead rubbers; the reflex STOPS at the group stage). L46/L8: a winning override is still variance, not skill.
+- reconciliation: **tilt(-2) + EV-UPDATE(+6) + DRAW-EXCEPTION(+4) + none(0) = +8 == script.**
+- prior Jun-27 snapshot (retained): total +1 / tilt -2 (full chain in the Jun-27 block below).
+
 ## Running tally - as of 2026-06-27 (post MD-3 day-4 FINAL reconcile; GROUP STAGE CLOSED, 18 MD-3 fixtures played)
 - **total dual-track gap = +1**  - `== script` (`cumulative()["override_value"] = +1`, TA7 `summary` verified
   2026-06-27: `us_entered = 217 == board` (rank 2/27), `us_model = 216`). Moved -2 -> +1 this batch; the lone
