@@ -691,5 +691,46 @@ pick that holds scores the same under both rules; a 90' draw your team wins in E
 are rule-sensitive (win only under REG90) -> as the LEADER (L50) take the rule-robust line, never lock a draw-argmax until
 the rule is confirmed. Resolve `KO_SCORING` before the first draw-relevant KO lock.
 
+## L53 - R32 cadence: fire the council on a GENUINE near-even board, not on a 0.55 tag-artifact (2026-06-29)
+**Pattern:** the read-only CLEAR/TIGHT map tags TIGHT when max(pH,pA) < 0.55. On Jun-29 that flagged Brazil-Japan
+(de-vig Brazil 0.529) and earlier SA-Canada (0.53) as TIGHT - but both are directionally CLEAR ~2.7x favorites whose
+EV-argmax == modal and whose pick is decisive + KO-rule-robust. Firing a 5-agent council on a 0.53-vs-0.55 threshold
+artifact is wasted motion (and, while LEADING/chalk-protect, the council cannot move the EV-argmax pick anyway, L50).
+**Rule:** the council trigger is a GENUINE near-even board, not the tag alone - diagnose by (a) EV-argmax DIVERGES from
+modal AND (b) weak favorite / live draw (Netherlands-Morocco: NL 0.416 / draw 0.308 / EV 1-0 vs modal 1-1). Fire it as
+LATE as the HITL can actually attend: the freshness ideal (T-1h, fresh odds+lineups, L33) is BOUNDED by human
+availability - if Sebas can't reach T-1h (NED-MAR KO 01:00Z = 03:00 German, no T-1h ping), pick the LATEST feasible
+window (~T-5/6h, when he's still awake) over firing 8h early or missing it entirely. NED-MAR is the user-MANDATED
+council exemplar: the single most penalty-likely R32 tie (very similar/contested sides), where FULL120 scoring makes the
+90' draw mass (0.308) most misleading vs the still-level-after-120' SCORED-draw mass - a 90' draw won in ET is NOT a
+scored draw. Cadence proof: 1 fetch (15/15, quota 435, B4 byte-identical), 0/15 flips vs Jun-28 baseline, 0 draw-picks;
+wrote 3 today/tonight baseline rows (BRA-JPN 1-0, GER-PAR 2-0, NED-MAR 1-0); SA-Canada recorded 0-1/0-1 = +9 (us_entered
+245->254); frozen diff empty; /code-review N/A (data-ops, no code diff).
+
+## L54 - The FULL120 KO rule makes the DRAW worse, not better: `ko_adjust` built; NED-MAR deep council = HOLD 1-0 (2026-06-29)
+**Pattern:** built `src/ko_adjust.py` (the long-deferred L52 wrapper; non-frozen, standalone, reuses frozen
+`optimizer.expected_points`+`model.implied_1x2`, 9 TDD, suite 251, frozen diff empty) to answer the toughest R32 call
+(Netherlands-Morocco, the most penalty-likely tie). It transforms the 90' matrix -> FULL120 scored dist: off-diagonal
+(decided-at-90') invariant, only the diagonal (level-at-90') redistributes through an ET Poisson model; a==b stays level
+= scored draw (pens excluded). The counter-intuitive result, proven across the WHOLE penalty-rate band: **the draw is
+NEVER EV-justified, under ANY rule.** best-decisive (1-0) beats best-draw (1-1) by +0.62..+1.75 across f in [0.30,0.83],
+and STILL by +0.247 at f=1.0 (= REG90, the draw-MAXIMAL bound) -> the gap is SMALLEST when draws are maximally favored
+and only WIDENS as ET resolves them. Intuition trap busted: Sebas (rightly) worried the 90' draw mass (0.31) was being
+undervalued; FULL120 makes it WORSE because a 1-1 won in ET becomes a 2-1 (not a scored draw), cratering the 1-1 pick
+while 0-0->1-0 ET resolution reinforces 1-0.
+**Rule:** (a) the council is ADVISORY (L44) - the EV math lives in the deterministic engine, NEVER a lens; the
+adversarial's strongest case (2-1 "better-calibrated") was REFUTED by re-deriving vs ko_adjust (1-0 2.746 > 2-1 2.680 AND
+higher P) - exactly the L44 discipline. (b) a 5-lens panel (market/form-tactical/historian/contrarian/adversarial) +
+deep-research historian (f=0.70 [.50-.83] from WC KO 1982-2022, BTTS 75% Qatar-confirmed) gave the draw its BEST
+empirical shot and it still lost = rigorous rejection, not a reflex. (c) pre-register a NUMERIC decision rule
+(best_draw_ev >= best_decisive_ev - eps across the f-band) so the loop verifies on a number, not vibes - this is what let
+the panel converge (contested=FALSE) without endless debate. (d) /code-review caught 2 real bugs in the new module
+(grid-edge clamp creating a FALSE diagonal = miscounted decisive-as-draw; best_draw/decisive None-vs-valid
+inconsistency) - both fixed + regression-tested; pushed back on 2 (symmetric mu_et override + unconditional-lambda ET =
+documented stylizations absorbed by cageyness calibration). DELIVERED: HOLD NED-MAR 1-0 (engine EV-argmax; chalk-protect
+L50-aligned; pick UNCHANGED from baseline, council CONFIRMS). `ko_adjust` now reusable for Belgium-Senegal + every later
+KO round. Artifact `council/outputs/ned_mar_r32/verdict.md`.
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
+- 2026-06-29 · `/code-review` on the NEW `src/ko_adjust.py` diff (212 lines; 2 finder agents = correctness + reuse/conventions) · result = **2 real bugs caught + fixed** (grid-edge `min(k+a,n-1)` clamp created a FALSE diagonal → a≠b ET overflow miscounted decisive-as-scored-draw, fixed to drop-overflow+renormalize + regression test #9; `best_draw`/`best_decisive` None-while-`ev_argmax`-valid inconsistency → unified on one `_candidate_table` scan with modal fallback) + 2 cleanups adopted (reuse `model.implied_1x2`; single scan removes the double O(n⁴)) · **2 findings pushed back with reasoning** (symmetric `mu_et` override = by-design convenience, live `cageyness` path is asymmetric-correct; unconditional-λ ET = stylization absorbed by cageyness→empirical-f calibration) — documented, not changed · I3/frozen CLEAN (ko_adjust imports only, mutates no frozen file, reads no result) · suite 250→251 green.
