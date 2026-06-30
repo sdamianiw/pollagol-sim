@@ -1,12 +1,17 @@
 # HANDOFF
 
-> 🟢 **KNOCKOUT v1 PHASE B — R32 IN PROGRESS (resume from `memory/` MEMORY.md → `pollagol-state.md`, the LIVE pointer; the MD-2 block below is STALE).**
-> As of **2026-06-30**: **RANK 1/27, us_entered 264** (+4 over Lucas LDC 260; gap_podium +9), n=76 recorded, override +13, engine FROZEN,
-> branch `rho-fit`. R32 reconciled through Jun-30 (SA-Canada +9; BRA-JAP 2-1 PLENO; GER-PAR & NED-MAR both 1-1 — two favorites out on
-> pens/FULL120 scored-draws, lead HELD). NEW non-frozen `src/ko_adjust.py` (KO 90'→120' FULL120 transform; committed `2856320`) + NED-MAR
-> deep council (HOLD 1-0; draw EV-rejected, then landed on variance — L54/L55, no draw-chasing). **NEXT = fetch today's R32 + flip-check:
-> France-Sweden (entered 2-0), Mexico-Ecuador (1-0), Ivory Coast-Norway (Sebas entered Norway 2-1); watch totals-line drift; then rest of
-> R32; `ko_adjust` ready for Belgium-Senegal (entered Senegal 2-1).** Full state + exact commands: `memory/pollagol-state.md` LATEST block.
+> 🟢 **KNOCKOUT v1 PHASE B — R32 DAY-3 CADENCE DONE (resume from `memory/` MEMORY.md → `pollagol-state.md`, the LIVE pointer; the MD-2 block below is STALE).**
+> As of **2026-06-30** (post day-3 fetch): **RANK 1/27, us_entered 273** (n=77, override +18, engine FROZEN, branch `rho-fit`). Ivory
+> Coast-Norway recorded = entered 1-2 (Norway 2-1) == actual 1-2 = **PLENO +9** (model argmax 0-1 → override +5; 1-2 was the #2 co-argmax
+> gap 0.0016 SUB-FLOOR, so +5 = variance not skill, L56). One amortized fetch (`md4_2026-06-30T19-16-45Z`, quota 431, **11/11 F27**, B4
+> byte-identical, 0 draw EV-picks); only engine drift-flip = USA-Bosnia 2-0→1-0 (Jul-2, DEFER). **France-Sweden** EV-checked on the fresh
+> elevated total (line 3.5, μ_eff 3.55): EV-argmax STAYS **2-0** (3-0 #2 gap −0.106; 2-1/3-1 −0.17/−0.21 → outside ε);
+> **user-MANDATED deep faceoff council** (4 lenses + faithful sweep, `council/outputs/fra_swe_r32/verdict.md`) **CONFIRMED 2-0** —
+> key finding **3-0 is E[pts]-DOMINATED** (never argmax; 2-0→3-1 directly at μ 4.25 < 3-0's 4.75; historian+chalk concur 3-0=worst).
+> **HOLD 2-0** (lock 20:50Z); 3-1 is the only legit alt (market-override, declined while leading). **Mexico-Ecuador** holds **1-0** (lock Jul-1 00:50Z). **NEXT = the Jul-1→4 R32 at their own T-1h windows**
+> (re-flip-check each); ⚠️ **Belgium-Senegal** divergence to resolve (engine Belgium 1-0 vs Sebas's entered Senegal 2-1 — council candidate
+> at its T-1h Jul-1 20:00Z; `ko_adjust` only if it turns draw-relevant). L45 board-rank reconcile pending the next standings screenshot.
+> Full state + exact commands: `memory/pollagol-state.md` LATEST block.
 >
 > ---
 >

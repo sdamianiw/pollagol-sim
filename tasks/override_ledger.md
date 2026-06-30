@@ -17,6 +17,19 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-06-30 (R32 day-3; Ivory Coast-Norway played — PLENO)
+- **total dual-track gap = +18**  - `== script` (`cumulative()["override_value"] = +18`, `summary` verified
+  2026-06-30: `Sigma us_entered = 273`, `us_model = 255`, n=77). Moved +13 -> +18 this row (+5, the lone
+  override = Ivory Coast-Norway). Rank/standings reconcile (L45 full-board gate) DEFERRED to the next pollaya
+  board screenshot; 273 is the new REAL standing, rank to confirm then.
+- **tilt-only override cost = +8 (points)**  - prior +3 + **CIV-NOR +5** (entered 1-2 / Norway 2-1 over the
+  EV-argmax 0-1; actual 1-2 = PLENO 9 vs the model's 4). **tilt COUNT +1.** HONESTY (L32/L55): 1-2 was the
+  #2 CO-ARGMAX (E[pts] 2.6442 vs 0-1's 2.6458, gap 0.0016 SUB-FLOOR) → ex-ante EV-equivalent, so the +5 is
+  pure PLENO variance, NOT skill; booked TILT-onto-co-optimal (a winning tilt carries the same bias risk as a
+  losing one — does NOT launder the no-tilt rule).
+- **EV-UPDATE cumulative = +6 (points)**  - UNCHANGED. **DRAW-EXCEPTION cumulative = +4**  - UNCHANGED + CLOSED.
+- reconciliation: **tilt(+8) + EV-UPDATE(+6) + DRAW-EXCEPTION(+4) + none(0) = +18 == script.**
+
 ## Running tally - as of 2026-06-30 (post KNOCKOUT v1 Phase B R32 day-2 reconcile; SA-Canada + BRA-JAP + GER-PAR + NED-MAR played)
 - **total dual-track gap = +13**  - `== script` (`cumulative()["override_value"] = +13`, `summary` verified
   2026-06-30: `us_entered = 264 == board` (**RANK 1/27**, +4 over Lucas LDC 260), `us_model = 251`, n=76). Moved +8 -> +13
