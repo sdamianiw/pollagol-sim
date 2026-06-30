@@ -1,5 +1,15 @@
 # HANDOFF
 
+> 🟢 **KNOCKOUT v1 PHASE B — R32 IN PROGRESS (resume from `memory/` MEMORY.md → `pollagol-state.md`, the LIVE pointer; the MD-2 block below is STALE).**
+> As of **2026-06-30**: **RANK 1/27, us_entered 264** (+4 over Lucas LDC 260; gap_podium +9), n=76 recorded, override +13, engine FROZEN,
+> branch `rho-fit`. R32 reconciled through Jun-30 (SA-Canada +9; BRA-JAP 2-1 PLENO; GER-PAR & NED-MAR both 1-1 — two favorites out on
+> pens/FULL120 scored-draws, lead HELD). NEW non-frozen `src/ko_adjust.py` (KO 90'→120' FULL120 transform; committed `2856320`) + NED-MAR
+> deep council (HOLD 1-0; draw EV-rejected, then landed on variance — L54/L55, no draw-chasing). **NEXT = fetch today's R32 + flip-check:
+> France-Sweden (entered 2-0), Mexico-Ecuador (1-0), Ivory Coast-Norway (Sebas entered Norway 2-1); watch totals-line drift; then rest of
+> R32; `ko_adjust` ready for Belgium-Senegal (entered Senegal 2-1).** Full state + exact commands: `memory/pollagol-state.md` LATEST block.
+>
+> ---
+>
 > 🟢 **MD-2 FULLY RECONCILED (8 played) + MD-2 TAIL CADENCE — DONE (2026-06-23, branch `rho-fit`, baseline commit `2b7073a`; engine FROZEN ρ=-0.05 / ρ_fit OFF / 0 edits to the 6 frozen paths + `decisionlog.py`/`decision_score.py` unmodified; master untouched `05cde08`, NOT merged; I-HITL — nothing entered/locked in pollaya).** Plan `…\plans\contract-md-2-agile-blanket.md`. **CC env note: `claude --version`=2.1.186 (auto-bumped from contract-pinned 2.1.185; real release, not a stub — re-pin the session contract template).**
 > **Phase A — recorded the 8 newly-played MD-2 fixtures** (decisions.csv rows 38-45, all were blank), OCR'd from the Jun-23 pollaya board (`PICKS VS ACTUAL RESULTS/` 073151+073201, format **`ENTERED(actual)`**; standings `standings 23-06-2026/` 073217+073230): ESP-KSA ent 2-0/act 4-0 (4) · BEL-IRN ent 2-1/act 0-0 (0) · URU-CPV ent 1-0/act 2-2 (0) · NZL-EGY ent 0-1/act 1-3 (3) · ARG-AUT ent 2-0/act 2-0 (9) · FRA-IRQ ent 3-0/act 3-0 (9) · NOR-SEN ent 2-1/act 3-2 (4) · JOR-ALG ent 0-1/act 1-2 (4). Recompute 16/16 == OCR (TA2); C-B3 proved `record` preserves the model `pick`; `pytest -k locked` 5-passed. **TA6 gate: `Σus_entered=133` == Jun-23 board, `override_value=+6` == script (cumulative()).** L34 clean (JOR opp = Algeria green/crescent flag, not the board "ARG" code; Argentina = sky-blue).
 > **Standings:** `standings/2026-06-23/standings.json` (27-array OCR-confirmed; our_points=133, rank **8/27**, leader 152) → `standings_log` +1 row: median 128, podium_cut 150, **gap_podium −17** (was −20), gap_median **+5** (first time above median), z +0.37, pctl 0.74. Climb: rank 12→8, us_entered 100→133.

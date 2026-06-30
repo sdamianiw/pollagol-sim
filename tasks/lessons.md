@@ -731,6 +731,24 @@ documented stylizations absorbed by cageyness calibration). DELIVERED: HOLD NED-
 L50-aligned; pick UNCHANGED from baseline, council CONFIRMS). `ko_adjust` now reusable for Belgium-Senegal + every later
 KO round. Artifact `council/outputs/ned_mar_r32/verdict.md`.
 
+## L55 - A sound EV decision that loses to variance is still sound; EV-argmax != modal, vividly (2026-06-30)
+**Pattern:** NED-MAR R32 = the deep council REJECTED the draw on EV (1-0 argmax, draw dominated at EVERY f; L54).
+Actual = **1-1** (Morocco advanced on pens; FULL120 pens-excluded -> scored DRAW). The model MODAL was 1-1 -> it
+scored **9** (exact); the EV-argmax 1-0 scored **1**; Sebas's entered 2-1 (his HITL deviation toward the adversarial's
+#2) also scored **1**. So in hindsight the modal nailed it and BOTH decisive picks missed. Same day GER-PAR also
+ended 1-1 (Paraguay upset on pens), our 2-0 = 0. Two favorites eliminated, two scored-draws, one wild day.
+**Rule:** do NOT outcome-bias. (a) The scored-draw was a ~0.14-0.22 tail; it landing does NOT make the EV pick wrong
+- EV-argmax maximizes EXPECTED points, not realized, and over n it wins (M7 backtest). Concluding "we should have
+drawn" from the 1-1-scored-9 is exactly the I3 / results-driven error the project bans (n=76 << 280). (b) It IS a
+vivid demonstration that **EV-argmax != modal on draw-prone KO boards** (L27/L28 meta-lesson: the binding constraint
+is the OBJECTIVE; on a high-draw board the modal and the EV-argmax genuinely diverge - here by 8 realized pts). The
+ko_adjust verdict (hold decisive) was epistemically correct; the build's value stands. (c) **Chalk-protect HELD:**
+despite two favorites dying we stayed RANK 1 at 264 (+4 over Lucas LDC 260; gaps +4/+9/+14 PRESERVED) because the draws
+hurt the whole field symmetrically - precisely why the leader takes EV/chalk and lets variance wash out (L50). (d)
+Sebas's 2-1 over the rec'd 1-0 = a TILT (override 0 here, cost nothing; book as variance per L32/L35, NOT validated;
+BRA-JAP 2-1 was the other tilt, +5, a lucky PLENO). NEXT-round discipline UNCHANGED: enter the EV-argmax, accept
+modal/draw variance, never chase the draw because one hit.
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
 - 2026-06-29 · `/code-review` on the NEW `src/ko_adjust.py` diff (212 lines; 2 finder agents = correctness + reuse/conventions) · result = **2 real bugs caught + fixed** (grid-edge `min(k+a,n-1)` clamp created a FALSE diagonal → a≠b ET overflow miscounted decisive-as-scored-draw, fixed to drop-overflow+renormalize + regression test #9; `best_draw`/`best_decisive` None-while-`ev_argmax`-valid inconsistency → unified on one `_candidate_table` scan with modal fallback) + 2 cleanups adopted (reuse `model.implied_1x2`; single scan removes the double O(n⁴)) · **2 findings pushed back with reasoning** (symmetric `mu_et` override = by-design convenience, live `cageyness` path is asymmetric-correct; unconditional-λ ET = stylization absorbed by cageyness→empirical-f calibration) — documented, not changed · I3/frozen CLEAN (ko_adjust imports only, mutates no frozen file, reads no result) · suite 250→251 green.

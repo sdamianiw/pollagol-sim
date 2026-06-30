@@ -17,6 +17,22 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-06-30 (post KNOCKOUT v1 Phase B R32 day-2 reconcile; SA-Canada + BRA-JAP + GER-PAR + NED-MAR played)
+- **total dual-track gap = +13**  - `== script` (`cumulative()["override_value"] = +13`, `summary` verified
+  2026-06-30: `us_entered = 264 == board` (**RANK 1/27**, +4 over Lucas LDC 260), `us_model = 251`, n=76). Moved +8 -> +13
+  this period (+5); the lone SCORING override is BRA-JAP (+5, a TILT-OVERRIDE that WON a PLENO).
+- **tilt-only override cost = +3 (points)**  - prior -2 + **BRA-JAP +5** (entered 2-1 over EV-argmax 1-0; hit exact 9 vs
+  the model's 4) + **NED-MAR +0** (entered 2-1 over the COUNCIL's EV-argmax 1-0; both scored 1 vs actual 1-1, cost
+  nothing). **tilt COUNT +2.** L32/L35/L46/L8: the winning tilt (BRA-JAP) carries the SAME bias risk as a losing one;
+  the +5 is VARIANCE (lucky PLENO), NOT skill - it does NOT launder the no-tilt rule. NED-MAR confirms it - the same
+  off-argmax instinct cost 0 that day.
+- **EV-UPDATE cumulative = +6 (points)**  - UNCHANGED (no EV-UPDATE flip; SA-Canada + GER-PAR entered == model `pick`).
+- **DRAW-EXCEPTION cumulative = +4 (points)**  - UNCHANGED + CLOSED (group-stage-only edge; KO has no dead rubbers, L51).
+- **L55 honesty note:** NED-MAR actual 1-1 = the council-rejected draw landing in its ~0.2 tail; the model MODAL (1-1)
+  would have scored 9 but the EV-argmax (1-0) scored 1 = VARIANCE + an EV-argmax-vs-modal divergence on a draw-prone
+  board (L27/L28), NOT evidence to chase draws (I3, n=76<<280). Chalk-protect HELD (rank 1 preserved, gaps +4/+9/+14).
+- reconciliation: **tilt(+3) + EV-UPDATE(+6) + DRAW-EXCEPTION(+4) + none(0) = +13 == script.**
+
 ## Running tally - as of 2026-06-28 (post KNOCKOUT v1 Phase A reconcile; GROUP STAGE CLOSED - all 72 fixtures played, J/K/L recorded)
 - **total dual-track gap = +8**  - `== script` (`cumulative()["override_value"] = +8`, TA7 `summary` verified
   2026-06-28: `us_entered = 245 == board` (**RANK 1/27**), `us_model = 237`). Moved +1 -> +8 this batch (the 6 J/K/L
