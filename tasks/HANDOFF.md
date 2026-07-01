@@ -1,5 +1,8 @@
 # HANDOFF
 
+> 🟢 **KNOCKOUT v1 PHASE B — R32 DAY-4 CADENCE + BELGIUM-SENEGAL COUNCIL DONE 2026-07-01 (commit `1e930ff`; resume from `memory/` MEMORY.md → `pollagol-state.md` LATEST, the LIVE pointer; blocks below are HISTORICAL).**
+> **Jul-1:** 1 fetch `md4_2026-07-01T18-29-49Z` (quota reset 498, 8/8 F27, B4 byte-identical). Flip-check 8 remaining R32 = **7/8 HOLD**, 0 signal flips (USA-Bosnia 1-0→2-0 +0.038 AMBIGUOUS → DEFER Jul-2). **Belgium-Senegal 4-lens council** (`council/outputs/bel_sen_r32/verdict.md`) = **enter Belgium 2-1** (primary) / 1-0 (co-equal fallback ~0.02); **REJECT Senegal 2-1** (−0.72 EV tilt, L50) + **1-1** (worst, craters under FULL120, L54). ko_adjust FULL120 flips argmax 1-0→2-1; survives the historian f=0.68 + adversarial ET-caginess challenges (engine-verified, L54c). Mendy (SEN GK) OUT. England-DRCongo 2-1 (Sebas entered 2-0 = +4). Engine FROZEN, decisions.csv UNTOUCHED, I-HITL. **NEXT:** Jul-2→4 R32 at own T-1h (baselines in the Jul-1 snapshot; USA-Bosnia 2-0 refresh first); **P4** record England-Congo/France-Sweden/Mexico-Ecuador on the next standings screenshot (L45); **P6 (own GO, decision-first per Sebas)** = reverse-engineer a `run-matchday` KO cadence skill + register `/plan-preflight` (`~/.claude/skills/plan-preflight/SKILL.md`) + plan-mode hook. Lock was 19:50Z; Sebas enters.
+>
 > 🟢 **KNOCKOUT v1 PHASE B — R32 DAY-3 CADENCE DONE (resume from `memory/` MEMORY.md → `pollagol-state.md`, the LIVE pointer; the MD-2 block below is STALE).**
 > As of **2026-06-30** (post day-3 fetch): **RANK 1/27, us_entered 273** (n=77, override +18, engine FROZEN, branch `rho-fit`). Ivory
 > Coast-Norway recorded = entered 1-2 (Norway 2-1) == actual 1-2 = **PLENO +9** (model argmax 0-1 → override +5; 1-2 was the #2 co-argmax
