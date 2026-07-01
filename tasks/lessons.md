@@ -774,7 +774,28 @@ forced now. **CIV-NOR booking:** entered 1-2 (Norway 2-1) beat the argmax 0-1 by
 #2 co-argmax (gap 0.0016 SUB-FLOOR) → an EV-equivalent pick whose +5 is pure variance, not skill (L32/L55); booked
 TILT-onto-co-optimal, tilt-count +1.
 
+## L57 - ko_adjust FULL120 can FLIP the decisive argmax (1-0->2-1), not just kill the draw; resolve an f-challenge on a NUMBER (2026-07-01, Belgium-Senegal R32)
+**Pattern:** the FIRST KO fixture where `ko_adjust` MOVED the decisive pick (NED-MAR/L54 held 1-0). On a weak-favorite
+(Belgium de-vig .447) HIGH-total (mu_eff 2.74) tie, the FULL120 transform flipped the argmax 90'-**1-0** -> 120'-**Belgium
+2-1** (2.755 vs 1-0 2.720): level-at-90' mass (1-1/0-0) resolves in ET most often to 2-1, and 2-1's partial-credit
+coverage + BTTS-calibration to the high total beats a 1-0 clean sheet. The draw still craters (2.065->1.415, dominated at
+every f by +0.39..+1.85, L54 universal). The historian lens challenged the default penalty rate (engine f=0.55 vs empirical
+WC-KO f~0.68, full-ET 2006-22 = 17/25); re-running the engine at f=0.68 kept **2-1 argmax by +0.020** (flips to 1-0 only at
+f>=0.83 = near-zero-ET, which contradicts the ET-goal record) -> BOTH the historian f-challenge AND the adversarial
+ET-caginess attack were REFUTED on the engine, not by vibes.
+**Rule:** (a) on a KO board the EV-argmax to RECOMMEND is the FULL120 one (the pool's actual objective), NOT the raw 90'
+argmax the live cadence prints -- run `ko_adjust` for EVERY KO fixture, not only when a draw is modal. (b) when 2-1 and 1-0
+are within the flip-floor (|dEV| <= 0.035, as here) it is a genuine coin-flip: recommend the FULL120 argmax as PRIMARY but
+name the near-tie fallback (both are disciplined leader picks, L50). (c) a challenge to a free parameter (f/cageyness) is
+resolved by SWEEPING the engine across the challenger's OWN stated range and reading the argmax, never by argument (L54c) --
+2-1 survived f in [0.55,0.80]. (d) the opposite-winner divergence (engine Belgium vs Sebas's gut Senegal) is the legit
+council trigger (L53); the 4-lens panel was UNANIMOUS Belgium-decisive -- Senegal 2-1 = a -0.72 EV tilt (market already
+prices Mane; Mendy-out makes 25.5% generous), REJECTED while leading (L50); 1-1 = worst pick. The honest routing of a
+leader's gut: distrust-of-Belgium -> Belgium **1-0** (grind-out narrow win, matching their 1-1/0-0 group games), NOT Senegal.
+Artifact `council/outputs/bel_sen_r32/verdict.md`.
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
+- 2026-07-01 · R32 day-4 cadence (fetch + 8-fixture flip-check + Belgium-Senegal ko_adjust f-band + 4-lens council + verdict.md) = DATA-OPS, scratchpad-only drivers (`r32_flipcheck.py`, `bel_sen_driver.py`), **no committed src** → `/code-review` **N/A** (data-ops/cadence per the Review Gate); RED gates instead = frozen-diff EMPTY + B4 byte-identical + F27 8/8 + decisions.csv UNTOUCHED + I-3 clean. Commit `1e930ff` (verdict.md + snapshot only).
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
 - 2026-06-30 · R32 day-3 cadence (fetch + flip-check + France-Sweden EV table + CIV-NOR record) = DATA-OPS, no committed code (scratchpad-only drivers) → `/code-review` **N/A** per the Review Gate (data-ops/cadence); RED gates instead = frozen-diff empty + B4 byte-identical + F27 11/11 + full-string bind + I-3 clean.
 - 2026-06-29 · `/code-review` on the NEW `src/ko_adjust.py` diff (212 lines; 2 finder agents = correctness + reuse/conventions) · result = **2 real bugs caught + fixed** (grid-edge `min(k+a,n-1)` clamp created a FALSE diagonal → a≠b ET overflow miscounted decisive-as-scored-draw, fixed to drop-overflow+renormalize + regression test #9; `best_draw`/`best_decisive` None-while-`ev_argmax`-valid inconsistency → unified on one `_candidate_table` scan with modal fallback) + 2 cleanups adopted (reuse `model.implied_1x2`; single scan removes the double O(n⁴)) · **2 findings pushed back with reasoning** (symmetric `mu_et` override = by-design convenience, live `cageyness` path is asymmetric-correct; unconditional-λ ET = stylization absorbed by cageyness→empirical-f calibration) — documented, not changed · I3/frozen CLEAN (ko_adjust imports only, mutates no frozen file, reads no result) · suite 250→251 green.
