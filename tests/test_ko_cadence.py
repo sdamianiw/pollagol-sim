@@ -114,20 +114,22 @@ class KoCadenceGoldenTest(unittest.TestCase):
         self.assertAlmostEqual(res["devig"]["home"], 0.4467, places=3)
         self.assertAlmostEqual(res["mu_eff"], 2.7402, places=3)
         self.assertEqual(res["ko_argmax"], (2, 1))          # FULL120 flips 1-0 -> 2-1 (L57)
-        self.assertAlmostEqual(res["ko_argmax_pts"], 2.7550, places=3)
+        # EV/f goldens re-pinned 2026-07-03 after the diagonal-wipe fix (test_ko_adjust test 10):
+        # pick/flip/council all UNCHANGED; draw EV and f_model rise as the recovered ET-draw mass predicts.
+        self.assertAlmostEqual(res["ko_argmax_pts"], 2.7287, places=3)
         self.assertEqual(res["best_decisive"]["pred"], (2, 1))
         self.assertEqual(res["best_draw"]["pred"], (1, 1))
-        self.assertAlmostEqual(res["best_draw"]["ev"], 1.4145, places=3)
-        self.assertAlmostEqual(res["f_model"], 0.5530, places=3)
+        self.assertAlmostEqual(res["best_draw"]["ev"], 1.4653, places=3)
+        self.assertAlmostEqual(res["f_model"], 0.5962, places=3)
 
     def test_belgium_senegal_candidate_evs(self):
         res = kc.ko_candidates(SNAP, BEL_SEN, candidates=[(1, 0), (2, 1), (1, 1), (1, 2)])
         ev120 = {c["pred"]: c["ev_120"] for c in res["candidates"]}
         ev90 = {c["pred"]: c["ev_90"] for c in res["candidates"]}
-        self.assertAlmostEqual(ev120[(1, 0)], 2.7199, places=3)
-        self.assertAlmostEqual(ev120[(2, 1)], 2.7550, places=3)
-        self.assertAlmostEqual(ev120[(1, 1)], 1.4145, places=3)   # draw craters (L54)
-        self.assertAlmostEqual(ev120[(1, 2)], 2.0388, places=3)   # Senegal 2-1
+        self.assertAlmostEqual(ev120[(1, 0)], 2.6880, places=3)   # re-pinned 2026-07-03 (wipe fix)
+        self.assertAlmostEqual(ev120[(2, 1)], 2.7287, places=3)
+        self.assertAlmostEqual(ev120[(1, 1)], 1.4653, places=3)   # draw craters (L54)
+        self.assertAlmostEqual(ev120[(1, 2)], 2.0217, places=3)   # Senegal 2-1
         self.assertAlmostEqual(ev90[(1, 1)], 2.0650, places=3)
         self.assertLess(ev120[(1, 1)], ev90[(1, 1)])              # draw worse under FULL120
 

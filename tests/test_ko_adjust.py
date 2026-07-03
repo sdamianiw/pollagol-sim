@@ -104,6 +104,22 @@ class TestKoAdjust(unittest.TestCase):
         self.assertAlmostEqual(r["p_away_win"], 0.25, places=9)
         self.assertAlmostEqual(float(r["dist_120"].sum()), 1.0, places=9)
 
+    # 10 - DIAGONAL-WIPE regression (2026-07-03): ET mass deposited on a HIGHER diagonal by an earlier
+    #      k must survive that k's own redistribution. M[0,0]=M[1,1]=0.5, mu_et=0.5: dist[1,1] receives
+    #      0.5*pmf[1]^2 (from 0-0 -> 1-1) + 0.5*pmf[0]^2 (from 1-1 staying 1-1); the in-loop
+    #      dist[k,k]=0.0 wipe kept only the latter and renormalized the loss away.
+    def test_diagonal_wipe_regression(self):
+        M = _zeros()
+        M[0, 0] = 0.5
+        M[1, 1] = 0.5
+        r = ko_adjust(M, mu_et=0.5, ko_rule="FULL120")
+        pmf = _et_pmf(0.5)
+        # all deposits stay on-grid (k+5 <= 6 < 9) -> no renormalization loss -> exact identities
+        self.assertAlmostEqual(float(r["dist_120"][1, 1]),
+                               0.5 * float(pmf[1] ** 2) + 0.5 * float(pmf[0] ** 2), places=12)
+        self.assertAlmostEqual(r["p_draw_scored"], float((pmf * pmf).sum()), places=12)
+        self.assertAlmostEqual(float(r["dist_120"].sum()), 1.0, places=12)
+
 
 if __name__ == "__main__":
     unittest.main()

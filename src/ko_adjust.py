@@ -21,7 +21,11 @@ KNOWN STYLIZATIONS (documented, not bugs; immaterial to the draw-vs-decisive ver
 the cageyness->empirical-f calibration): (1) `lambda_side` is the UNCONDITIONAL 90' expected goals, not the
 goal rate CONDITIONAL on the game being level at 90' - so the home/away ET-rate asymmetry is approximate for
 lopsided ties. (2) the optional explicit `mu_et` override is SYMMETRIC (both sides equal); for asymmetric
-matches use the default `cageyness` path, which preserves the home/away ratio.
+matches use the default `cageyness` path, which preserves the home/away ratio. (3) live callers
+(`ko_cadence.fixture_eval`) pass the POST-context matrix (apply_context('neutral'), ~+0.069
+expected-total push), not the raw DC 90' matrix - verified pick-immaterial on all 8 R32 boards
+(2026-07-03: ev_argmax identical pre/post-context, f_model delta ~0.01; source =
+data/snapshots/md4_2026-07-01T18-29-49Z.json, 8 events, scratchpad tier0_checks.py F-A1 table).
 """
 from math import exp, factorial
 import numpy as np
@@ -93,11 +97,14 @@ def ko_adjust(matrix_90, cageyness=DEFAULT_CAGEYNESS, mu_et=None, ko_rule="FULL1
             mu_a = cageyness * lam_a * ET_FRACTION
         pmf_h, pmf_a = _et_pmf(mu_h), _et_pmf(mu_a)
         dist = M.copy()
+        # Zero ALL level-at-90' cells BEFORE redistributing: an ET deposit on a HIGHER diagonal
+        # (e.g. 0-0 level -> 1-1 after ET) is a FINAL scored draw and must survive the later
+        # k-iteration (zeroing inside the loop wiped it and understated p_draw_scored; test 10).
+        np.fill_diagonal(dist, 0.0)
         for k in range(n):
             p = M[k, k]
             if p <= 0.0:
                 continue
-            dist[k, k] = 0.0
             for a, ph in enumerate(pmf_h):
                 if k + a >= n:
                     break                       # home ET goals overflow the grid -> DROP (never clamp onto
