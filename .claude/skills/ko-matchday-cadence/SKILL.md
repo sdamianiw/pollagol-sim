@@ -26,9 +26,15 @@ non-frozen `src/ko_cadence.py` driver + `src/ko_adjust.py`. Nothing is entered o
 
 ## P0 — Context recovery  ·  gate: state restated from disk
 Read `memory/MEMORY.md` → `pollagol-state.md` LATEST, `tasks/HANDOFF.md` top banner, `CLAUDE.md`,
-`tasks/lessons.md` (esp. L33/L49/L50/L53/L54/L57). Confirm: current rank/`us_entered`, HEAD commit,
+`tasks/lessons.md` (esp. L33/L49/L50/L53/L54/L57/L59). Confirm: current rank/`us_entered`, HEAD commit,
 `git rev-parse --abbrev-ref HEAD` (= `rho-fit`), frozen diff EMPTY, current UTC vs the next KO lock (10 min
 pre-kickoff). PASS/FAIL.
+- **Lag gate (L59, HARD):** diff the latest standings-board `us_entered` (newest screenshot) vs
+  `cumulative(decisions.csv)["us_entered"]`. If the board is AHEAD, played KO games are UNRECORDED — a
+  paused cadence silently accrues this (Jul-3: board 315 vs CSV 273 = 8 games behind). RECORD them
+  (`log_decision` → `backfill` from the freshest **pre-lock** snapshot per game — a game not in the latest
+  snapshot needs its own earlier one, else `backfill` aborts the loop — → `record`) and reconcile the
+  ledger BEFORE running the cadence. Gate = board `us_entered` == CSV `us_entered`.
 
 ## P1 — ONE amortized fetch  ·  gate: HTTP-200 + in-window == calendar count
 `--win-lo` excludes already-played games; `--expect` = the **FIFA-calendar** count of remaining KO fixtures

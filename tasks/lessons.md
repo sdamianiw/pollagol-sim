@@ -794,7 +794,44 @@ prices Mane; Mendy-out makes 25.5% generous), REJECTED while leading (L50); 1-1 
 leader's gut: distrust-of-Belgium -> Belgium **1-0** (grind-out narrow win, matching their 1-1/0-0 group games), NOT Senegal.
 Artifact `council/outputs/bel_sen_r32/verdict.md`.
 
+## L58 — ko_adjust FULL120 diagonal-wipe: an in-loop reset erased ET-draw mass on higher diagonals (2026-07-03)
+**Pattern:** `ko_adjust`'s ET redistribution loop zeroed the source cell with `dist[k,k] = 0.0` INSIDE the
+per-k loop. But an earlier k deposits ET mass onto a HIGHER diagonal (0-0 level → 1-1 after ET = a FINAL
+scored draw); when the loop reached k=1 it wiped `dist[1,1]`, deleting that deposit, then renormalized the
+loss away. Effect: `p_draw_scored` understated ~0.6–1.1pp on live boards and the council's
+`best_decisive − best_draw` gap OVERSTATED ~0.07 EV pts — larger than `COUNCIL_EPS = 0.05`, i.e. a **silent
+council no-fire window**: any board with a TRUE gap in [0.05, 0.12] computes as > 0.05 and never convenes.
+Found by a D1 independent re-implementation (a second code path, not self-review) whose output diverged
+4.45e-3 from the shipped one; a fresh-eyes finder converged on the identical line independently. Materiality
+was NIL on all 8 R32 boards (picks unchanged, gaps all > 1.13) but grows as ties tighten (QF/SF).
+**Rule:** (a) when redistributing mass across a grid where targets can land on other SOURCE cells, zero ALL
+source cells in one pass BEFORE the redistribution loop (`np.fill_diagonal(dist, 0.0)`), never inside it —
+an in-loop reset silently double-counts or wipes cross-iteration deposits. (b) verify a probability
+transform with an INDEPENDENT re-derivation (different code) + a hand-computable synthetic case pinned to
+1e-12, not just internal-consistency asserts on the (possibly-wrong) output — tests 2–7 all passed on the
+buggy distribution because they checked self-consistency, not an external oracle. (c) a bug that only moves
+a threshold-crossing (not a headline pick) is still HIGH severity: it silently suppresses a decision gate.
+Fix `bc8cdd2` (fill_diagonal-before-loop + regression test 10 + golden re-pin, EVs only; suite 268→269).
+
+## L59 — a paused cadence silently accrues an unrecorded-games LAG; gate the board vs the CSV at P0 (2026-07-03)
+**Pattern:** the KO cadence was paused after Jul-1; 8 R32 games (FRA-SWE…SUI-ALG) were entered in pollaya
+and PLAYED but never `record`ed, so `decisions.csv`/ledger/standings_log lagged the real board by 42 pts
+(CSV us_entered 273 vs board 315). The lag is invisible unless you diff the two — nothing errors. Recording
+8-at-once surfaced a second trap: `decision_score.backfill` replays ONE snapshot against ALL un-backfilled
+rows and ABORTS the loop on the first fixture not in that snapshot (`_select_event` raises), so the 3 early
+games (not in the Jul-1 snapshot) needed a two-batch backfill from their own pre-lock snapshot
+(`md4_2026-06-30`). `record()` also cannot CREATE rows — order is `log_decision` (pick MANDATORY-non-empty)
+→ `backfill` → `record`.
+**Rule:** (a) at cadence P0, diff board `us_entered` (newest standings screenshot) vs
+`cumulative(decisions.csv)["us_entered"]`; if the board is ahead, RECORD the missing played games before
+running the cadence (added as the P0 Lag gate in `.claude/skills/ko-matchday-cadence/SKILL.md`). (b) backfill
+each game from the freshest snapshot that CONTAINS it (games drop out of the API once played) — never assume
+the latest snapshot has every un-recorded fixture. (c) `pick` for a KO row = the FULL120 `ko_adjust` argmax
+where the council FIRED (register the flip, L44/NOR-FRA precedent), else the 90' argmax (sub-floor
+favourite ET-flips are noise, not a pick change) — this keeps override classification faithful.
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
+- 2026-07-03 · KO forensic bug-hunt + R32 day-4/5 reconcile + day-5 cadence. CODE: `src/ko_adjust.py` diagonal-wipe fix (BUG-1, L58) + regression test 10 + golden re-pin → `/code-review` **high (8 angles / 3 finder agents)** = **1 conventions finding ADOPTED** (docstring datum needs a source artifact, CLAUDE.md rule 3) + 3 cleanup findings PUSHED BACK w/ reasoning (golden-literal dup is the point of a golden; `places=12` sum-check is load-bearing for the test premise); frozen diff EMPTY (src/model|optimizer|strength|context untouched), suite 268→269 green, commit `bc8cdd2`. DATA-OPS (reconcile + cadence): `/code-review` **N/A** (no code diff); RED gates instead = G3a us_entered 315==board, G3b ledger identity +23==script, G3c standings_log, 77 rows byte-identical, fetch 3/3 F27, I-3/I-HITL clean, commit `e281987`. Bug found by an INDEPENDENT re-derivation (separate verifier), not self-review, per the goal contract.
 - 2026-07-01 · R32 day-4 cadence (fetch + 8-fixture flip-check + Belgium-Senegal ko_adjust f-band + 4-lens council + verdict.md) = DATA-OPS, scratchpad-only drivers (`r32_flipcheck.py`, `bel_sen_driver.py`), **no committed src** → `/code-review` **N/A** (data-ops/cadence per the Review Gate); RED gates instead = frozen-diff EMPTY + B4 byte-identical + F27 8/8 + decisions.csv UNTOUCHED + I-3 clean. Commit `1e930ff` (verdict.md + snapshot only).
 - 2026-07-01 · NEW `src/ko_cadence.py` + `tests/test_ko_cadence.py` (17) + `.claude/skills/ko-matchday-cadence/SKILL.md` (KO cadence skill — formalizes the scratchpad flip-check + ko_adjust drivers into a deterministic tested CLI; non-frozen, reuses FROZEN engine + ko_adjust verbatim, imports only PUBLIC symbols, I-3 clean, golden values pinned to the Belgium-Senegal run) · `/code-review` **high (8 angles / 4 finder agents)** → **10 findings FIXED** (3× None-deref on ko_adjust `best_draw=None` [cand_set / f-band / _print_ko], empty-table IndexError in fixture_eval, LineGuardStop batch-abort → GUARD-STOP verdict, I-3 test CWD-relative + inside skipUnless → moved to an UNCONDITIONAL class + `inspect.getsource`, private `_select_event` import from frozen run_matchday → local reimpl, `ko_rule` un-threaded → `--ko-rule`, ko_flip buried on the council line → promoted to the FULL120 PICK line, self-baseline double-load → fresh-scan refactor) + **2 skipped with reasoning** (`_score`/`_parse_score` dups — both codebase formatters are PRIVATE so nothing public to reuse, and importing the frozen `decision_score` scoring module into a read-only cadence tool for a 2-line parser is worse coupling; ko_adjust 0.65 recompute — negligible on a read-only CLI, a float-compare guard is more fragile than the ~1ms save) · suite **251→268** green, frozen diff EMPTY, E2E reproduces the manual P2/P3 tables. Commit `cda4ddb`. **Lesson: a durable reusable tool earns robustness a one-session scratchpad skips** — the review's top 5 bugs (None-derefs, empty-table, batch-abort) were all "impossible in tonight's data" but reachable on future KO boards; formalizing scratchpad→module is exactly when to pay that down.
 - 2026-06-25 · installed the `/code-review` gate (doc-ops: CLAUDE.md Review Gate block + plan-preflight Phase E) · Redundancy-criterion: rejected 6 already-present/conflicting concepts (simplicity/TDD/plan-default/writing-skills/self-improvement = already have; subagent-driven = R7 boundary; git-worktrees = single-canonical decisions.csv L2) · R7 boundary drawn (code-review = code-quality ≠ deterministic-stats decisions; aligned with Sebas's "use subagents liberally" note) · gate result = DOGFOODED on its own diff (10 angles × 3 reviewers) → caught a real mis-reference: "extends FM3" corrected to "extends #7 Sparring/PUSH-BACK" (FM3 = anti-fabrication, not critique-integrity) → **gate has teeth on first use**.
