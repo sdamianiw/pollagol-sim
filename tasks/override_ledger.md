@@ -17,6 +17,42 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-03 (R32 day-4/day-5 reconcile; 8 played fixtures FRA-SUE → SUI-ALG)
+> Recorded 2026-07-03 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-03 091850.png`,
+> format `ENTERED(actual)`) + pre-lock snapshots (`md4_2026-06-30T19-16-45Z` for the 3 early games not in
+> Jul-1; `md4_2026-07-01T18-29-49Z` for the 5 later). The KO cadence was PAUSED after Jul-1, so these 8
+> played fixtures were entered in pollaya but never logged until now. **`pick` rule (L57):** FULL120
+> `ko_adjust` argmax where the council FIRED (BEL-SEN), else the 90' argmax (sub-floor favourite ET-flips
+> are noise, not a pick change). Resolved by fixture_id + full team strings (**L49: board "SUI-ARG" =
+> Switzerland-ALGERIA `c17fe2e…`, NOT Argentina**). Recompute green (record → src.optimizer.points, 8/8
+> both tracks); 77 pre-existing rows byte-identical after rewrite.
+- **total dual-track gap = +23**  - `== script` (`cumulative()["override_value"] = +23`, `summary` verified
+  2026-07-03: `Sigma us_entered = 315 == board` (**RANK 1/27**, +13 over Greg Langer 302, +14 over Lucas LDC
+  301, +19 over GonzaloVillagran 296), `us_model = 292`, n=85). Moved +18 → +23 this period (+5); the lone
+  SCORING override is **Portugal-Croatia +5** (a TILT-OVERRIDE that hit a PLENO).
+- **tilt-only override cost = +13 (points)**  - prior +8 + **POR-CRO +5** (entered 2-1 over the FULL120
+  EV-argmax 1-0; hit exact 2-1 = PLENO 9 vs the model's 4). **tilt COUNT +3** (FRA-SUE net-0: entered 3-1
+  flicker over argmax 2-0, both 4 · SUI-ALG net-0: entered 2-1 over argmax 1-0, both 4 · POR-CRO +5).
+  L46/L8/L32: the winning tilt (POR-CRO) carries the SAME bias risk as a losing one; +5 is PLENO VARIANCE,
+  NOT skill - it does NOT launder the no-tilt rule (chalk-protect at rank 1, gap +13, MAXIMAL per L50).
+- **EV-UPDATE cumulative = +6 (points)**  - UNCHANGED. BEL-SEN booked **EV-UPDATE net-0**: `pick` registered
+  90' 1-0 → FULL120 2-1 (council FIRED, weak-fav 0.447; entered 2-1 followed the engine's KO argmax), both
+  scored 4 vs actual 3-2 → override 0 (NOR-FRA/L44 precedent: register the flip, count it, pts 0).
+- **DRAW-EXCEPTION cumulative = +4 (points)**  - UNCHANGED + CLOSED (group-stage-only edge; KO has no dead rubbers, L51).
+- reconciliation: **tilt(+13) + EV-UPDATE(+6) + DRAW-EXCEPTION(+4) + none(0) = +23 == script.**
+
+| fixture | entered | model pick | actual (120') | pts_ent | pts_model | override | flag |
+|---------|:-------:|:----------:|:-------------:|:-------:|:---------:|:--------:|------|
+| France-Sweden | 3-1 | 2-0 (90') | 3-0 | 4 | 4 | **+0** | TILT-OVERRIDE net-0 (3-1 flicker over EV-argmax 2-0; both 4) |
+| Mexico-Ecuador | 1-0 | 1-0 (90') | 2-0 | 4 | 4 | 0 | none (EV-pick) |
+| England-DR Congo | 2-0 | 2-0 (90') | 2-1 | 4 | 4 | 0 | none (EV-pick; sub-floor FULL120 flip→1-0 = noise, no-fire) |
+| Belgium-Senegal | 2-1 | 2-1 (FULL120) | 3-2 | 4 | 4 | 0 | EV-UPDATE net-0 (90' 1-0→FULL120 2-1, council FIRED, entered followed) |
+| USA-Bosnia&H. | 2-0 | 2-0 (90') | 2-0 | 9 | 9 | 0 | none (EV-pick, exact PLENO) |
+| Spain-Austria | 2-0 | 2-0 (90') | 3-0 | 4 | 4 | 0 | none (EV-pick; sub-floor FULL120 flip→1-0 = noise, no-fire) |
+| Portugal-Croatia | 2-1 | 1-0 (FULL120) | 2-1 | 9 | 4 | **+5** | TILT-OVERRIDE WON (council FIRED, argmax 1-0; 2-1 hit PLENO; L46 variance≠edge) |
+| Switzerland-Algeria | 2-1 | 1-0 (FULL120) | 2-0 | 4 | 4 | **+0** | TILT-OVERRIDE net-0 (council FIRED, argmax 1-0; entered 2-1; both 4) |
+| **period total** | | | | **42** | **37** | **+5** | TILT +5 (count 3) · EV-UPDATE +0 (BEL-SEN flip-followed) · DRAW-EXC 0 · none 0 |
+
 ## Running tally - as of 2026-06-30 (R32 day-3; Ivory Coast-Norway played — PLENO)
 - **total dual-track gap = +18**  - `== script` (`cumulative()["override_value"] = +18`, `summary` verified
   2026-06-30: `Sigma us_entered = 273`, `us_model = 255`, n=77). Moved +13 -> +18 this row (+5, the lone
