@@ -17,6 +17,30 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-04 (R32 CLOSE-OUT; final 3 games AUS-EGY, ARG-CPV, COL-GHN played — R32 COMPLETE 16/16)
+> Recorded 2026-07-04 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-04 123745.png`,
+> format `ENTERED(actual)`; **full 16/16 board cross-check CLEAN** vs decisions.csv, all 13 prior R32 rows
+> match) + the pre-lock snapshot `md4_2026-07-03T17-11-26Z.json` (n_events=3, **single-batch** backfill). The
+> KO cadence was paused after the Jul-3 T-1h recheck; these 3 games were entered in pollaya but never logged.
+> **`pick` rule (L57):** 90' EV-argmax (council NO-FIRE at Jul-3 T-7h/T-1h, all decisive; entered == argmax ==
+> baseline, 3/3 HOLD). Resolved by fixture_id + full team strings (**L49: right-col board "ARG" = Argentina
+> sun-flag `3e161b2…`, NOT Algeria**). Per-game points **reverse-engineered** from the additive rubric
+> (exact 3 / outcome 3 / team-goals 1 ea / GD 1) and confirmed == the code's `pts_entered` (Sebas Jul-4:
+> never eyeball a tier). Recompute green (record → src.optimizer.points, 3/3 both tracks); 85 pre-existing
+> rows byte-identical.
+- **total dual-track gap = +23**  - `== script` (`cumulative()["override_value"] = +23`, `summary` verified
+  2026-07-04: `Sigma us_entered = 328 == board` (**RANK 1/27**, +14 over Lucas LDC 314, +18 over Greg Langer
+  310, +24 over GonzaloVillagran 304), `us_model = 305`, n=88). UNCHANGED this period (all 3 = none / +0).
+- **tilt-only = +13 · EV-UPDATE = +6 · DRAW-EXCEPTION = +4** — ALL UNCHANGED (no override this period).
+- reconciliation: **tilt(+13) + EV-UPDATE(+6) + DRAW-EXCEPTION(+4) + none(0) = +23 == script.**
+
+| fixture | entered | model pick | actual (120') | pts_ent | pts_model | override | flag |
+|---------|:-------:|:----------:|:-------------:|:-------:|:---------:|:--------:|------|
+| Australia-Egypt | 0-1 | 0-1 (90') | 1-1 | 1 | 1 | 0 | none (EV-pick; Egypt drew, adv. pens; team-goals EGY 1==1 → 1) |
+| Argentina-Cape Verde | 2-0 | 2-0 (90') | 3-2 | 3 | 3 | 0 | none (EV-pick; correct winner only → 3) |
+| Colombia-Ghana | 1-0 | 1-0 (90') | 1-0 | 9 | 9 | 0 | none (EV-pick, exact PLENO → 9) |
+| **period total** | | | | **13** | **13** | **+0** | none 3 · TILT 0 · EV-UPDATE 0 · DRAW-EXC 0 |
+
 ## Running tally - as of 2026-07-03 (R32 day-4/day-5 reconcile; 8 played fixtures FRA-SUE → SUI-ALG)
 > Recorded 2026-07-03 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-03 091850.png`,
 > format `ENTERED(actual)`) + pre-lock snapshots (`md4_2026-06-30T19-16-45Z` for the 3 early games not in

@@ -830,7 +830,32 @@ the latest snapshot has every un-recorded fixture. (c) `pick` for a KO row = the
 where the council FIRED (register the flip, L44/NOR-FRA precedent), else the 90' argmax (sub-floor
 favourite ET-flips are noise, not a pick change) — this keeps override classification faithful.
 
+## L60 — reverse-engineer per-game points from the additive rubric category-by-category; never eyeball a tier (2026-07-04, Sebas)
+**Pattern:** in the R32 close-out plan I hand-labelled the 3 final games' points by feel — AUS-EGY "0",
+ARG-CPV "4" — and both were WRONG. The aggregate happened to still sum to +13 (my errors cancelled), which
+is exactly how a lazy per-game count hides: the reconcile-to-board gate passes on the total while the
+attribution is nonsense. Sebas corrected: AUS-EGY entered 0-1 / actual 1-1 = **1** (Egypt team-goals 1==1
+only, outcome wrong); ARG-CPV entered 2-0 / actual 3-2 = **3** (correct winner only — GD +2≠+1, no team-goals);
+COL-GHN 1-0/1-0 = **9** (exact). The `decision_score.record()` code (encoding `memory/rules.md`) computed
+1/3/9 exactly — confirming the reverse-engineering.
+**Rule:** for EVERY recorded game, compute the four additive categories explicitly — exact-score (+3 iff both
+goals) · outcome 1/X/2 (+3) · team-goals (+1 **per team**, max 2, iff that team's predicted goals == actual) ·
+goal-difference (+1 iff predicted margin == actual margin) — sum them, and confirm the sum == the code's
+`points_actual`/`pts_entered` PER GAME, not just the board aggregate. Achievable totals ∈ {0,1,3,4,9} (5–8 are
+unreachable). Never assert a tier by feel; a total that reconciles can still hide swapped per-game attributions.
+
+## R16 baseline map — 2026-07-04 (KO cadence, Phase-2 seed; read-only, I-HITL)
+Amortized fetch `md4_2026-07-04T11-24-50Z.json` (quota 492, 8/8 F27, in-window==expect==8). NO-BASELINE
+flip-check (first fetch of a new round = baseline establishment, not a bug). FULL120 `ko_adjust` per game →
+**today (Jul-4) both no-fire**: Canada-Morocco 0-1 (Morocco 0.538, argmax==modal), Paraguay-France 0-2
+(France 0.815) → HOLD the EV-argmax, no council to dispatch. 5 future boards council-eligible at their own
+T-1h (weak-fav <0.55 AND argmax≠modal): Brazil-Norway 2-1, Mexico-England 0-1, **Portugal-Spain 1-2 [FULL120
+flip from 90' 0-1 — the España node, Jul-6]**, USA-Belgium 1-2, Switzerland-Colombia 0-1; Argentina-Egypt
+no-fire (0.711 strong fav, HOLD 1-0). Councils convene at each T-1h on FRESH odds/lineups, never early on the
+seed odds. Baselines are PENDING Sebas entry (nothing logged to decisions.csv until played/reconciled).
+
 ## Code-review gate log (one-line cadence; lighter than the L# blocks — see CLAUDE.md → Review Gate)
+- 2026-07-04 · R32 CLOSE-OUT reconcile (3 final games AUS-EGY/ARG-CPV/COL-GHN) + R16 baseline map + council check = DATA-OPS, **0 code edits** (ran the tested `/ko-matchday-cadence` skill verbatim) → `/code-review` **N/A** (no diff); RED gates instead = pytest 269/0, frozen-diff EMPTY, Lag-gate board 328−CSV 315==13, P4 reconcile us_entered 328==board + 85 rows byte-identical + **per-game points reverse-engineered==code (L60)**, override +23==script, standings 328/rank1, R16 fetch 8/8 F27 in-window==expect, B4 flipcheck+ko byte-identical, full-string bind (L49), I-3/I-HITL clean. Today both no-fire (Canada-Morocco 0-1 / Paraguay-France 0-2 HOLD); no council dispatched. Plan-preflight designed it (plan `luminous-strolling-tower.md`).
 - 2026-07-03 · KO forensic bug-hunt + R32 day-4/5 reconcile + day-5 cadence. CODE: `src/ko_adjust.py` diagonal-wipe fix (BUG-1, L58) + regression test 10 + golden re-pin → `/code-review` **high (8 angles / 3 finder agents)** = **1 conventions finding ADOPTED** (docstring datum needs a source artifact, CLAUDE.md rule 3) + 3 cleanup findings PUSHED BACK w/ reasoning (golden-literal dup is the point of a golden; `places=12` sum-check is load-bearing for the test premise); frozen diff EMPTY (src/model|optimizer|strength|context untouched), suite 268→269 green, commit `bc8cdd2`. DATA-OPS (reconcile + cadence): `/code-review` **N/A** (no code diff); RED gates instead = G3a us_entered 315==board, G3b ledger identity +23==script, G3c standings_log, 77 rows byte-identical, fetch 3/3 F27, I-3/I-HITL clean, commit `e281987`. Bug found by an INDEPENDENT re-derivation (separate verifier), not self-review, per the goal contract.
 - 2026-07-01 · R32 day-4 cadence (fetch + 8-fixture flip-check + Belgium-Senegal ko_adjust f-band + 4-lens council + verdict.md) = DATA-OPS, scratchpad-only drivers (`r32_flipcheck.py`, `bel_sen_driver.py`), **no committed src** → `/code-review` **N/A** (data-ops/cadence per the Review Gate); RED gates instead = frozen-diff EMPTY + B4 byte-identical + F27 8/8 + decisions.csv UNTOUCHED + I-3 clean. Commit `1e930ff` (verdict.md + snapshot only).
 - 2026-07-01 · NEW `src/ko_cadence.py` + `tests/test_ko_cadence.py` (17) + `.claude/skills/ko-matchday-cadence/SKILL.md` (KO cadence skill — formalizes the scratchpad flip-check + ko_adjust drivers into a deterministic tested CLI; non-frozen, reuses FROZEN engine + ko_adjust verbatim, imports only PUBLIC symbols, I-3 clean, golden values pinned to the Belgium-Senegal run) · `/code-review` **high (8 angles / 4 finder agents)** → **10 findings FIXED** (3× None-deref on ko_adjust `best_draw=None` [cand_set / f-band / _print_ko], empty-table IndexError in fixture_eval, LineGuardStop batch-abort → GUARD-STOP verdict, I-3 test CWD-relative + inside skipUnless → moved to an UNCONDITIONAL class + `inspect.getsource`, private `_select_event` import from frozen run_matchday → local reimpl, `ko_rule` un-threaded → `--ko-rule`, ko_flip buried on the council line → promoted to the FULL120 PICK line, self-baseline double-load → fresh-scan refactor) + **2 skipped with reasoning** (`_score`/`_parse_score` dups — both codebase formatters are PRIVATE so nothing public to reuse, and importing the frozen `decision_score` scoring module into a read-only cadence tool for a 2-line parser is worse coupling; ko_adjust 0.65 recompute — negligible on a read-only CLI, a float-compare guard is more fragile than the ~1ms save) · suite **251→268** green, frozen diff EMPTY, E2E reproduces the manual P2/P3 tables. Commit `cda4ddb`. **Lesson: a durable reusable tool earns robustness a one-session scratchpad skips** — the review's top 5 bugs (None-derefs, empty-table, batch-abort) were all "impossible in tonight's data" but reachable on future KO boards; formalizing scratchpad→module is exactly when to pay that down.
