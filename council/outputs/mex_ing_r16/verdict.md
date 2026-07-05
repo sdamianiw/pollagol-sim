@@ -97,3 +97,45 @@ verdict our own Belgium-Senegal council reached in R32, now with the full histor
   **P(1-1 final) ≈ 9.9%** (below the 11% quoted). And corrected pens share **0.642 vs engine f_model
   0.637** = a near-exact independent calibration match. Every correction moves AGAINST the 1-1 entry;
   the **ENTER 0-1** verdict is unchanged and firmer.
+
+---
+
+## FACE-OFF ADDENDUM — 0-1 vs 1-2 (Sebas-mandated second council, 2026-07-05 ~19:20Z)
+> Zero-invasive: public `ko_candidates` API on scratchpad snapshot copies; frozen files untouched;
+> B4 replay byte-identical. Success criteria defined BEFORE running (G1–G6).
+
+### Deterministic backbone
+FULL120 EVs: **0-1 = 2.676 > 1-2 = 2.534 (+0.142)** > 0-2 = 2.286 > 1-0 = 2.257 > 2-1 = 2.136 > 1-1 = 1.671.
+Both picks = one-goal England win → the face-off is EXACTLY **P(Mexico scores | one-goal England win)**;
+engine conditional = **0.477** (to-nil 0.523). Engine grid: P(MEX≥1) 0.661, **P(BTTS) 0.479**.
+
+| Gate | Test | Result |
+|---|---|---|
+| G1 base gap | ≥ +0.035 noise floor | **PASS** +0.142 (4× floor) |
+| G2 totals sweep | crossover p_over* vs market | **PASS** — bisected **p_over* = 0.4866**; cross-book de-vig 0.38–0.41, juice drifting UNDER; +8.9pp gap, no evidence |
+| G3 ENG-prob sweep | crossover vs drift band | **PASS** — England firming WIDENS 0-1's lead (+0.19 @45% → +0.53 @60%); 1-2 has NO route via team strength (0-2 passes it by ENG 55%) |
+| G4 f-band | ordering all cageyness | **PASS** — 0-1 leads +0.118…+0.175 at every f |
+| G5 council | any rule-confirmed EV-UPDATE to 1-2? | **NONE** (3 lenses + synthesis, below) |
+| G6 B4 | byte-identical replay | **PASS** |
+
+### Panel (3 lenses + synthesis; sourced 2026-07-05)
+**Totals-market:** cross-book p_over(2.5) **0.38–0.41** (DK 38.1 / consensus 40.6), juice moved mildly
+toward the UNDER; **BTTS Yes de-vig ≈ 46% vs engine 47.9% — market and engine AGREE** (the lens mis-guessed
+the engine number; audited). Altitude consensus = low-total-REINFORCING (England can't press at 2,240m;
+Mexico 4 straight Azteca clean sheets). Zero evidence for 0.49.
+**Adversarial (1-2 steelman, LOW):** landed = Rice nerve-pain, Azteca 1985 (England's only visit, lost 0-1),
+late-push dynamics — all public/priced. **Premise-correction: England have 2 clean sheets in 4** (0-0 Ghana,
+2-0 Panama), not 1; Mexico's 8 GF came vs RSA/KOR/CZE/ECU; Aguirre's low block produces 0-1 losses, not 1-2.
+**Historian-D:** England KO-win shape ~50% to-nil (4 nil / 4 conceding since 2018); Mexico scored in all
+4 games, unbeaten at Azteca since 2013 (W70 D17 L2/89); Azteca '86 inflator negligible (2.6 vs 2.54 g/g);
+**all-WC one-goal wins split 1-0:2-1 = 182:152 = 54.5% to-nil**. Leaned "context favors 1-2".
+**Synthesis (audited):** the historian's OWN base rate (54.5/45.5) matches the engine conditional
+(52.3/47.7) within 2pp — **model, raw history, and the live totals market converge independently on 0-1**;
+the contextual 1-2 narrative explains the number post-hoc, it does not update it.
+
+### VERDICT — HOLD England 0-1 (entered pick correct; no change)
+**Reopen condition at the 22:45Z lineup reveal (conservative, BOTH required):** Rice absent/restricted AND
+England fielding a high line that exposes Spence to Quinones/Alvarado pace. Either alone is priced.
+**Plain answer:** the totals market already knows Mexico always scores at the Azteca — and still prices the
+game under (0.40). Switching to 1-2 requires a 9pp totals-market error that the base rate, the engine, and
+the drift direction all independently contradict.
