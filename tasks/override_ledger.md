@@ -17,6 +17,23 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-05 (R16 day-1: Canada-Morocco + Paraguay-France played)
+> Recorded 2026-07-05 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-05 195847.png`,
+> format `ENTERED(actual)`) + pre-lock snapshot `md4_2026-07-04T16-14-23Z.json` (both fixtures in it, ONE
+> backfill batch — L59). **`pick` rule (L57):** 90' EV-argmax (council NO-FIRE at the Jul-4 T-1h recheck for
+> both; entered == argmax == baseline). Per-game points **reverse-engineered from the additive rubric (L60)**
+> and confirmed == code `pts_entered`: Canada-Morocco entered 0-1 / actual **0-3** → outcome+3, CAN
+> team-goals+1 = **4** · Paraguay-France entered 0-2 / actual **0-1** → outcome+3, PRY team-goals+1 = **4**.
+> Σ +8 → **us_entered 328 → 336 == board (rank 1/27, +15 over #2)**; 88 prior rows byte-identical.
+>
+> | fixture | entered | actual | pts | deviation_flag | override |
+> |---|---|---|---|---|---|
+> | Canada-Morocco `9c7073ae…` | 0-1 | 0-3 | 4 | `none` (entered == pick) | +0 |
+> | Paraguay-France `c798a1ff…` | 0-2 | 0-1 | 4 | `none` (entered == pick) | +0 |
+>
+> **Running override_value: +23 (UNCHANGED)** == `cumulative(decisions.csv)` == tilt +13 / EV-UPD +6 /
+> DRAW-EXC +4 identity. n=90 rows.
+
 ## Running tally - as of 2026-07-04 (R32 CLOSE-OUT; final 3 games AUS-EGY, ARG-CPV, COL-GHN played — R32 COMPLETE 16/16)
 > Recorded 2026-07-04 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-04 123745.png`,
 > format `ENTERED(actual)`; **full 16/16 board cross-check CLEAN** vs decisions.csv, all 13 prior R32 rows
