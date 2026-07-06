@@ -53,3 +53,71 @@ Quota 486 = no constraint. This is the NOR-FRA/L44 pattern: pick changes only on
 ## VERDICT
 **CONDITIONAL: hold 2-1 on the board now; final entry = fresh FULL120 argmax at the 23:00Z T-1h
 recheck** (expected: genuinely close; the Balogun retrace determines it). Deadline 23:50Z.
+
+---
+
+## FINAL COUNCIL ADDENDUM — full-drill adjudication at T-2.5h (2026-07-06 ~21:30Z)
+
+> Sebas-mandated deep council on the T-1h FLIP (2-1 -> 1-2). Pre-registered success criteria SC1-SC5
+> fixed BEFORE the lens outputs. Deterministic layer this session: symmetry decomposition
+> (`usabel_symmetry.py`), H-pin pattern scan (12/12 recorded boards), drift trajectory, P(exact) table.
+
+### Deterministic findings (all reproduced, zero-invasive)
+1. **21:06Z market: PERFECTLY even** (devig USA .357895 / BEL .357895, six decimals).
+2. **The FULL120 gap 1-2 minus 2-1 (+0.130) is 100% engine-internal**: with rho frozen the model holds
+   24.8% draw vs the market's 28.4%; the residual spills to the AWAY column (matrix-implied BEL 39.0 /
+   USA 36.2; symmetrized matrix -> gap exactly 0.0000). NOT a tonight-bug: **H-pinned 12/12** recorded
+   boards (engine always matches home devig exactly; draw-vs-model residual flows to away, 9/12) —
+   the same pre-registered character that produced all 92 rows, rank 1/27, and the MEX-ING 0-1 hit.
+   It also EXPLAINS the drift-harness flip boundary (+3pp == the internal away-offset).
+3. **Trajectory** (5 snapshots Jul-4 -> Jul-6): BEL +2.6pp -> BEL +1.6 -> USA +3.1 (Balogun overturn)
+   -> USA +4.7 (peak) -> 0.0 (full retrace). Totals monotonic UP (p_over .541 -> .583, mu 2.84 -> 3.03).
+4. **P(exact@120')**: 1-2 = .1028 > 2-1 = .0986 (same internal tilt; symmetrized they tie).
+5. **Coolbet 21:20Z (Sebas's own NON-US book, photo): USA 2.60 / 3.50 / 2.85 -> devig USA +3.3pp** —
+   contradicts the patriot-inflation hypothesis (non-US book prices USA AHEAD); sits exactly AT the
+   crossover -> even on Coolbet's prices 1-2 vs 2-1 is sub-noise (~+0.01 for 2-1, < 0.030 floor).
+
+### Panel split and resolution (SC1-SC5)
+- **Doctrine lens: 1-2 MANDATORY.** The frozen engine is the pre-registered decision procedure;
+  symmetrizing the matrix at T-2.5h is itself the unfrozen intervention. Under co-argmax framing every
+  tie-breaker (P(exact) under the frozen engine, ledger none-vs-TILT, zero switching cost, bias guard)
+  independently selects 1-2. 2-1 from-3rd-place test FAILS (coin-flip differentiation = tilt).
+- **Adversarial lens: STAY 2-1** — FM1: entering 1-2 launders a calibration artifact into a direction
+  call; coin goes to the entered pick. Its externals: patriot-money = soft BEL shadow; fatigue/H2H
+  priced; lineup EV ~0.03-0.05 pts (De Bruyne = the one real unknown); FM5 0-1/1-0 REFUTED (mu 3.03).
+- **Resolution (per pre-registered SC):** SC1 — the market is directionless and NO sourced external
+  lean survives scrutiny: the patriot-money shadow (the adversarial's strongest external, its basis for
+  a "true" BEL lean) is CONTRADICTED by the Coolbet observation; fatigue + H2H were available to the
+  market that prices even; the pre-spike BEL equilibrium is superseded by the live price (martingale).
+  SC2 therefore applies: **absent sourced external evidence, the pre-registered procedure's argmax
+  stands — 1-2.** The adversarial's remaining case reduces to churn-avoidance (which it itself called
+  operationally addressable) plus a NEW ledger class ("COIN-FLIP-NEUTRAL") that does not exist in the
+  standing taxonomy — inventing it at T-2.5h is exactly the unfrozen intervention FM1 warns against,
+  applied to the other side. Symmetric interventions cancel; process remains; process says 1-2.
+- Both lenses AGREE on: never 1-1 (SC4); 0-1/1-0 refuted; the EV stakes of the direction call are tiny
+  (symmetrized gap 0.0000; regret bounds ~0.01-0.05 pts) — this is a governance decision, not an EV one.
+
+### VERDICT — ENTER **Belgium 1-2** before 23:50Z (change from 2-1)
+Classification when recorded: `pick = 1-2` (L57, council fired) and entered 1-2 -> **`none`** (clean).
+Sleep protocol: no rule requires staying awake (drift re-flip P ~0.4% normal / ~19% under 3-sigma news;
+regret ~0.01). OPTIONAL 23:30Z alarm per adversarial FM4: the single name that shifts direction is
+**De Bruyne OUT (-> USA lean; would reopen 2-1)**; Pulisic OUT reinforces 1-2. If asleep: 1-2 stands,
+tail regret ~0.03-0.05 pts accepted and documented.
+
+### SHARP-MARKET LENS (landed post-adjudication; confirms + sharpens, no verdict change)
+- **Sharp reference = perfect pick'em:** VSiN USA 36.0/BEL 36.0 devig; **Asian handicap = level ball (0)**
+  — the cleanest direction signal there is. bet365 UK to-advance **exactly 50/50**.
+- **Patriot premium quantified:** FanDuel USA +6.1pp vs VSiN 0pp (≈3pp USA premium on FD, 1.5pp on DK);
+  our Odds-API consensus (0.0pp) and Coolbet (+3.3pp) sit between retail and sharp. Confirms the premium
+  EXISTS on retail books but the sharp read is EVEN — not Belgium-ahead: SC1 resolution unchanged.
+- **External scoreline models lean 1-2:** OddsShark computer projects BEL 1.8 vs USA 1.4 goals; decisive
+  correct-score ranking **1-2 > 0-1 > 2-1 > 1-0** (Dimers/OddsShark). Independent of our engine, the
+  external Poisson layer puts 1-2 as the TOP decisive scoreline — the engine's argmax and the outside
+  models agree even though they disagree with the retail moneyline. Strengthens 1-2.
+- **Lineups ~21:25Z: both XIs fully fit** (De Bruyne/Doku/Lukaku/Trossard confirmed; Balogun eligible;
+  only Roldan doubtful, non-starter). No reopen trigger live; the 23:00Z lineup drop is residual tail only.
+- Drift driver confirmed: 55% of tickets Belgium + Balogun-bump mean reversion + model xG leans.
+
+**FINAL (unchanged): ENTER Belgium 1-2 before 23:50Z.** Direction = sharp pick'em; scoreline = engine
+argmax + external-model top decisive + P(exact) + ledger `none` all select 1-2; only retail patriot
+premium argues 2-1 and it is the one input class every lens agreed to distrust.
