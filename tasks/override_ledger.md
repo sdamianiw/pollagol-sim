@@ -17,6 +17,25 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-06 (R16 day-2: Brazil-Norway + Mexico-England played)
+> Recorded 2026-07-06 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-06 191920.png`,
+> format `ENTERED(actual)`) + pre-lock snapshot `md4_2026-07-05T18-21-51Z.json` (both fixtures in it, ONE
+> backfill batch — L59). **`pick` rule (L57):** FULL120 argmax (BOTH councils FIRED Jul-5). Per-game points
+> reverse-engineered (L60) and confirmed == code `pts_entered`: Brazil-Norway entered 2-1 / actual **1-2** →
+> no category hits (signed GD +1 ≠ −1) = **0** — the FIRST game to disambiguate signed-vs-absolute GD on the
+> live board (board pays 0 ⇒ GD is SIGNED, == frozen `points()`) · Mexico-England entered 0-1 / actual
+> **2-3** → outcome+3, GD+1 = **4** (the council REVERT 1-1→0-1 was worth +3 vs keeping 1-1).
+> Σ +4 → **us_entered 336 → 340 == board (rank 1/27, +17 Lucas 323 / +19 Greg 321)**; 90 prior rows
+> byte-identical (md5 53057eac…).
+>
+> | fixture | entered | actual | pts | deviation_flag | override |
+> |---|---|---|---|---|---|
+> | Brazil-Norway `a4634eae…` | 2-1 | 1-2 | 0 | `none` (entered == pick) | +0 |
+> | Mexico-England `e61a7b47…` | 0-1 | 2-3 | 4 | `none` (entered == pick) | +0 |
+>
+> **Running override_value: +23 (UNCHANGED)** == `standings 2026-07-06` script output == tilt +13 /
+> EV-UPD +6 / DRAW-EXC +4 identity. n=92 rows.
+
 ## Running tally - as of 2026-07-05 (R16 day-1: Canada-Morocco + Paraguay-France played)
 > Recorded 2026-07-05 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-05 195847.png`,
 > format `ENTERED(actual)`) + pre-lock snapshot `md4_2026-07-04T16-14-23Z.json` (both fixtures in it, ONE
