@@ -64,6 +64,12 @@ app shows the Over CLEARLY favored (≥ ~-140-equivalent on O2.5) would 2-1 be i
 Classification when recorded: council no-fire (user-mandate convening) → pick = 90'==FULL120 argmax 1-0;
 entered 1-0 → `none`.
 
+## T-1h ADDENDUM (18:38Z refetch `md5_2026-07-09T18-37-56Z`, delivered T-70min) — **CONDITION RESOLVED: ENTER 1-0, FINAL**
+Flip-check vs 17:23Z baseline: **4/4 HOLD, gap_base +0.0000**, B4 byte-identical. Fresh FRA-MAR devig
+.603/.253/.144 (France −1pp, noise), **p_over 0.481** — the ≥0.55 flip condition is NOT met and the totals
+market did not move toward the Over. FULL120 argmax **1-0 (3.414)** vs 2-1 (3.281) at every f. The
+conditional rule closes on the 1-0 branch; no further check before the 19:50Z lock.
+
 ## Same-cadence siblings (17:23Z board, `md5_2026-07-09T17-23-16Z`)
 - **ESP-BEL (Jul-10 19:00Z, lock 18:50Z): RAZOR** — FULL120 1-0 (3.228) vs 2-1 (3.213) = +0.015 SUB-FLOOR,
   argmax flips to 2-1 at f=1.00; p_over 0.526 and rising would flip it. **Council at its own T-1h
