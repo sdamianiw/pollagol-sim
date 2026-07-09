@@ -17,6 +17,32 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-09 (R16 CLOSE-OUT — final 4 games POR-ESP, USA-BEL, ARG-EGI, SUI-COL; R16 COMPLETE 8/8)
+> Recorded 2026-07-09 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-09 185449.png`,
+> format `ENTERED(actual)`); the Jul-7 session ran its councils but never recorded (cadence pause — same
+> L59 pattern as Jul-3). Backfill = FOUR single-fixture batches, each from the game's OWN freshest pre-lock
+> snapshot (17:33Z / 22:16Z / 15:40Z / 18:43Z — a played game drops out of later snapshots; freshest-first
+> order so the idempotent skip protects earlier fills). **`pick` rule (L57):** POR-ESP & SUI-COL = FULL120
+> argmax (councils FIRED) · USA-BEL = FULL120 argmax off the T-1h 22:16Z refetch (CONDITIONAL verdict tree:
+> USA-lead 2.65pp < 3pp → 1-2; the tree executed correctly) · ARG-EGI = 90' argmax 1-0 (no-fire, fav 0.719).
+> Per-game points reverse-engineered (L60) and confirmed == code `pts_entered`: POR-ESP 1-2/0-1 = outcome+3,
+> signed GD+1 = **4** · USA-BEL 1-2/1-4 = outcome+3, USA-goals+1 = **4** · ARG-EGI 2-0/3-2 = outcome only =
+> **3** · SUI-COL 0-1/0-0(pens) = SUI-goals = **1**. Σ +12 → **us_entered 340 → 352 == board (rank 1/27,
+> +24 Greg 328 / +25 Lucas 327 / +31 Gonzalo 321)**; 92 prior rows byte-identical (git diff = 4 insertions).
+>
+> | fixture | entered | actual | pts | deviation_flag | override |
+> |---|---|---|---|---|---|
+> | Portugal-Spain `16ed3adc…` | 1-2 | 0-1 | 4 | `none` (entered == pick) | +0 |
+> | USA-Belgium `810f80b3…` | 1-2 | 1-4 | 4 | `none` (entered == pick, conditional tree) | +0 |
+> | **Argentina-Egypt** `190922af…` | **2-0** | 3-2 | 3 | **TILT-OVERRIDE** (pick 1-0 at every f @15:40Z; entered the MODAL 2-0; 1-0 → 4 via signed GD) | **−1** |
+> | Switzerland-Colombia `a6da973c…` | 0-1 | 0-0 | 1 | `none` (entered == pick) | +0 |
+>
+> **Running override_value: +23 → +22** == `summary` script output. Identity: tilt +13−1=**+12** /
+> EV-UPD +6 / DRAW-EXC +4 = +22. n=96 rows. **L8/L32 honest read:** the ARG-EGI 2-0 was a gut modal-tilt
+> that KEPT the outcome but dropped the signed-GD point — a −1 tilt in a game the pick had fully covered;
+> the ledger's tilt-only line worsens to +12, still dominated by the one lucky ARG-AUT +5. NOT permission
+> to tilt the QFs (the council's HOLD 1-0 was on the board at T-6h and was correct at T-20min).
+
 ## Running tally - as of 2026-07-06 (R16 day-2: Brazil-Norway + Mexico-England played)
 > Recorded 2026-07-06 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-06 191920.png`,
 > format `ENTERED(actual)`) + pre-lock snapshot `md4_2026-07-05T18-21-51Z.json` (both fixtures in it, ONE

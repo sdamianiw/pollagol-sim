@@ -89,6 +89,10 @@ order is FIXED (L59). For each played game not yet in `decisions.csv`:
    **TWO-BATCH** when games span snapshots (a game drops out of the API once played, so an early game needs
    its own earlier snapshot; ONE `backfill` call per snapshot, else the loop aborts on the absent fixture):
    `python -m src.decision_score backfill --snapshot data/snapshots/md4_<pre-lock-UTC>.json`
+   **OVERLAP case (L61, 2026-07-09):** when the games' snapshots OVERLAP (an early snapshot also contains
+   the later games), a chronological batch loop greedily backfills the later rows from the OLDEST snapshot
+   (wrong provenance) and reverse order ABORTS on the earlier game. Blank/fill **ONE fixture at a time,
+   freshest snapshot first** — the idempotent `modal`+`m_h` skip then protects each already-correct row.
 3. **record** the 120' result (pens excluded) + entered pick:
    `python -m src.decision_score record <fid> "<H-A actual>" --entered-pick "<H-A entered>"`
 4. **summary + reconcile:** `python -m src.decision_score summary` → `Σ us_entered == board` (L45 I-NOFAB);
