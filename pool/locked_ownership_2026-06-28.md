@@ -70,9 +70,11 @@ We hold trailing-but-live lottery tickets, not dead ones.
    Spain/Kane/Bruno dies while their pick lives). Only THEN does the "de-facto chaser → controlled match variance"
    branch open (see `[[ko-leader-doctrine]]`); until then, FREEZE the match layer.
 
-## Open check (Sebas-side, still UNVERIFIED)
-- **Tiebreaker rule** on pollaya (most exact scores? most outcomes? entry order?). At +4 over a 3-way tie a tie
-  is plausible; this is the one input the stress-test flagged that we still cannot confirm from the app/repo.
+## Open check — RESOLVED 2026-07-10
+- **Tiebreaker rule CONFIRMED (Sebas, in-app, 2026-07-10): most exact scores (plenos).** Was UNVERIFIED
+  since the Jun-28 stress-test. Strategic consequence: the council's max-P(exact@120') secondary sort on
+  sub-noise EV gaps is POOL-OPTIMAL (plenos are the tiebreak currency), not just a convention — first
+  applied live on the ESP-BEL QF razor (2026-07-10).
 
 ---
 Sources (web-verified 2026-06-28): ESPN Golden Boot tracker; PlanetFootball WC2026 stat leaders; SofaScore assist

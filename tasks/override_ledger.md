@@ -17,6 +17,21 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-10 (QF day-1 game: France-Morocco played)
+> Recorded 2026-07-10 (Sebas verbal + web ×4: FIFA/ESPN/CNN/NPR — France **2-0**, 90', Mbappé 60' +
+> Dembélé 66'). Entered 1-0 == `pick` (deep council ENTER 1-0, `council/outputs/fra_mar_qf/`; T-1h
+> conditional resolved on the 18:38Z refetch, p_over .481 << .55). L60: outcome+3, MAR-goals+1 = **4**.
+> Backfill `md5_2026-07-09T18-37-56Z` (single fixture, no overlap). Σ +4 → **us_entered 352 → 356**
+> (n=97; board screenshot pending — Sebas reports rank 1 unchanged, ~+24/+25/+31 gaps intact).
+>
+> | fixture | entered | actual | pts | deviation_flag | override |
+> |---|---|---|---|---|---|
+> | France-Morocco `b6e926d7…` | 1-0 | 2-0 | 4 | `none` (entered == pick) | +0 |
+>
+> **Running override_value: +22 (UNCHANGED)** == `summary` script. Identity: tilt +12 / EV-UPD +6 /
+> DRAW-EXC +4. NEW POOL DATUM (Sebas, in-app): **tiebreaker = most plenos** — max-P(exact) tiebreak on
+> sub-noise gaps is now pool-optimal (first applied: ESP-BEL QF council, same day).
+
 ## Running tally - as of 2026-07-09 (R16 CLOSE-OUT — final 4 games POR-ESP, USA-BEL, ARG-EGI, SUI-COL; R16 COMPLETE 8/8)
 > Recorded 2026-07-09 from the board (`PICKS VS ACTUAL RESULTS/Captura de pantalla 2026-07-09 185449.png`,
 > format `ENTERED(actual)`); the Jul-7 session ran its councils but never recorded (cadence pause — same
