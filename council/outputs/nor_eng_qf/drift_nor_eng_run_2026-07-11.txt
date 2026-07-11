@@ -1,0 +1,52 @@
+LIVE devig 0.2469/0.2469/0.5063 p_over 0.5723 argmax=(1, 2) 1-2=2.9450 0-1=2.8367 0-2=2.6901 2-1nor=1.7919
+CONTROL argmax=(1, 2) max|dEV|=0.00e+00 -> PASS
+  ENG-4pp    argmax=(1, 2)  gap(1-2 vs 0-1)=+0.1175
+  ENG-2pp    argmax=(1, 2)  gap(1-2 vs 0-1)=+0.1143
+  ENG+2pp    argmax=(1, 2)  gap(1-2 vs 0-1)=+0.0992
+  ENG+4pp    argmax=(1, 2)  gap(1-2 vs 0-1)=+0.0862
+  DRAW-2pp   argmax=(1, 2)  gap(1-2 vs 0-1)=+0.1106
+  DRAW+2pp   argmax=(1, 2)  gap(1-2 vs 0-1)=+0.1057
+  po-7pp     argmax=(1, 2)  gap(1-2 vs 0-1)=+0.0035
+  po-3.5     argmax=(1, 2)  gap(1-2 vs 0-1)=+0.0579
+  po+3.5     argmax=(1, 2)  gap(1-2 vs 0-1)=+0.1546
+  po+7pp     argmax=(1, 2)  gap(1-2 vs 0-1)=+0.1966
+STABILITY: 10/10 keep (1, 2)
+  po=0.40 argmax=0-1 gap(1-2 vs 0-1)=-0.1786
+  po=0.41 argmax=0-1 gap(1-2 vs 0-1)=-0.1593
+  po=0.42 argmax=0-1 gap(1-2 vs 0-1)=-0.1403
+  po=0.43 argmax=0-1 gap(1-2 vs 0-1)=-0.1217
+  po=0.44 argmax=0-1 gap(1-2 vs 0-1)=-0.1034
+  po=0.45 argmax=0-1 gap(1-2 vs 0-1)=-0.0854
+  po=0.46 argmax=0-1 gap(1-2 vs 0-1)=-0.0677
+  po=0.47 argmax=0-1 gap(1-2 vs 0-1)=-0.0503
+  po=0.48 argmax=0-1 gap(1-2 vs 0-1)=-0.0333
+  po=0.49 argmax=0-1 gap(1-2 vs 0-1)=-0.0166
+  po=0.50 argmax=0-1 gap(1-2 vs 0-1)=-0.0002
+  po=0.51 argmax=1-2 gap(1-2 vs 0-1)=+0.0158
+  po=0.52 argmax=1-2 gap(1-2 vs 0-1)=+0.0315
+  po=0.53 argmax=1-2 gap(1-2 vs 0-1)=+0.0469
+  po=0.54 argmax=1-2 gap(1-2 vs 0-1)=+0.0620
+  po=0.55 argmax=1-2 gap(1-2 vs 0-1)=+0.0767
+  po=0.56 argmax=1-2 gap(1-2 vs 0-1)=+0.0911
+  po=0.57 argmax=1-2 gap(1-2 vs 0-1)=+0.1052
+  po=0.58 argmax=1-2 gap(1-2 vs 0-1)=+0.1189
+  po=0.59 argmax=1-2 gap(1-2 vs 0-1)=+0.1323
+  po=0.60 argmax=1-2 gap(1-2 vs 0-1)=+0.1453
+  po=0.61 argmax=1-2 gap(1-2 vs 0-1)=+0.1580
+  po=0.62 argmax=1-2 gap(1-2 vs 0-1)=+0.1704
+  po=0.63 argmax=1-2 gap(1-2 vs 0-1)=+0.1824
+  po=0.64 argmax=1-2 gap(1-2 vs 0-1)=+0.1940
+BOUNDARY: 1-2 argmax from p_over >= 0.51
+  NOR+0.00 (H=0.25/A=0.51)   argmax=1-2
+  NOR+0.03 (H=0.28/A=0.48)   argmax=1-2
+  NOR+0.06 (H=0.31/A=0.45)   argmax=1-2
+  NOR+0.09 (H=0.34/A=0.42)   argmax=1-2
+  NOR+0.12 (H=0.37/A=0.39)   argmax=1-2
+  NOR+0.15 (H=0.40/A=0.36)   argmax=2-1
+  NOR+0.18 (H=0.43/A=0.33)   argmax=2-1
+  NOR+0.21 (H=0.46/A=0.30)   argmax=2-1
+NOR-win argmax first at H=0.40
+P(exact 1-2 @120') = 0.1158
+P(exact 0-1 @120') = 0.0966
+P(exact 0-2 @120') = 0.0823
+P(exact 2-1 @120') = 0.0783
