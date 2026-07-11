@@ -17,6 +17,23 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-11 (QF day-2 game: Spain-Belgium — PLENO)
+> Recorded 2026-07-11 (Sebas verbal + web ×5: FIFA/ESPN/CNN/NBC/Al Jazeera — Spain **2-1**, 90', no ET;
+> Fabián Ruiz 30' / De Ketelaere 40' EQ / Merino 88' winner). **Entered 2-1 == `pick` == the council's
+> FULL120 argmax** (deep champion-node council, `council/outputs/esp_bel_qf/`; T-15 18:26Z confirmed
+> p_over .544 ≥ .54 flip boundary). Backfill `md5_2026-07-10T18-26-03Z` (single fixture, no overlap).
+> **EXACT SCORE = PLENO +9** (outcome 3 + exact 3 + goals 1+1 + GD 1); Σ +9 → **us_entered 356 → 365**
+> (n=98; board pending). The ET-decomposition path materialized: level 1-1 at 88' → Spain won in
+> regulation (not ET) → 2-1 exactly. Baselines B1(fav)=4, B2(modal 1-1)=1 → the FULL120 flip to 2-1
+> beat naive-favorite by **+5** and modal by **+8** (live ko_adjust validation).
+>
+> | fixture | entered | actual | pts | deviation_flag | override |
+> |---|---|---|---|---|---|
+> | Spain-Belgium `fca257de…` | 2-1 | 2-1 | **9 PLENO** | `none` (entered == pick == argmax) | +0 |
+>
+> **Running override_value: +22 (UNCHANGED)** == `summary` script. **Plenos on the entered track = 16**
+> (our tiebreaker currency — pool tiebreak CONFIRMED = most exact scores; ESP-BEL is the first QF pleno).
+
 ## Running tally - as of 2026-07-10 (QF day-1 game: France-Morocco played)
 > Recorded 2026-07-10 (Sebas verbal + web ×4: FIFA/ESPN/CNN/NPR — France **2-0**, 90', Mbappé 60' +
 > Dembélé 66'). Entered 1-0 == `pick` (deep council ENTER 1-0, `council/outputs/fra_mar_qf/`; T-1h
