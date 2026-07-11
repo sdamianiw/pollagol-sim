@@ -1,0 +1,46 @@
+ADVANCEMENT (QF=FULL120 VERIFIED; SF1=90'-devig APPROX): ENG=0.639  NOR=0.361  SUI=0.289  ARG=0.711  FRA=0.552  ESP=0.448
+P(CHAMPION) (chain, SF2/final pairwise ASSUMED): FRA=0.317  ESP=0.241  ARG=0.180  ENG=0.164  NOR=0.064  SUI=0.033
+  sum=1.000000 (must be 1)
+
+BRANCH TABLE -- expected locked-50 delta (chaser MINUS us) by champion branch
+champ   P(branch)      Greg     Lucas   Gonzalo    felipe   Rodrigo
+  FRA    0.317        +6.20     +4.50    +16.20     +7.30    +19.20
+  ESP    0.241        +0.70    -10.00     -6.80    -11.20    -10.50
+  ENG    0.164        -4.60     -5.30     -2.10     -3.30     -5.80
+  ARG    0.180        -4.50     -5.20     -2.00     -1.20     -5.70
+  NOR    0.064        +0.70     +0.00     +3.20     -1.20     -0.50
+  SUI    0.033        +0.70     +0.00     +3.20     -1.20     -0.50
+
+Gap coverage check: chaser closes the CURRENT gap only if locked50-delta + match-layer > gap
+  Greg: gap +29, worst branch FRA delta +6.20 -> needs +22.80 MORE from the match layer (6 games)
+  Lucas: gap +30, worst branch FRA delta +4.50 -> needs +25.50 MORE from the match layer (6 games)
+  Gonzalo: gap +36, worst branch FRA delta +16.20 -> needs +19.80 MORE from the match layer (6 games)
+  felipe: gap +37, worst branch FRA delta +7.30 -> needs +29.70 MORE from the match layer (6 games)
+  Rodrigo: gap +39, worst branch FRA delta +19.20 -> needs +19.80 MORE from the match layer (6 games)
+
+MATCH-LAYER per-game swing vs mixture field: E=+0.498 sd=2.929 (proxy=tonight, ASSUMED)
+
+P(HOLD #1 vs each chaser) x champion branch  (MC 200000, seed 42, 6 games)
+champ       Greg     Lucas   Gonzalo    felipe   Rodrigo
+  FRA      0.999     1.000     0.998     1.000     0.998
+  ESP      1.000     1.000     1.000     1.000     1.000
+  ENG      1.000     1.000     1.000     1.000     1.000
+  ARG      1.000     1.000     1.000     1.000     1.000
+  NOR      1.000     1.000     1.000     1.000     1.000
+  SUI      1.000     1.000     1.000     1.000     1.000
+
+OVERALL P(hold #1 vs ALL top-5) by branch (same MC draws, joint over chasers):
+  FRA: 0.998
+  ESP: 1.000
+  ENG: 1.000
+  ARG: 1.000
+  NOR: 1.000
+  SUI: 1.000
+
+SWEEPS (sensitive assumptions)
+  olise_else=0.15: Gonzalo-delta(ESP-branch)=-8.80  Greg-delta(ENG-branch)=-4.60
+  olise_else=0.55: Gonzalo-delta(ESP-branch)=-4.80  Greg-delta(ENG-branch)=-4.60
+  kane_mvp_if_eng=0.35: Gonzalo-delta(ESP-branch)=-6.80  Greg-delta(ENG-branch)=-2.60
+  kane_mvp_if_eng=0.75: Gonzalo-delta(ESP-branch)=-6.80  Greg-delta(ENG-branch)=-6.60
+  PAIR-0.10: P(FRA)=0.264 P(ESP)=0.197 P(ENG)=0.162 P(ARG)=0.259
+  PAIR+0.10: P(FRA)=0.371 P(ESP)=0.285 P(ENG)=0.153 P(ARG)=0.116

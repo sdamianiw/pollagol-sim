@@ -1,5 +1,32 @@
 # HANDOFF
 
+> 🟢 **QF DAY-3 CADENCE — NOR-ENG DEEP COUNCIL (CONFIRM 1-2) + LEAD-MAX SCENARIO HARNESSES + Jul-11 STANDINGS INGEST — 2026-07-11 ~19:20Z (branch `rho-fit`, engine FROZEN, I-HITL; plan `…\plans\qf-day-3-nor-eng-council-async-rocket.md`).**
+> **Board 365 rank 1/27 INGESTED** (`standings/2026-07-11` → log: gap_podium **+30**, z 2.43; Greg 336 +29 /
+> Lucas 335 +30 / Gonzalo 329 +36 / felipe 328 +37 / Rodrigo 326 +39). **L59 lag gate PASS** (CSV 365 == board).
+> **P1 fetch `md5_2026-07-11T19-03-03Z`** (quota 464, **3/3 F27**: NOR-ENG 21:00Z + ARG-SUI Jul-12 01:00Z +
+> **SF1 = FRANCE vs Spain (FRA home) Jul-14 19:00Z** — API full-string bind; SF2 Jul-15 19:00Z teams TBD).
+> Flip-check 2/2 HOLD + FRA-ESP NO-BASELINE (FULL120 argmax **2-1 FRA**, razor +0.022 over 1-0, council FIRES
+> → DEFERRED to its own T-1h ~18:00Z Jul-14). B4 all byte-identical.
+> **① NOR-ENG COUNCIL (verdict ~19:15Z = T-95, `council/outputs/nor_eng_qf/verdict.md`): CONFIRM ENGLAND 1-2**
+> (was already registered in-app — Sebas had moved 0-1→1-2 pre-session; discrepancy vs Jul-9 HANDOFF noted).
+> Devig .247/.247/**.506**, p_over **.572** (Over −115→−140, money==tickets 84-87% = sharp-confirmed, NOT
+> square); FULL120 **1-2 (2.945) vs 0-1 (2.837) = +0.108 (3.6× razor)**, argmax every f; drift 10/10, **flip
+> boundary p_over < 0.51** (moving away); NOR-side needs +15pp (dead); **plenos agree (1-2 P(exact) .1158 #1)**.
+> 4 isolated lenses converged (form: Guehi/Burn-vs-Haaland leak = BTTS; historian: BTTS ≥70% at this profile;
+> chalk: **Kane-bias audit PASS** — neutral leader enters 1-2; adversarial's public-bias-haircut attack
+> REFUTED by line direction). Team news VERIFIED: the 2 England doubts = **Rice (bug, trained Fri) + Guehi
+> (hamstring, expected to start)**; Norway virus CLEARED Jul-9 (doctor). T-75 sheets not yet out at check;
+> reopen ONLY on Kane-OUT or Haaland-OUT. **② LEAD-MAX HARNESSES** (`lead_max_scenarios.py` CONTROL==committed
+> ESP-BEL + `endgame_branches.py` MC 200k seed 42, both B4): **1-2 beats EVERY rival entry and every
+> contrarian-q mixture (edge GROWS with q)**; joint (1-2,1-0) positive vs all pairs; **P(hold #1 vs all top-5)
+> ≥ .998 in EVERY champion branch incl. FRA title**; **FRA title = worst world ×3 common-mode (Gonzalo +16.2 /
+> Rodrigo +19.2 locked-50 recovery), P(FRA champ) ~.32 [.26-.37]**; best worlds ENG > ARG > ESP; no lever
+> moves (L50 verified numerically). Full table `lead_max_verdict.md` + verified-vs-ASSUMED ledger.
+> **⚠️ NEXT: ~00:00Z ARG-SUI T-1h recheck (registered 1-0 HOLD; lock 00:50Z)** → then record tonight's 2
+> results on the next board; **Jul-14 ~18:00Z FRA-ESP SF1 DEEP COUNCIL** (champion node + razor + the
+> France-title-worst-world tension — entry stays EV-argmax per L50, rooting ≠ lever; Sebas preliminary "pick
+> France" has engine support: FULL120 2-1 FRA). Deferred-own-GO stack unchanged.
+>
 > 🟢 **QF DAY-2 RESULT RECONCILED — ESP-BEL 2-1 = PLENO (+9) — 2026-07-11 (branch `rho-fit`, engine FROZEN, I-HITL).**
 > **us_entered 356 → 365** (n=98, override **+22 UNCHANGED**; still rank 1). **Spain 2-1 Belgium** (web ×5:
 > FIFA/ESPN/CNN/NBC/Al Jazeera; 90', no ET — Fabián Ruiz 30' / De Ketelaere 40' EQ / **Merino 88' winner**).
