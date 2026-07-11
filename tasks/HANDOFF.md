@@ -1,5 +1,23 @@
 # HANDOFF
 
+> 🟢 **QF DAY-2 RESULT RECONCILED — ESP-BEL 2-1 = PLENO (+9) — 2026-07-11 (branch `rho-fit`, engine FROZEN, I-HITL).**
+> **us_entered 356 → 365** (n=98, override **+22 UNCHANGED**; still rank 1). **Spain 2-1 Belgium** (web ×5:
+> FIFA/ESPN/CNN/NBC/Al Jazeera; 90', no ET — Fabián Ruiz 30' / De Ketelaere 40' EQ / **Merino 88' winner**).
+> **Entered 2-1 == pick == council FULL120 argmax → EXACT SCORE PLENO +9** (`none`, override +0). The council's
+> ET-decomposition thesis materialized almost verbatim: **level 1-1 at 88'** → Spain won it (in regulation, not
+> ET) → **2-1 exactly**. Baselines B1(fav)=4 / B2(modal 1-1)=1 → the overnight FULL120 flip 1-0→2-1 beat
+> naive-favorite by **+5** and modal by **+8** = live `ko_adjust` + council-flip validation. Belgium scored →
+> Spain's clean-sheet streak ended (the "right side of history" call held; no team since 1990 keeps 0-GA past
+> the semis, and all 3 who reached the semis clean conceded there). **Plenos on the entered track = 16** (our
+> tiebreaker currency; pool tiebreak CONFIRMED = most exact scores; this is the first QF pleno). log→backfill
+> (`md5_2026-07-10T18-26-03Z`)→record; 97 prior rows byte-identical (git diff = 1 insertion); ledger row `none`.
+> **BracketNOW: SF = España vs France (the champion node lives — España in the final four; Mbappé 8 goals tied
+> w/ Messi after FRA-MAR).** **⚠️ NEXT (later TODAY, at deadline — user will trigger `/ko-matchday-cadence`):**
+> **NOR-ENG council ~20:00Z (KO 21:00Z)** — weak-fav ENG .50, FULL120 argmax 1-2 (flipped from 90' 0-1); the
+> genuine coin-flip on the slate, and the BTTS base rate for elite-European coin-flip KO = **70% (7/10)** with a
+> low ~2.0 total → the decisive-both-score 1-2/2-1 shape is base-rate-supported (feeds the council). **ARG-SUI
+> recheck ~23:30Z** (HOLD 1-0, lock Jul-12 00:50Z). Standings screenshot still pending (expect 365 + rank 1).
+>
 > 🟢 **QF CADENCE DAY-2 — FRA-MAR RECORDED (+4 → 356) + ESP-BEL CHAMPION-NODE DEEP COUNCIL (ENTER 2-1, razor) + TIEBREAKER CONFIRMED = PLENOS — DONE 2026-07-10 (branch `rho-fit`, engine FROZEN, 0 repo-code edits beyond advisory council harnesses; plan `qf-matchday-cadence-reconcile-stateless-candle.md` rewritten for Jul-10; I-HITL).**
 > **us_entered = 356** (n=97, override +22 unchanged; FRA-MAR entered 1-0 / actual **2-0** (90', web ×4) = **4** = L60 == code; 96 prior rows byte-identical; board screenshot PENDING — Sebas reports rank 1, gaps ≈ +24/+25/+31 intact; standings ingest DEFERRED to next screenshot, expect 356).
 > **NEW POOL DATUM: tiebreaker CONFIRMED (Sebas, in-app) = MOST EXACT SCORES (plenos).** Was UNVERIFIED since Jun-28 — memory corrected (`ko-leader-doctrine`, `locked_ownership`, ledger). Consequence: max-P(exact@120') on sub-noise EV gaps = POOL-OPTIMAL tiebreak, first applied today.
