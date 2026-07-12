@@ -1,5 +1,31 @@
 # HANDOFF
 
+> 🟢 **QF RECONCILED (377, PLENO #17) + SF PREP SESSION — 2026-07-12 ~12:45Z (branch `rho-fit`, engine FROZEN,
+> I-HITL; plan re-used `…\plans\qf-day-3-nor-eng-council-async-rocket.md` [SF-prep rewrite]).**
+> **P4: NOR-ENG 1-2 = PLENO +9** (council ET path verbatim: 1-1 @90' → Bellingham ET winner; **Bellingham
+> BRACE, Kane 0 goals** — sourced ESPN/FA/Yahoo ×4) · **ARG-SUI 3-1 (pick 1-0) = +3** (Mac Allister 10' [Messi
+> assist] / Ndoye 67' / Álvarez 112' / Lautaro 120+1'; Sebas's "1-0" corrected by screenshot+board arithmetic).
+> **us_entered 365→377, n=100, override +22 UNCHANGED, 17 plenos**; L61 replayed exactly (23:28Z snapshot for
+> ARG-SUI, 19:03Z for NOR-ENG — pop/re-append needed because backfill aborts on absent-fixture blanks).
+> **Board 2026-07-12 INGESTED**: us **377 rank 1/27**, Greg 349 **+28** / Gonzalo 342 +35 / felipe 338 +39 /
+> Lucas 338 +39 / Rodrigo 327 +50; z 2.52. **P1 fetch `md6_2026-07-12T12-14-09Z`** (quota 460, 2/2 == calendar):
+> **SF1 France-Spain Jul-14 19:00Z** (flipcheck HOLD) + **SF2 England-Argentina (ENG home) Jul-15 19:00Z**
+> (NO-BASELINE — this fetch IS the baseline). **SF PREP (`council/outputs/sf_prep/`, verdict =
+> `sf_prep_verdict.md`, all B4 + CONTROLs PASS):** ① **SF1 = RAZOR ON THE BOUNDARY**: FULL120 argmax flipped
+> overnight 2-1→**1-0 FRA (2.5619 vs 2.5544, +0.0075)** because p_over moved .500→.4797; **crossover = p_over
+> .49 — the fresh Jul-14 T-1h number IS the pick**; 0-1 ESP territory only at ESP ≥ .36 (+6pp); plenos razor
+> too (1-0 .1076 / 2-1 .1063). **Council MANDATORY Jul-14 ~18:00Z; BIAS INVERTED** (España stake pulls toward
+> ESP — guard in verdict). ② **SF2 baseline: 1-0 ENG (2.5412)**; **tightest winner-boundary yet: 0-1 ARG takes
+> argmax at ARG +2pp** (H≤.35/A≥.33); totals safe (.412 vs .49); plenos 1-0 .1207 top; council fires Jul-15
+> ~18:00Z; Chilean-pool Messi-mass defused numerically (our edge grows even at q=.75 ARG-side). ③ **Endgame
+> refresh (real SF odds, GAPS 28/35/39/39/50, MC seed 42): P(hold #1 vs ALL top-5) = FRA-title .998 / ESP
+> 1.000 / ENG 1.000 / ARG 1.000**; P(champ) FRA .299/ENG .246/ESP .228/ARG .227; **ESP title = best world,
+> FRA title = worst** (Gonzalo +16.7/Rodrigo +18.7 recovery, still needs ~3σ match layer); award refresh:
+> **kane_mvp_if_eng cut .55→.30 (Bellingham 6==6 + Ball narrative), Mbappé 8==Messi 8, Maignan 4 CS vs Simón
+> 5, Olise floor raised (4-assist chasers all eliminated)** — no sweep flips any sign. Zero divergences across
+> 7 layers. **⚠️ NEXT: Jul-14 ~18:00Z FRA-ESP DEEP COUNCIL (fresh p_over vs .49 decides 1-0/2-1; ESP≥.36 →
+> re-derive) → Jul-15 ~18:00Z ENG-ARG COUNCIL (ARG +2pp flips winner side) → record both on next board.**
+>
 > 🟢 **QF DAY-3 CADENCE — NOR-ENG DEEP COUNCIL (CONFIRM 1-2) + LEAD-MAX SCENARIO HARNESSES + Jul-11 STANDINGS INGEST — 2026-07-11 ~19:20Z (branch `rho-fit`, engine FROZEN, I-HITL; plan `…\plans\qf-day-3-nor-eng-council-async-rocket.md`).**
 > **Board 365 rank 1/27 INGESTED** (`standings/2026-07-11` → log: gap_podium **+30**, z 2.43; Greg 336 +29 /
 > Lucas 335 +30 / Gonzalo 329 +36 / felipe 328 +37 / Rodrigo 326 +39). **L59 lag gate PASS** (CSV 365 == board).
