@@ -1,0 +1,45 @@
+W* = {champ FRA, MVP Mbappe, GK Maignan, AST Olise} -- ALL PAY (joint extreme, not expectation)
+
+PART 1 -- deterministic locked-50 settlement (LOCK=10/leg) + required match-layer margin
+  case A [Boot=Mbappe (our leg PAYS)]:
+    Greg     settle=  20 vs us  10 -> delta   +10  | gap +28 -> chaser needs > +18 from the match layer to PASS us
+    Gonzalo  settle=  30 vs us  10 -> delta   +20  | gap +35 -> chaser needs > +15 from the match layer to PASS us
+    felipe   settle=  10 vs us  10 -> delta    +0  | gap +39 -> chaser needs > +39 from the match layer to PASS us
+    Lucas    settle=  20 vs us  10 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
+    Rodrigo  settle=  30 vs us  10 -> delta   +20  | gap +50 -> chaser needs > +30 from the match layer to PASS us
+  case B [Boot=other/Messi (our leg fails)]:
+    Greg     settle=  10 vs us   0 -> delta   +10  | gap +28 -> chaser needs > +18 from the match layer to PASS us
+    Gonzalo  settle=  20 vs us   0 -> delta   +20  | gap +35 -> chaser needs > +15 from the match layer to PASS us
+    felipe   settle=  10 vs us   0 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
+    Lucas    settle=  10 vs us   0 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
+    Rodrigo  settle=  30 vs us   0 -> delta   +30  | gap +50 -> chaser needs > +20 from the match layer to PASS us
+  BINDING CHASER: Gonzalo (margin +15 after worst-case settlement)
+
+PART 2 -- does tonight's entry keep its logic INSIDE W*? (conditional harvest, deterministic)
+  W* requires FRANCE TO WIN TONIGHT. E[our pts | 120' region] per candidate entry:
+    entry 1-0: E|FRA-win=5.002 (p=0.449)  E|ESP-win=0.377 (p=0.387)  E|level120=0.722 (p=0.164)  E[uncond]=2.508
+    entry 2-1: E|FRA-win=5.023 (p=0.449)  E|ESP-win=0.359 (p=0.387)  E|level120=0.668 (p=0.164)  E[uncond]=2.502
+    entry 0-1: E|FRA-win=0.373 (p=0.449)  E|ESP-win=5.076 (p=0.387)  E|level120=0.722 (p=0.164)  E[uncond]=2.252
+  -> the argmax entry is ALSO the max-harvest entry in the France-win branch (the branch W*
+     lives in); an 0-1 Spain entry harvests in the branch where the locked-50 already protects us.
+
+PART 3 -- P(hold #1) with W* FORCED (settlement deterministic, match layer MC seed 42)
+  tonight|FRA-win swing: E=+1.865   rest-of-slate/game: E=+0.247
+  case A: Greg=0.9983  Gonzalo=0.9953  felipe=1.0000  Lucas=1.0000  Rodrigo=1.0000   JOINT(all 5)=0.9953
+  case B: Greg=0.9983  Gonzalo=0.9953  felipe=1.0000  Lucas=1.0000  Rodrigo=0.9994   JOINT(all 5)=0.9953
+
+PART 4 -- projected FINAL standings under W* (expected, tonight|FRA-win + 3-game proxy)
+  case A: expected FINAL margin (us - chaser) =
+    Greg      +20.61
+    Gonzalo   +17.61
+    felipe    +41.61
+    Lucas     +31.61
+    Rodrigo   +32.61
+  case B: expected FINAL margin (us - chaser) =
+    Greg      +20.61
+    Gonzalo   +17.61
+    felipe    +31.61
+    Lucas     +31.61
+    Rodrigo   +22.61
+
+HAND-CHECK cells: ours1-0 vs rival2-1 @2-1 diff=-5 (expect -5) | ours1-0 vs rival0-1 @1-0 diff=9 (expect +9)
