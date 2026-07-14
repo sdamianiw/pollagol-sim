@@ -1,0 +1,27 @@
+P(FINISH #1) [strict, tie=loss]  = 0.9996
+P(FINISH #1) [tie->plenos lead]  = 0.9998   (truth in between, near the latter)
+
+MULTIVERSE -- P(branch) and P(#1 | branch)  [strict]
+  FRA title: P=0.290   P(#1|branch)=0.9991
+  ESP title: P=0.236   P(#1|branch)=1.0000
+  ENG title: P=0.242   P(#1|branch)=0.9998
+  ARG title: P=0.231   P(#1|branch)=0.9996
+  advancement inside the sim: P(FRA adv)=0.529 P(ENG adv)=0.512
+
+W* CROSS-CHECK: P(W* occurs)=0.0793   P(#1 | W*)=0.9991   (worst_world_stress said ~.9953)
+
+LOSS AUTOPSY -- the 0.04% of universes where we are NOT #1 [strict]:
+  champion distribution in losses: FRA=0.63  ESP=0.02  ENG=0.11  ARG=0.24
+  Greg     is (co-)passer in 0.92 of losses  | needs realized delta  +9.5 + layer  -20.4 vs gap +28
+  Gonzalo  is (co-)passer in 0.08 of losses  | needs realized delta +10.0 + layer  -25.9 vs gap +35
+  felipe   is (co-)passer in 0.01 of losses  | needs realized delta +10.0 + layer  -30.0 vs gap +39
+  Lucas    is (co-)passer in 0.01 of losses  | needs realized delta +10.0 + layer  -29.0 vs gap +39
+  Rodrigo  is (co-)passer in 0.00 of losses  | needs realized delta  +0.0 + layer   +0.0 vs gap +50
+  (Gonzalo AND Greg both pass simultaneously in 0.02 of losses)
+
+SENSITIVITY
+  SF2 entry 0-1 ARG instead of 1-0 ENG: P(#1) = 0.9993
+  PAIR-0.10: P(#1) = 0.9995
+  PAIR+0.10: P(#1) = 0.9997
+
+HAND-CHECKS: rubric cells -5/+9 OK; mixtures sum to 1; award categoricals sum <= 1 per branch.
