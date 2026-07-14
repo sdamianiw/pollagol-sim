@@ -1,0 +1,61 @@
+LIVE devig 0.3659/0.3171/0.3171 p_over 0.4088 argmax=(1, 0) 1-0=2.5142 0-1=2.3948 2-1=2.4004 1-2=2.2858
+CONTROL argmax=(1, 0) max|dEV|=0.00e+00 -> PASS
+  ENG-4pp    argmax=(0, 1)  gap(1-0 vs 0-1)=-0.2631
+  ENG-2pp    argmax=(0, 1)  gap(1-0 vs 0-1)=-0.0703
+  ENG+2pp    argmax=(1, 0)  gap(1-0 vs 0-1)=+0.3062
+  ENG+4pp    argmax=(1, 0)  gap(1-0 vs 0-1)=+0.4905
+  DRAW-2pp   argmax=(1, 0)  gap(1-0 vs 0-1)=+0.2198
+  DRAW+2pp   argmax=(1, 0)  gap(1-0 vs 0-1)=+0.0181
+  po-7pp     argmax=(1, 0)  gap(1-0 vs 0-1)=+0.2195
+  po-3.5     argmax=(1, 0)  gap(1-0 vs 0-1)=+0.1663
+  po+3.5     argmax=(1, 0)  gap(1-0 vs 0-1)=+0.0773
+  po+7pp     argmax=(1, 0)  gap(1-0 vs 0-1)=+0.0394
+STABILITY: 8/10 keep (1, 0)
+  ARG+0.00 (H=0.37/A=0.32) argmax=1-0 gap(1-0 vs 0-1)=+0.1193
+  ARG+0.01 (H=0.36/A=0.33) argmax=1-0 gap(1-0 vs 0-1)=+0.0249
+  ARG+0.02 (H=0.35/A=0.34) argmax=0-1 gap(1-0 vs 0-1)=-0.0703
+  ARG+0.03 (H=0.34/A=0.35) argmax=0-1 gap(1-0 vs 0-1)=-0.1663
+  ARG+0.04 (H=0.33/A=0.36) argmax=0-1 gap(1-0 vs 0-1)=-0.2631
+  ARG+0.05 (H=0.32/A=0.37) argmax=0-1 gap(1-0 vs 0-1)=-0.3607
+  ARG+0.06 (H=0.31/A=0.38) argmax=0-1 gap(1-0 vs 0-1)=-0.4593
+  ARG+0.07 (H=0.30/A=0.39) argmax=0-1 gap(1-0 vs 0-1)=-0.5587
+  ARG+0.08 (H=0.29/A=0.40) argmax=0-1 gap(1-0 vs 0-1)=-0.6592
+  ARG+0.09 (H=0.28/A=0.41) argmax=0-1 gap(1-0 vs 0-1)=-0.7607
+  ARG+0.10 (H=0.27/A=0.42) argmax=0-1 gap(1-0 vs 0-1)=-0.8633
+  ARG+0.11 (H=0.26/A=0.43) argmax=0-1 gap(1-0 vs 0-1)=-0.9671
+  ARG+0.12 (H=0.25/A=0.44) argmax=0-1 gap(1-0 vs 0-1)=-1.0721
+  ARG+0.13 (H=0.24/A=0.45) argmax=0-1 gap(1-0 vs 0-1)=-1.1784
+  ARG+0.14 (H=0.23/A=0.46) argmax=0-1 gap(1-0 vs 0-1)=-1.2861
+  ARG+0.15 (H=0.22/A=0.47) argmax=0-1 gap(1-0 vs 0-1)=-1.3954
+BOUNDARY: ARG-side (0-1) argmax from H<=0.35/A>=0.34 devig
+  po=0.38 argmax=1-0 gap(1-0 vs 2-1)=+0.1635
+  po=0.39 argmax=1-0 gap(1-0 vs 2-1)=+0.1458
+  po=0.40 argmax=1-0 gap(1-0 vs 2-1)=+0.1285
+  po=0.41 argmax=1-0 gap(1-0 vs 2-1)=+0.1117
+  po=0.42 argmax=1-0 gap(1-0 vs 2-1)=+0.0953
+  po=0.43 argmax=1-0 gap(1-0 vs 2-1)=+0.0793
+  po=0.44 argmax=1-0 gap(1-0 vs 2-1)=+0.0638
+  po=0.45 argmax=1-0 gap(1-0 vs 2-1)=+0.0486
+  po=0.46 argmax=1-0 gap(1-0 vs 2-1)=+0.0338
+  po=0.47 argmax=1-0 gap(1-0 vs 2-1)=+0.0194
+  po=0.48 argmax=1-0 gap(1-0 vs 2-1)=+0.0054
+  po=0.49 argmax=2-1 gap(1-0 vs 2-1)=-0.0082
+  po=0.50 argmax=2-1 gap(1-0 vs 2-1)=-0.0215
+  po=0.51 argmax=2-1 gap(1-0 vs 2-1)=-0.0344
+  po=0.52 argmax=1-2 gap(1-0 vs 2-1)=-0.0470
+  po=0.53 argmax=1-2 gap(1-0 vs 2-1)=-0.0593
+  po=0.54 argmax=1-2 gap(1-0 vs 2-1)=-0.0711
+  po=0.55 argmax=1-2 gap(1-0 vs 2-1)=-0.0827
+  po=0.56 argmax=1-2 gap(1-0 vs 2-1)=-0.0939
+  po=0.57 argmax=1-2 gap(1-0 vs 2-1)=-0.1048
+  po=0.58 argmax=1-2 gap(1-0 vs 2-1)=-0.1154
+  po=0.59 argmax=1-2 gap(1-0 vs 2-1)=-0.1256
+  po=0.60 argmax=1-2 gap(1-0 vs 2-1)=-0.1355
+  po=0.61 argmax=1-2 gap(1-0 vs 2-1)=-0.1450
+  po=0.62 argmax=1-2 gap(1-0 vs 2-1)=-0.1543
+BOUNDARY: 2-1 argmax from p_over >= 0.49
+P(exact 1-0 @120') = 0.1203
+P(exact 0-1 @120') = 0.1152
+P(exact 2-1 @120') = 0.0991
+P(exact 1-2 @120') = 0.0951
+P(exact 1-1 @120') = 0.0822

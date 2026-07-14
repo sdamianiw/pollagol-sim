@@ -12,7 +12,7 @@ from src.ko_adjust import ko_adjust
 from src.optimizer import expected_points
 
 FID = "f9aa13a662d1658e5a02cfc06d6a2d73"
-SNAP = "data/snapshots/md6_2026-07-12T12-14-09Z.json"
+SNAP = sys.argv[1] if len(sys.argv) > 1 else "data/snapshots/md6_2026-07-12T12-14-09Z.json"
 CANDS = [(1, 0), (2, 1), (1, 1), (0, 1), (1, 2), (2, 0), (0, 2)]
 
 
