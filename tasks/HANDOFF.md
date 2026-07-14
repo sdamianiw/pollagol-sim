@@ -1,5 +1,28 @@
 # HANDOFF
 
+> 🟢 **SF1 COUNCIL DAY — FRESH-ODDS VERDICTS BOTH SEMIS + 4-LENS PARALLEL COUNCIL — 2026-07-14 ~17:25Z
+> (branch `rho-fit`, engine FROZEN, I-HITL; plan `qf-day-3-nor-eng-council-async-rocket.md` [SF1-day rewrite]).**
+> Board unchanged 377 rank 1/27 (+28 Greg), 17 plenos, no P4 backlog (SFs unplayed). **Fetch
+> `md6_2026-07-14T16-52-55Z`** (quota 458, 2/2==calendar); flipcheck **2/2 HOLD** vs Jul-12 baseline + B4.
+> **SF1 FRANCE-SPAIN (KO today 19:00Z, lock 18:50Z): ENTER FRANCE 1-0** (`council/outputs/fra_esp_sf/verdict.md`).
+> Fresh devig .3905/.2998/.3098, **p_over .4797 < .49 → 1-0** (E 2.5084 vs 2-1 2.5020, +0.0064; crossover
+> RE-DERIVED on fresh board = still .49). **4 ISOLATED PARALLEL lens agents (form/market/leader-bias/
+> adversarial) + judge reconciliation** (Sebas flagged that inline self-lensing defeats isolation — fixed):
+> all 4 AGREE 1-0 France, bias-guard HIGH ("Spain-lean = pure tilt, −0.256 EV, unneeded at P(hold)=.998").
+> **Council RELOCATED the live watch from totals to the WINNER SIDE: 3 lenses triangulated on Spain firming
+> toward the A≥.34 flip via the France CB question** (Saliba+Upamecano both missed Sat training, "expected";
+> market shows a mild reverse-line-move = sharp handle on Spain). **T-40 RULE for Sebas's ~18:20Z refetch:
+> ESP devig ≥ .34 (confirmed CB scratch) → 0-1 Spain [engine+instinct converge] · p_over ≥ .49 → 2-1 France
+> [margin only] · else → 1-0 France.** NEVER a pre-emptive Spain hedge (inverted-bias tilt). **SF2 ENG-ARG
+> (Jul-15 19:00Z) PRELIMINARY = ENG 1-0** (`council/outputs/eng_arg_sf/verdict_preliminary.md`): devig
+> .3659/.3171/.3171, argmax 1-0 at every f; **winner-flip A≥.34, ARG +2.3pp away & TRENDING** (ARG firmed
+> +1.1pp; a news source's "Argentina favored" REFUTED — raw Pinnacle ENG 1.75<ARG 2.05, England is book fav).
+> **Same policy framework, different active variable (winner side, not totals); binding council = its own
+> T-1h tomorrow.** Harnesses re-run fresh (argv override added, CONTROL-proven inert on old inputs, B4):
+> **divergence scan vs Jul-12 = both favs softened ~1pp toward underdogs, SUB-THRESHOLD, zero pick changes,
+> P(hold #1)≥.998 unchanged.** NEXT: Sebas enters FRA-ESP at his T-40; **Jul-15 ~18:00Z ENG-ARG binding
+> council**; record SF1 result next board.
+>
 > 🟢 **QF RECONCILED (377, PLENO #17) + SF PREP SESSION — 2026-07-12 ~12:45Z (branch `rho-fit`, engine FROZEN,
 > I-HITL; plan re-used `…\plans\qf-day-3-nor-eng-council-async-rocket.md` [SF-prep rewrite]).**
 > **P4: NOR-ENG 1-2 = PLENO +9** (council ET path verbatim: 1-1 @90' → Bellingham ET winner; **Bellingham

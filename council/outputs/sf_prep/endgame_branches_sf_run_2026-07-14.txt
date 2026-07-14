@@ -1,0 +1,44 @@
+ADVANCEMENT (BOTH SFs = FULL120 on real odds, VERIFIED): FRA=0.5306  ESP=0.4694  ENG=0.5135  ARG=0.4865
+P(CHAMPION) (final pairwise ASSUMED): FRA=0.292  ENG=0.243  ESP=0.235  ARG=0.230
+  sum=1.000000 (must be 1)
+
+BRANCH TABLE -- expected locked-50 delta (chaser MINUS us) by champion branch
+champ   P(branch)      Greg   Gonzalo    felipe     Lucas   Rodrigo
+  FRA    0.292        +6.70    +16.70     +5.70     +5.50    +18.70
+  ESP    0.235        +0.70     -5.30    -13.30    -10.00    -12.60
+  ENG    0.243        -2.10     +1.90     -3.80     -2.80     -4.90
+  ARG    0.230        -3.50     +0.50     -2.30     -4.20     -5.80
+
+Gap coverage check: chaser closes the CURRENT gap only if locked50-delta + match-layer > gap
+  Greg: gap +28, worst branch FRA delta +6.70 -> needs +21.30 MORE from the match layer (4 games)
+  Gonzalo: gap +35, worst branch FRA delta +16.70 -> needs +18.30 MORE from the match layer (4 games)
+  felipe: gap +39, worst branch FRA delta +5.70 -> needs +33.30 MORE from the match layer (4 games)
+  Lucas: gap +39, worst branch FRA delta +5.50 -> needs +33.50 MORE from the match layer (4 games)
+  Rodrigo: gap +50, worst branch FRA delta +18.70 -> needs +31.30 MORE from the match layer (4 games)
+
+MATCH-LAYER per-game swing vs mixture field: E=+0.247 sd=3.221 (proxy=SF2, ASSUMED)
+
+P(HOLD #1 vs each chaser) x champion branch  (MC 200000, seed 42, 4 games)
+champ       Greg   Gonzalo    felipe     Lucas   Rodrigo
+  FRA      0.999     0.998     1.000     1.000     1.000
+  ESP      1.000     1.000     1.000     1.000     1.000
+  ENG      1.000     1.000     1.000     1.000     1.000
+  ARG      1.000     1.000     1.000     1.000     1.000
+
+OVERALL P(hold #1 vs ALL top-5) by branch (same MC draws, joint over chasers):
+  FRA: 0.998
+  ESP: 1.000
+  ENG: 1.000
+  ARG: 1.000
+
+SWEEPS (sensitive assumptions)
+  olise_else=0.30: Gonzalo-delta(ESP)=-7.30  Gonzalo-delta(ENG)=-0.10
+  olise_else=0.70: Gonzalo-delta(ESP)=-3.30  Gonzalo-delta(ENG)=+3.90
+  kane_mvp_if_eng=0.15: Greg-delta(ENG)=-0.60  felipe-delta(ENG)=-2.30
+  kane_mvp_if_eng=0.45: Greg-delta(ENG)=-3.60  felipe-delta(ENG)=-5.30
+  dibu_gk_if_arg=0.30: Greg-delta(ARG)=-2.00  felipe-delta(ARG)=-2.30
+  dibu_gk_if_arg=0.60: Greg-delta(ARG)=-5.00  felipe-delta(ARG)=-2.30
+  mbappe_boot_lo: felipe-delta(FRA-branch)=+6.70
+  mbappe_boot_hi: felipe-delta(FRA-branch)=+4.70
+  PAIR-0.10: P(FRA)=0.239  P(ESP)=0.188  P(ENG)=0.294  P(ARG)=0.279
+  PAIR+0.10: P(FRA)=0.345  P(ESP)=0.282  P(ENG)=0.192  P(ARG)=0.182

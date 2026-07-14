@@ -22,7 +22,7 @@ from src.run_matchday import run_match
 from src.ko_adjust import ko_adjust
 from src.optimizer import points
 
-SNAP = "data/snapshots/md6_2026-07-12T12-14-09Z.json"
+SNAP = sys.argv[1] if len(sys.argv) > 1 else "data/snapshots/md6_2026-07-12T12-14-09Z.json"
 FID_FE = "f9aa13a662d1658e5a02cfc06d6a2d73"   # France vs Spain SF1 (home=FRA)
 FID_EA = "ced22494ae0bbb8cc4f7108bf6f493df"   # England vs Argentina SF2 (home=ENG)
 
