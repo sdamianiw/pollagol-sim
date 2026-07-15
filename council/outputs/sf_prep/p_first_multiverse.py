@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """P(FINISH #1) MULTIVERSE HARNESS (2026-07-14, ADVISORY; I-3 clean, imported by nothing).
+KNOWN DEFECT (found 2026-07-15 by greg_paths.py exact cross-validation): the pay dict uses
+numpy bool "+" (= logical OR), capping every award payout at ONE leg -- multi-leg parlays
+never stacked, so the committed run OVERSTATES P(#1) (.9996 headline; true value lower,
+order ~.99, since chasers hold more stackable legs than us). Superseded by greg_paths.py /
+fixed greg_block.py for the SF2 decision; retained unfixed as the audit trail of L-line
+2026-07-15. Do NOT reuse this file without applying .astype(float) casts per leg.
+
 One JOINT seeded simulation solving every dependency in every branch:
   SF1 real 120' cell (frozen dist, our entry 1-0 FRA) -> winner  x  SF2 real cell (entry 1-0 ENG,
   ASSUMED pending its council) -> winner -> final via PAIR (ASSUMED, swept) -> CHAMPION ->
