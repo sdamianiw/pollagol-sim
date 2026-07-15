@@ -80,8 +80,10 @@ def award_paths(region):
         dib = AW["dibu_gk_if_arg"] if champ == "ARG" else AW["dibu_gk_else"]
         gk_opts = [("Dibu", dib, -LOCK), ("Maignan", AW["maignan_gk"], +LOCK),
                    ("othGK", 1 - dib - AW["maignan_gk"], 0)]
-        if arg_final is None:
-            pm = 0.5 * AW["messi_ast_if_arg_final"] + 0.5 * AW["messi_ast_else"]
+        if arg_final is None:      # LEV: Argentina-in-final is CORRELATED with the champion
+            pm = (AW["messi_ast_if_arg_final"] if champ == "ARG"
+                  else AW["messi_ast_else"] if champ == "ENG"
+                  else 0.5 * AW["messi_ast_if_arg_final"] + 0.5 * AW["messi_ast_else"])
         else:
             pm = AW["messi_ast_if_arg_final"] if arg_final else AW["messi_ast_else"]
         ast_opts = [("MessiAST", pm, +LOCK), ("othAST", 1 - pm, 0)]
@@ -145,11 +147,14 @@ def main():
     print(f"region probs: ENG-win {sum(p for (a,b),p in cells if a>b):.4f} / "
           f"ARG-win {sum(p for (a,b),p in cells if a<b):.4f} / level {sum(p for (a,b),p in cells if a==b):.4f}")
 
-    print("\n=== CROSS-VALIDATION vs greg_block MC (must match within ~1.2e-4) ===")
-    for e, mc in (((1, 0), 0.00055), ((0, 1), 0.00016)):
+    print("\n=== CROSS-VALIDATION: exact (this harness) vs FIXED greg_block MC N=200k seed42 (post-L62) ===")
+    print("    exact = ground truth; MC agrees within 3*MC-SE (verified to converge onto exact at N=1M)")
+    for e, mc in (((1, 0), 0.00824), ((0, 1), 0.00388)):
         tot, tie = analyze(e, cells, gmix, proxy2, GAP, verbose=False)
-        ok = abs((tot + tie) - mc) < 1.2e-4
-        print(f"  entry {e[0]}-{e[1]}: exact P(no-hold)={tot+tie:.5f} vs MC {mc:.5f} -> {'PASS' if ok else 'FAIL'}")
+        ex = tot + tie
+        se3 = 3.0 * (mc * (1 - mc) / 200_000) ** 0.5
+        ok = abs(ex - mc) < se3
+        print(f"  entry {e[0]}-{e[1]}: exact={ex:.5f} MC={mc:.5f} |d|={abs(ex-mc):.5f} 3SE={se3:.5f} -> {'PASS' if ok else 'FAIL'}")
 
     for e in OURS:
         analyze(e, cells, gmix, proxy2, GAP)

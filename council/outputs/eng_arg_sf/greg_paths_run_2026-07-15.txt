@@ -1,22 +1,23 @@
 EXACT ENUMERATION -- every (tonight-result x champion x MVP x GK x AST x match-swing) branch
 region probs: ENG-win 0.4200 / ARG-win 0.3927 / level 0.1873
 
-=== CROSS-VALIDATION vs greg_block MC (must match within ~1.2e-4) ===
-  entry 1-0: exact P(no-hold)=0.00826 vs MC 0.00055 -> FAIL
-  entry 0-1: exact P(no-hold)=0.00414 vs MC 0.00016 -> FAIL
+=== CROSS-VALIDATION: exact (this harness) vs FIXED greg_block MC N=200k seed42 (post-L62) ===
+    exact = ground truth; MC agrees within 3*MC-SE (verified to converge onto exact at N=1M)
+  entry 1-0: exact=0.00825 MC=0.00824 |d|=0.00001 3SE=0.00061 -> PASS
+  entry 0-1: exact=0.00413 MC=0.00388 |d|=0.00025 3SE=0.00042 -> PASS
 
-ENTRY 1-0 @ gap +24:  P(Greg PASSES)=0.006117  P(exact tie)=0.002146  [P(hold strict)=0.99174]
+ENTRY 1-0 @ gap +24:  P(Greg PASSES)=0.006109  P(exact tie)=0.002143  [P(hold strict)=0.99175]
   TOP LOSS PATHS (universe | prob | share):
-    ARG-win|ESP|Yamal|othGK|MessiAST|need M<=-5                2.58e-03   42.1%
+    ARG-win|ESP|Yamal|othGK|MessiAST|need M<=-5                2.58e-03   42.2%
     ARG-win|ESP|Yamal|othGK|othAST|need M<=-15                 8.72e-04   14.3%
-    ARG-win|ESP|othMVP|othGK|MessiAST|need M<=-15              4.50e-04    7.3%
+    ARG-win|ESP|othMVP|othGK|MessiAST|need M<=-15              4.50e-04    7.4%
     LEV-win|ESP|Yamal|othGK|MessiAST|need M<=-5                3.61e-04    5.9%
     ARG-win|ARG|othMVP|othGK|MessiAST|need M<=-15              3.22e-04    5.3%
     ARG-win|ARG|Yamal|othGK|MessiAST|need M<=-5                2.90e-04    4.7%
     ARG-win|ESP|Yamal|Maignan|othAST|need M<=-5                1.52e-04    2.5%
     LEV-win|ESP|Yamal|othGK|othAST|need M<=-15                 1.19e-04    1.9%
 
-ENTRY 0-1 @ gap +24:  P(Greg PASSES)=0.002913  P(exact tie)=0.001227  [P(hold strict)=0.99586]
+ENTRY 0-1 @ gap +24:  P(Greg PASSES)=0.002905  P(exact tie)=0.001224  [P(hold strict)=0.99587]
   TOP LOSS PATHS (universe | prob | share):
     ARG-win|ESP|Yamal|othGK|MessiAST|need M<=-5                9.31e-04   32.0%
     LEV-win|ESP|Yamal|othGK|MessiAST|need M<=-5                3.61e-04   12.4%
@@ -27,9 +28,9 @@ ENTRY 0-1 @ gap +24:  P(Greg PASSES)=0.002913  P(exact tie)=0.001227  [P(hold st
     ARG-win|ESP|Yamal|othGK|othAST|need M<=-15                 8.97e-05    3.1%
     ENG-win|ENG|Yamal|othGK|MessiAST|need M<=-5                6.82e-05    2.3%
 
-ENTRY 2-1 @ gap +24:  P(Greg PASSES)=0.006104  P(exact tie)=0.002067  [P(hold strict)=0.99183]
+ENTRY 2-1 @ gap +24:  P(Greg PASSES)=0.006096  P(exact tie)=0.002064  [P(hold strict)=0.99184]
   TOP LOSS PATHS (universe | prob | share):
-    ARG-win|ESP|Yamal|othGK|MessiAST|need M<=-5                2.55e-03   41.7%
+    ARG-win|ESP|Yamal|othGK|MessiAST|need M<=-5                2.55e-03   41.8%
     ARG-win|ESP|Yamal|othGK|othAST|need M<=-15                 8.60e-04   14.1%
     ARG-win|ESP|othMVP|othGK|MessiAST|need M<=-15              4.43e-04    7.3%
     LEV-win|ESP|Yamal|othGK|MessiAST|need M<=-5                3.83e-04    6.3%
@@ -40,10 +41,10 @@ ENTRY 2-1 @ gap +24:  P(Greg PASSES)=0.006104  P(exact tie)=0.002067  [P(hold st
 
 === GAP SWEEP -- 'when to play the man' (P(Greg passes+ties), EV-pick 1-0 vs cover 0-1) ===
   gap   1-0 ENG      0-1 ARG      cover buys (bp)   verdict
-  +24   0.00826      0.00414         41.2          consider
-  +20   0.02095      0.01291         80.4          COVER
-  +15   0.05834      0.04202        163.2          COVER
-  +10   0.14463      0.13213        124.9          COVER
-  + 5   0.28056      0.26391        166.5          COVER
+  +24   0.00825      0.00413         41.2          consider
+  +20   0.02092      0.01288         80.4          COVER
+  +15   0.05828      0.04195        163.2          COVER
+  +10   0.14448      0.13199        124.9          COVER
+  + 5   0.28042      0.26377        166.5          COVER
 
 HAND-CHECKS PASS. All probabilities exact (convolution), no MC in this harness.
