@@ -1,6 +1,35 @@
 # HANDOFF
 
-> 🟢 **SF1 COUNCIL DAY — FRESH-ODDS VERDICTS BOTH SEMIS + 4-LENS PARALLEL COUNCIL — 2026-07-14 ~17:25Z
+> 🟢 **ENDGAME COUNCIL — SF2 RECORDED (DOUBLE PLENO) + 3RD-PLACE & FINAL BASELINES + UNANIMOUS
+> CHALK-CHALK — 2026-07-17 ~13:50Z (branch `rho-fit`, engine FROZEN, I-HITL; plan
+> `qf-day-3-nor-eng-council-async-rocket.md` [endgame rewrite], verdict `council/outputs/endgame/verdict.md`).**
+> **P4: SF2 ENG 1-2 ARG recorded** (×6 sources, 90'+stoppage NO ET; Gordon ~55'/Enzo 85'/Lautaro 90+2,
+> Messi 2 assists): pick 1-0 (engine track, FIRST council/engine divergence — `pick` stays engine argmax
+> per `decisionlog.py:28-30`) = 1 pt; **entered 1-2 = PLENO +9; Greg ALSO plenoed** → **us 386 / Greg 362,
+> gap +24 UNCHANGED, rank 1/27** (board 17-07 ingested, cross-foot ✓), n=102, **18 plenos** (tiebreak:
+> ties are WINS), override **+30** (ledger: EV-UPD +3 cover-leg / TILT +5 exact-score; identity tilt +17 /
+> EV-UPD +9 / DRAW-EXC +4). 3rd felipe/Gonzalo 342 (+44, dead ~0.0003). **P1 fetch
+> `md7_2026-07-17T10-48-15Z`** (quota 452, 2/2==calendar, L49): **3rd-place France-England Jul-18 21:00Z**
+> `7a49e798…` (devig .500/.253/.247, FULL120 argmax **2-1 FRA** E 2.854, council FIRED) + **FINAL
+> Spain-Argentina Jul-19 19:00Z** `fb30113e…` (devig .418/.319/.262, FULL120 argmax **1-0 ESP** E 2.728,
+> council FIRED). **NEW HARNESS `council/outputs/endgame/greg_endgame.py`** (EXACT convolution; MC sibling
+> cross-val 5/5 in 3×SE; B4 ×3; L62 grep clean): **max match swing 18 < 24 → Greg CANNOT pass on matches;
+> award parlays MANDATORY; 100% of top loss paths = Messi-AST** (4 vs Olise 5); #1 path ESP-champ × Yamal ×
+> Messi 32%. **THE READ RESOLVED: q = P(Greg ARG-side) is IRRELEVANT — strict-pass metric (we win ties):
+> cover ≤ 2-3bp at ANY q under every stressed award scenario** (L63: cover = triggered rule, not momentum;
+> SF2's 42bp = live match channel, now extinct). Greg ROLE-PLAY agent independently converged on the exact
+> harness's best-responses (his only universe = SPAIN title, his optimal entry Spain 2-1, P(#1)~1%).
+> **4 ISOLATED lenses + judge: UNANIMOUS — ENTER FRANCE 2-1 (Jul-18) + SPAIN 1-0 (Jul-19).** P(hold #1) =
+> **99.86%** true (99.78% conservative). **T-1h RULES: Jul-18 ~20:00Z (lock 20:50Z): p_over≥.52 → eval 3-1;
+> ENG devig≥.30 → re-derive; Mbappé OUT → 1-0 FRA; else 2-1 FRA. Jul-19 ~18:00Z (lock 18:50Z, RE-RUN
+> greg_endgame at REALIZED gap): p_over≥.50 → eval 2-1 ESP; ARG≥.33 → re-derive; Yamal+Porro BOTH out →
+> re-run ko (0-0 mass); COVER fires ONLY if gap≤+20 AND hard q≥.9 evidence AND Olise adds 0 assists Jul-18
+> (at +24 the gate cannot open).** Watch Jul-18: Olise assists (kills/keeps Messi-AST = the whole threat),
+> Saliba OUT, Yamal/Porro doubtful (Sat presser). Evaluation skill registered (`~/.claude/skills/evaluation/
+> SKILL.md`). NEXT: **Jul-18 ~20:00Z T-1h node → record → Jul-19 ~18:00Z FINAL node at realized gap →
+> record + tournament close-out.**
+>
+> 🟢 **SF1 COUNCIL DAY (SUPERSEDED) — FRESH-ODDS VERDICTS BOTH SEMIS + 4-LENS PARALLEL COUNCIL — 2026-07-14 ~17:25Z
 > (branch `rho-fit`, engine FROZEN, I-HITL; plan `qf-day-3-nor-eng-council-async-rocket.md` [SF1-day rewrite]).**
 > Board unchanged 377 rank 1/27 (+28 Greg), 17 plenos, no P4 backlog (SFs unplayed). **Fetch
 > `md6_2026-07-14T16-52-55Z`** (quota 458, 2/2==calendar); flipcheck **2/2 HOLD** vs Jul-12 baseline + B4.

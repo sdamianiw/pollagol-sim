@@ -17,6 +17,30 @@
   - `EV-UPDATE` — entered != `pick` but followed a disciplined fresh-argmax switch (e.g. NED-SWE). NOT tilt.
   - `TILT-OVERRIDE` — entered != `pick`, discretionary/gut (e.g. BRA-HAI, USA-AUS).
 
+## Running tally - as of 2026-07-17 (SF2 England-Argentina — DOUBLE PLENO; FIRST council/engine DIVERGENCE)
+> Recorded 2026-07-17 (Sebas verbal + web ×6: ESPN/FIFA/NBC/FOX/Yahoo/BATimes — **Argentina 2-1** =
+> ENG **1-2**, 90'+stoppage NO ET; Gordon ~55' / Enzo 85' EQ / Lautaro 90'+2 winner; Messi 2 assists).
+> Backfill `md6_2026-07-15T17-11-10Z` (single fixture, no overlap). **FIRST node where the council rec
+> DIVERGED from the engine argmax:** `pick` = engine FULL120 EV-argmax **1-0 ENG** (MODEL track kept honest,
+> `decisionlog.py:28-30` — `pick` never leaves the engine argmax, else the override identity breaks);
+> council VERDICT = **0-1 ARG** (L50-exception P(hold)-cover of the known chaser Greg; `greg_paths.py` exact
+> +42bp post-L62). Sebas ENTERED **1-2** (covered Greg's ARG side AND nailed his exact-score read →
+> **PLENO +9**). Greg ALSO plenoed +9 → **gap +24 HOLDS** (board: us 386 / Greg 362, 27 entrants).
+> Scoring: `pick` 1-0 vs 1-2 = **1** (ENG home-goal match only); entered 1-2 = **9 PLENO**. Σ +9 →
+> **us_entered 377 → 386** (n=102).
+>
+> | fixture | entered | actual | pts | deviation_flag | override |
+> |---|---|---|---|---|---|
+> | England-Argentina `ced22494…` | 1-2 | 1-2 | **9 PLENO** | `EV-UPDATE + TILT` (blend, see split) | **+8** |
+>
+> **Override split (+8), the row is a BLEND of two stacked deviations from `pick` (1-0):** (a) engine→council
+> cover leg **1-0 → 0-1 ARG** = disciplined model-grounded switch (L50-exception, P(hold)-argmax; NOT tilt) →
+> **EV-UPDATE +3** (0-1 would score 4 vs engine 1-0's 1); (b) council→entered leg **0-1 → 1-2** = Sebas's
+> exact-score gut → **TILT +5** (1-2's 9 vs 0-1's 4). Sum +8.
+> **Running override_value: +30** == `summary` script (`us_entered 386 − us_model 356`, `decision_score.py:131`).
+> Identity: **tilt +17 / EV-UPD +9 / DRAW-EXC +4 = +30**. **Plenos on the entered track = 18** (SF2 = the 18th;
+> our tiebreaker currency — pool tiebreak = most exact scores).
+
 ## Running tally - as of 2026-07-11 (QF day-2 game: Spain-Belgium — PLENO)
 > Recorded 2026-07-11 (Sebas verbal + web ×5: FIFA/ESPN/CNN/NBC/Al Jazeera — Spain **2-1**, 90', no ET;
 > Fabián Ruiz 30' / De Ketelaere 40' EQ / Merino 88' winner). **Entered 2-1 == `pick` == the council's

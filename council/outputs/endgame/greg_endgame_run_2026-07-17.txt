@@ -1,0 +1,72 @@
+GREG ENDGAME (exact, no MC)  snap=md7_2026-07-17T10-48-15Z.json  gap +24
+  3rd-place 120' regions: FRA 0.5601 / lev 0.1214 / ENG 0.3184
+  FINAL     120' regions: ESP 0.4785 / lev 0.1752 / ARG 0.3463
+  Greg model: Q3_ENG=0.3  QF_ARG=0.5 (ASSUMED, swept)  awards: yamal {'ESP': 0.06, 'ARG': 0.01}, messi {'ESP': 0.25, 'ARG': 0.4}, dibu {'ESP': 0.02, 'ARG': 0.35}, kane 0.01, maignan 0.01, pens_esp 0.5
+  STRUCTURAL: worst joint match swing = -18 > -24 -> awards are MANDATORY for Greg  OK
+
+=== [A] FINAL entry e2 at gap +24 (game1 net 0): P(Greg passes+ties) x QF_ARG ===
+  QF_ARG        1-0       2-1       2-0       0-1       1-2       0-2       1-1       0-0   best_e2
+   0.0      0.110%    0.132%    0.162%    0.544%    0.546%    0.677%    0.413%    0.423%   1-0
+   0.1      0.115%    0.135%    0.164%    0.495%    0.498%    0.617%    0.383%    0.393%   1-0
+   0.2      0.119%    0.137%    0.167%    0.446%    0.449%    0.556%    0.352%    0.364%   1-0
+   0.3      0.123%    0.139%    0.169%    0.397%    0.401%    0.495%    0.322%    0.334%   1-0
+   0.4      0.128%    0.142%    0.171%    0.348%    0.352%    0.435%    0.291%    0.304%   1-0
+   0.5      0.132%    0.144%    0.173%    0.298%    0.304%    0.374%    0.261%    0.274%   1-0
+   0.6      0.137%    0.146%    0.175%    0.249%    0.255%    0.313%    0.230%    0.244%   1-0
+   0.7      0.141%    0.149%    0.178%    0.200%    0.207%    0.253%    0.200%    0.214%   1-0
+   0.8      0.146%    0.151%    0.180%    0.151%    0.158%    0.192%    0.169%    0.184%   1-0
+   0.9      0.150%    0.153%    0.182%    0.101%    0.110%    0.132%    0.138%    0.154%   0-1
+   1.0      0.155%    0.156%    0.184%    0.052%    0.061%    0.071%    0.108%    0.124%   0-1
+
+=== [B] 3RD-PLACE entry e1: P(pass+tie) with e2 fixed / with OPTIMAL e2 at realized gap ===
+  e1     e2=1-0(chalk)  e2=0-1(cover)  e2=SEQ-OPTIMAL(policy)
+  2-1        0.219%         0.386%           0.217%
+  1-0        0.230%         0.409%           0.226%
+  2-0        0.250%         0.433%           0.246%
+  1-2        0.384%         0.583%           0.384%
+  0-1        0.371%         0.578%           0.370%
+
+=== [C] GREG-NEEDS MAP (our entries = chalk 2-1 then 1-0; Greg mix at defaults) ===
+  P(Greg passes)=0.001362  P(exact tie)=0.000832  [P(hold strict)=0.99781]
+  TOP LOSS PATHS (region|champ:MVP|GK|AST  --  prob, share):
+    ESP-reg|ESP:YamalMVP|othGK|MessiAST            4.41e-04   32.4%
+    ARG-reg|ARG:othMVP|MaignanGK|MessiAST          2.43e-04   17.9%
+    ARG-reg|ARG:othMVP|othGK|MessiAST              1.62e-04   11.9%
+    ARG-reg|ARG:YamalMVP|othGK|MessiAST            1.59e-04   11.7%
+    LEV-reg|pens>ESP:YamalMVP|othGK|MessiAST       9.36e-05    6.9%
+    ESP-reg|ESP:othMVP|MaignanGK|MessiAST          7.05e-05    5.2%
+    ESP-reg|ESP:YamalMVP|MaignanGK|MessiAST        5.49e-05    4.0%
+    LEV-reg|pens>ARG:othMVP|MaignanGK|MessiAST     2.52e-05    1.9%
+    LEV-reg|pens>ARG:YamalMVP|othGK|MessiAST       1.65e-05    1.2%
+    LEV-reg|pens>ESP:othMVP|MaignanGK|MessiAST     1.50e-05    1.1%
+
+=== [D] ADVERSARIAL Greg (pure entries, max over his (g1,g2)): our candidate pairs ===
+  ours(e1,e2)      worst-case P(pass+tie)   Greg's best response (g1,g2)
+  2-1, 1-0           0.501%             g1=1-2 g2=2-1
+  2-1, 0-1           0.761%             g1=1-2 g2=1-0
+  2-1, 1-2           0.782%             g1=1-2 g2=1-0
+  1-0, 1-0           0.465%             g1=2-1 g2=0-1
+  1-0, 0-1           0.926%             g1=2-1 g2=1-0
+  1-0, 1-2           0.857%             g1=2-1 g2=2-1
+  MINIMAX pair: e1=1-0, e2=1-0  worst-case 0.465%
+
+=== [E] FINAL-node lookup: best e2 by realized gap (after 3rd place; Greg mix default) ===
+  gap'   best_e2   P(pass+tie)    1-0 chalk     0-1 cover
+  +33    1-0       0.001%       0.001%        0.004%
+  +30    1-0       0.005%       0.005%        0.008%
+  +28    2-1       0.036%       0.036%        0.109%
+  +26    1-0       0.039%       0.039%        0.109%
+  +24    1-0       0.132%       0.132%        0.298%
+  +22    1-0       0.172%       0.172%        0.453%
+  +20    1-0       0.703%       0.703%        1.006%
+  +18    2-1       1.908%       1.927%        2.757%
+  +15    1-0       3.064%       3.064%        3.364%
+
+=== [F] SWEEPS (best e2 at gap 24, QF_ARG=.5; flag if the argmin moves) ===
+  yamal_esp : 0.03->1-0 (0.105%)   0.06->1-0 (0.132%)   0.12->1-0 (0.188%)
+  messi_arg : 0.25->1-0 (0.107%)   0.4->1-0 (0.132%)   0.55->1-0 (0.158%)
+  messi_esp : 0.1->1-0 (0.095%)   0.25->1-0 (0.132%)   0.4->1-0 (0.169%)
+  dibu_arg  : 0.2->1-0 (0.139%)   0.35->1-0 (0.132%)   0.45->1-0 (0.128%)
+  pens_esp  : 0.3->1-0 (0.130%)   0.5->1-0 (0.132%)   0.7->1-0 (0.134%)
+
+HAND-CHECKS PASS. All probabilities exact (convolution); MC cross-val = greg_endgame_mc.py.
