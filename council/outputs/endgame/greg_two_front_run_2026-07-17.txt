@@ -1,0 +1,45 @@
+GREG TWO-FRONT (MC N=1,000,000 seed=42)  boards: greg 362 | chasers 342/342/339/327 | us 386
+  chaser mixes ASSUMED chalk-heavy; awards: boot {'MBAPPE': 0.4, 'KANE': 0.02, 'DEMBELE': 0.005} mvp {'YAMAL_ESP': 0.06, 'YAMAL_ARG': 0.01, 'KANE': 0.01, 'MBAPPE': 0.02} gk {'DIBU_ESP': 0.02, 'DIBU_ARG': 0.35, 'MAIGNAN': 0.01} ast {'MESSI_ESP': 0.25, 'MESSI_ARG': 0.4, 'MBAPPE': 0.02, 'OTHER': 0.05}
+
+=== [1] Greg strategy table (chaser ties count AGAINST Greg -- conservative for his seed-2) ===
+  S1  chalk-chalk 2-1/1-0  P1= 0.009%  P2= 99.43%  P3=  0.55%  E[prize-share]=0.1995  (passes us: 0.009%)
+  S1b chalk 1-0/1-0        P1= 0.095%  P2= 99.32%  P3=  0.58%  E[prize-share]=0.1998  (passes us: 0.095%)
+  S2  ESP-diff  2-1/2-1    P1= 0.194%  P2= 99.27%  P3=  0.53%  E[prize-share]=0.2002  (passes us: 0.194%)
+  S3  ENG-gamble 1-2/1-0   P1= 0.110%  P2= 98.42%  P3=  1.44%  E[prize-share]=0.1989  (passes us: 0.110%)
+  S4  double    1-2/2-1    P1= 0.178%  P2= 98.31%  P3=  1.47%  E[prize-share]=0.1992  (passes us: 0.178%)
+  S5  ARG-fandom 2-1/0-1   P1= 0.077%  P2= 99.79%  P3=  0.13%  E[prize-share]=0.2002  (passes us: 0.077%)
+  S6  ENG+ARG   1-2/0-1    P1= 0.393%  P2= 99.27%  P3=  0.33%  E[prize-share]=0.2012  (passes us: 0.393%)
+
+=== [2] tie convention flipped (Greg WINS chaser ties) ===
+  S1  chalk-chalk 2-1/1-0  P1= 0.009%  P2= 99.62%  P3=  0.37%  E[prize-share]=0.1997  (passes us: 0.009%)
+  S1b chalk 1-0/1-0        P1= 0.095%  P2= 99.51%  P3=  0.39%  E[prize-share]=0.2000  (passes us: 0.095%)
+  S2  ESP-diff  2-1/2-1    P1= 0.194%  P2= 99.43%  P3=  0.38%  E[prize-share]=0.2004  (passes us: 0.194%)
+  S3  ENG-gamble 1-2/1-0   P1= 0.110%  P2= 98.66%  P3=  1.21%  E[prize-share]=0.1992  (passes us: 0.110%)
+  S4  double    1-2/2-1    P1= 0.178%  P2= 98.59%  P3=  1.20%  E[prize-share]=0.1995  (passes us: 0.178%)
+  S5  ARG-fandom 2-1/0-1   P1= 0.077%  P2= 99.84%  P3=  0.08%  E[prize-share]=0.2002  (passes us: 0.077%)
+  S6  ENG+ARG   1-2/0-1    P1= 0.393%  P2= 99.34%  P3=  0.26%  E[prize-share]=0.2013  (passes us: 0.393%)
+
+=== [3] chasers +10pp contrarian tilt ===
+  S1  chalk-chalk 2-1/1-0  P1= 0.009%  P2= 99.28%  P3=  0.70%  E[prize-share]=0.1993  (passes us: 0.009%)
+  S1b chalk 1-0/1-0        P1= 0.095%  P2= 99.16%  P3=  0.73%  E[prize-share]=0.1996  (passes us: 0.095%)
+  S2  ESP-diff  2-1/2-1    P1= 0.194%  P2= 99.11%  P3=  0.69%  E[prize-share]=0.2001  (passes us: 0.194%)
+  S3  ENG-gamble 1-2/1-0   P1= 0.110%  P2= 98.33%  P3=  1.52%  E[prize-share]=0.1988  (passes us: 0.110%)
+  S4  double    1-2/2-1    P1= 0.178%  P2= 98.23%  P3=  1.55%  E[prize-share]=0.1991  (passes us: 0.178%)
+  S5  ARG-fandom 2-1/0-1   P1= 0.077%  P2= 99.76%  P3=  0.16%  E[prize-share]=0.2001  (passes us: 0.077%)
+  S6  ENG+ARG   1-2/0-1    P1= 0.393%  P2= 99.29%  P3=  0.31%  E[prize-share]=0.2013  (passes us: 0.393%)
+
+=== [4] Olise-AST stress: P(Olise) shifted -10pp (transferred to 'other') ===
+  S1  chalk-chalk 2-1/1-0  P1= 0.009%  P2= 99.49%  P3=  0.49%  E[prize-share]=0.1995  (passes us: 0.009%)
+  S1b chalk 1-0/1-0        P1= 0.095%  P2= 99.39%  P3=  0.52%  E[prize-share]=0.1999  (passes us: 0.095%)
+  S2  ESP-diff  2-1/2-1    P1= 0.194%  P2= 99.33%  P3=  0.47%  E[prize-share]=0.2003  (passes us: 0.194%)
+  S3  ENG-gamble 1-2/1-0   P1= 0.110%  P2= 98.61%  P3=  1.25%  E[prize-share]=0.1991  (passes us: 0.110%)
+  S4  double    1-2/2-1    P1= 0.178%  P2= 98.51%  P3=  1.28%  E[prize-share]=0.1994  (passes us: 0.178%)
+  S5  ARG-fandom 2-1/0-1   P1= 0.077%  P2= 99.80%  P3=  0.12%  E[prize-share]=0.2002  (passes us: 0.077%)
+  S6  ENG+ARG   1-2/0-1    P1= 0.393%  P2= 99.31%  P3=  0.29%  E[prize-share]=0.2013  (passes us: 0.393%)
+
+=== [5] CROSS-VAL: pairwise P(passes us) vs greg_endgame EXACT (pure entries, 3xSE gate) ===
+  S1  chalk-chalk 2-1/1-0  MC=0.000088  exact=0.000102  |d|=0.000014  3SE=0.000030  PASS
+  S4  double    1-2/2-1    MC=0.001780  exact=0.001818  |d|=0.000038  3SE=0.000128  PASS
+  S6  ENG+ARG   1-2/0-1    MC=0.003934  exact=0.003927  |d|=0.000007  3SE=0.000188  PASS
+
+HAND-CHECKS PASS (rubric 100/100, prize shares). CROSS-VAL: ALL PASS

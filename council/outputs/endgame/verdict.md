@@ -104,6 +104,48 @@ the latent global-GAP trap for the Jul-19 realized-gap re-run); MC `rng.choice` 
 (robustness); LEV award-mass assert added; [F] sweep hoisted (90→8 convolutions). Post-fix: B4 ×3 one
 hash, MC cross-val 5/5 in 3×SE, hand-checks PASS. L62 grep clean; I-3 clean (review-verified read-only).
 
+## ADDENDUM (same day, ~15:3xZ) — TWO-FRONT GREG: seed-2 defense vs #1 hunt (Sebas's follow-up angle)
+**Question:** does Greg "risk it" with England, and what does it cost him against HIS chasers (felipe/
+Gonzalo 342 = −20, Lucas 339, Rodrigo 327 — ALL with dead champion legs)? **Harness:**
+`greg_two_front.py` (joint MC N=1M seed 42 over the top-6, REAL 2026-06-28 ownership slates, prize
+.60/.20/.10; pairwise cross-val vs the exact convolution 3/3 in 3×SE; B4; verified by a 2-agent
+metacognitive+adversarial panel — both SURVIVES — plus an independent seed-7 replication).
+**Slate structure (the analytical core):** Yamal-MVP is COMMON to Greg+Gonzalo+felipe → useless for his
+seed-2 defense; the ASSISTER award is the two-front pivot (Messi→Greg+10 vs everyone / OLISE→Gonzalo+10
+vs Greg); Dibu-GK (us+felipe) fires only in ARG-title worlds → an Argentina title hurts Greg on BOTH
+fronts; and **his España champion lock walls off seed-2 in ALL Spain-title worlds** (V2's exact
+decomposition: chaser max bridge 9+9+10=28 < the 30-pt barrier → P(drop to 3rd)=0 there; his entire
+chaser risk lives in ARG-title worlds).
+**Greg strategy table (P1 / P2 / P3 / E[pot-share]; ties-to-chasers conservative):** chalk-chalk .009/
+99.43/0.55/.1995 · **ENG-gamble alone .110/98.42/1.44/.1989 = his WORST** (P3 triples: France wins ~.56
+and Gonzalo's Olise-AST path opens — V2 tail audit: 93% of those losses are FRA-win worlds, Gonzalo 73%
+of passers) · ARG-fandom .077/99.79/0.13/.2002 (the ARG-side final entry is a seed-2 HEDGE: harvests a
+pleno exactly in the Dibu-firing worlds, P3 ÷4, mechanism exactly derived + seed-stable) · **ENG+ARG
+double .393/99.27/0.33/.2012 = his E-max**. Whole spread = **23bp of pot = 1,863 CLP** — his choice is
+economically near-irrelevant; the P2 fortress (~99%) dominates everything.
+**RECONCILIATION vs the main verdict (does chalk-chalk hold? YES — strengthened):**
+1. The E[prize]-rational Greg tilts to the DOUBLE differential (ENG 1-2 + **ARG 0-1** — the two-front
+   frame flips his rational final entry ARG-side, unlike the P(#1)-only role-play's Spain-2-1). His
+   P(pass us) under that E-max strategy = **0.393% — inside the adversarial ceiling (0.501%) our [D]
+   already priced**, and our chalk 1-0 remains the argmin vs ARG-side Greg (that's the q-insensitivity
+   result: cover ≤2-3bp strict at any q). Correction of an earlier framing (V1 audit): rational Greg
+   does NOT necessarily avoid the England leg — he avoids it ALONE (S3 worst) but pairs it in his E-max;
+   either way Q3_ENG mis-estimates are bounded by [D] and change nothing.
+2. Sebas's headline question answered: **the England gamble ALONE is Greg's worst move** (−6bp E,
+   P3 ×2.6, buys 0.10pp vs us). If we SEE an England-side Greg signal it implies the double-gamble
+   profile — which our chalk pair already worst-cases at 99.5% hold.
+3. Panel fixes applied post-audit: Olise-sweep sign inverted (V1) → fixed + re-run (orderings
+   unchanged); unused boot key removed; S5 mechanism now exactly derived (V2), not just simulated.
+**GREG ROLE-PLAY #2 (two-front frame, independent):** concludes CHALK-CHALK from his own seat — "P(2nd)
+drives >90% of my E[prize]; the England gamble nets <2k CLP and accelerates Gonzalo's Olise path; ARG
+fandom is my WORST option (an ARG title fires Dibu for Sebas AND felipe against me in the same stroke)."
+His P(Olise-AST)=.82 (higher than our .53-.68 — strengthens his defensive motive; a sensitivity our
+sweep covered). His whisper: "France 2-1, Spain 1-0 — and I check Olise's assist column at halftime."
+Note the residual model-spread on Greg's rational FINAL entry: P(#1)-maximizer → Spain 2-1 · E[prize]
+harness → thin S6 (ENG+ARG) edge inside noise · two-front role-play → Spain 1-0 chalk. All three are
+Spain-side-or-noise, none is the fandom-ARG-alone profile, and OUR entry is identical against all three.
+**VERDICT UNCHANGED AND RE-CONFIRMED: FRANCE 2-1 + SPAIN 1-0. The cover gate stays shut at +24.**
+
 ## Bias statement (mandate)
 Sebas's instinct was "guess his side and play the man." The council's answer: we played the man HARDER
 than that — we computed his entire strategy space (exact best-response + role-play) and found the man's
