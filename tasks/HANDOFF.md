@@ -1,6 +1,24 @@
 # HANDOFF
 
-> 🟢 **ENDGAME COUNCIL — SF2 RECORDED (DOUBLE PLENO) + 3RD-PLACE & FINAL BASELINES + UNANIMOUS
+> 🟢 **FINAL NODE DELIVERED — 3RD-PLACE RECORDED (FRA 4-6 ENG, 0 pts everyone, gap +24 HOLDS) +
+> LAST FETCH + ENTER SPAIN 1-0 — 2026-07-19 ~15:05Z (branch `rho-fit`, engine FROZEN, I-HITL; verdict
+> `council/outputs/endgame/verdict.md` ADDENDUM 07-19).** **P4: FRA-ENG 4-6** (90'+stoppage no ET, ×5
+> sources; Saka hat-trick, Mbappé 2 → **Boot 10 vs Messi 8**, **Olise +1 assist → 7, breaks Pelé's
+> record**): pick 2-1 = entered 2-1 = 0 pts (whole field ~0) → **Σ 386 == board, n=103, plenos 18,
+> override +30, realized gap vs Greg +24 UNCHANGED, rank 1/27**. **LAST FETCH `md7_2026-07-19T14-54-28Z`**
+> (quota 444, 1/1==calendar): FINAL Spain-Argentina 19:00Z `fb30113e…` devig **.412/.314/.274**; flipcheck
+> HOLD +0.0000 ×2 baselines, B4; ko **FULL120 1-0 ESP E 2.7131** (p_over .417<.50, ARG .274<.33 — quiet).
+> **Drift pattern**: ESP peaked .428 Fri close → .412; **ARG +1.8pp overnight** (Messi-money, 5.6pp below
+> trigger); p_over DOWN .426→.417 (Under-lean); argmax 1-0 all 5 snapshots. **NEW thin driver
+> `council/outputs/endgame/final_node.py`** (reuses greg_endgame fns; game-1 resolved → final-only at
+> realized gap; B4 1-hash): **1-0 ESP = EV-argmax AND P(hold)-argmin ∀q≤.75; the 0-1 cover is
+> NEGATIVE-value in every stressed sweep (−14 to −54bp)**; cover gate **TRIPLE-SHUT** (gap 24>20 · no
+> hard-q · Olise +1); Messi-AST re-grounded {ESP .03/ARG .08} (needs 3 assists to TIE Olise) ⇒
+> **P(hold strict) = 99.976% on 1-0 ESP**. Yamal+Porro expected to PLAY (trained apart Thu, ESPN).
+> **DELIVERED: ENTER SPAIN 1-0 (lock 18:50Z). Re-derive only if ARG≥.33 or p_over≥.50 at lock.**
+> NEXT: record the final + standings ingest + tournament close-out (hold = 60% of 810k CLP pot).
+>
+> 🟢 **ENDGAME COUNCIL (SUPERSEDED by 07-19 node above) — SF2 RECORDED (DOUBLE PLENO) + 3RD-PLACE & FINAL BASELINES + UNANIMOUS
 > CHALK-CHALK — 2026-07-17 ~13:50Z (branch `rho-fit`, engine FROZEN, I-HITL; plan
 > `qf-day-3-nor-eng-council-async-rocket.md` [endgame rewrite], verdict `council/outputs/endgame/verdict.md`).**
 > **P4: SF2 ENG 1-2 ARG recorded** (×6 sources, 90'+stoppage NO ET; Gordon ~55'/Enzo 85'/Lautaro 90+2,

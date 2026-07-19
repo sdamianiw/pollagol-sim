@@ -405,3 +405,6 @@ Non-zero override rows (`override = pts_entered − points_actual`; all other du
 - Verified against the script: `cumulative()["override_value"] = +1` (Jun-27 TA7 `summary` printed
   `override_value=+1`, `us_entered=217`, `us_model=216`). If a future reconcile disagrees with the script,
   the script wins. (Jun-25 snapshot −2; Jun-24 +1; Jun-23 +6; Jun-21 −3.)
+
+## 2026-07-19 — 3rd-place recorded
+- FRA-ENG 4-6 (90'+stoppage, no ET; verified x5 ESPN/Fox/SkySports/AlJazeera/beIN): pick 2-1 (council track) = entered 2-1 = 0 pts -> classification NONE (entered==pick). Override stays +30 (tilt +17 / EV-UPD +9 / DRAW-EXC +4). n=103, Sigma 386, plenos 18. Greg also 0 (board unchanged) -> realized gap +24.

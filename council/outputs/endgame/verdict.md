@@ -152,3 +152,12 @@ than that — we computed his entire strategy space (exact best-response + role-
 optimal play is Spain-side, his fandom play is ARG-side, and OUR entry is identical against both. The
 protective move at this node is not mirroring; it is holding the modal Spain cell (1-0) that blocks his
 exact-score kill-shot and keeps our pleno-tiebreak fortress. Chalk here IS playing the man.
+
+---
+## ADDENDUM 2026-07-19 — FINAL-NODE (binding, delivered ~15:05Z, lock 18:50Z)
+- **3rd place recorded: France 4-6 England** (90'+stoppage, x5 sources). Everyone on the France side scored 0 (us, Greg, the field except one non-exact England pick) → **board unchanged: us 386 / Greg 362, realized gap +24**, n=103, plenos 18.
+- **Last fetch** `md7_2026-07-19T14-54-28Z` (quota 444, 1/1==calendar). Flipcheck **HOLD +0.0000** vs both baselines, B4 ×2. Fresh ko: **FULL120 argmax 1-0 ESP (E 2.7131)**; p_over .417 < .50, ARG .274 < .33 — no trigger.
+- **Drift pattern (5-snapshot sweep)**: ESP .418→.428 (Fri close)→**.412**; ARG firmed **+1.8pp overnight** (.256→.274) — Messi-handle/sentiment money, still 5.6pp below the re-derive trigger; p_over drifted DOWN .426→.417 (Under-lean = 1-0's friend); argmax 1-0 at all five snapshots.
+- **`final_node.py`** (thin driver reusing greg_endgame fns; game-1 resolved → final-only at gap +24; B4 1-hash): 1-0 ESP = **EV-argmax AND P(hold)-argmin for all q≤.75**; the 0-1 cover is **negative-value in every stressed award sweep** (−14 to −54bp) and buys only 3-5bp even at q=.90-1.0. **Cover gate TRIPLE-SHUT**: gap 24>20 · no hard-q evidence · **Olise added 1 assist (7 total, breaks Pelé's record)** — Greg's Messi-AST leg needs Messi 3+ assists tonight to TIE → re-grounded MESSI {ESP .03/ARG .08} ⇒ **P(hold strict) = 99.976%** on 1-0 ESP.
+- Intel: Yamal + Porro both trained apart Thu but **expected to play** (ESPN) — no ko rerun trigger. Ball: Messi −900 (common-null). Boot: Mbappé 10 vs Messi 8 (needs 3+) — our locked Mbappé-Boot leg near-certain, common-mode vs Greg.
+- **VERDICT: ENTER SPAIN 1-0** (I-HITL — Sebas types). T-1h re-check optional; re-derive ONLY if ARG devig ≥.33 or p_over ≥.50 at lock.
