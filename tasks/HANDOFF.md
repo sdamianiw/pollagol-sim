@@ -1,6 +1,18 @@
 # HANDOFF
 
-> 🟢 **FINAL NODE DELIVERED — 3RD-PLACE RECORDED (FRA 4-6 ENG, 0 pts everyone, gap +24 HOLDS) +
+> 🏆 **TOURNAMENT WON — CLOSE-OUT COMPLETE 2026-07-21 (branch `rho-fit`, engine FROZEN end-to-end, I-HITL
+> honored every node).** **FINAL: Spain 1-0 Argentina** (Ferran Torres 106' ET; ×5 ESPN/FIFA/NBC/VAVEL) —
+> pick 1-0 (council track) = **Sebas ENTERED 1-0 = PLENO +9**. Recorded: **n=104, Σ us_entered=395,
+> 19 plenos, override +30** (final row +0); model tracks close **us_model 365 / B1 341 / B2 321**
+> (+24 / +44 paired). **FINAL BOARD (standings/FINAL STANDINGS + standings/2026-07-21/): us 410 = 395
+> match + 15 premiaciones (champion España ✓ + Mbappé Boot ✓; per-award split 10+5 vs 5+10 UNVERIFIED
+> vs the Premiaciones config — rules.md's "10/pick" over-predicts by 5, L23-class note); RANK 1/27,
+> Greg 386 (+24), Gonzalo 366, podium cut 366, z 2.73, +94 over median. PRIZE = 60% of 810k CLP = 486k.**
+> Locked-50 settled: España ✓ · Mbappé ✓ · Kane MVP ✗ · Martínez GK ✗ · Bruno assister ✗.
+> Tournament over — no further cadence. Residual: LinkedIn case-study post (scratchpad, session 07-20/21)
+> finalized with these numbers.
+>
+> 🟢 (superseded) **FINAL NODE DELIVERED — 3RD-PLACE RECORDED (FRA 4-6 ENG, 0 pts everyone, gap +24 HOLDS) +
 > LAST FETCH + ENTER SPAIN 1-0 — 2026-07-19 ~15:05Z (branch `rho-fit`, engine FROZEN, I-HITL; verdict
 > `council/outputs/endgame/verdict.md` ADDENDUM 07-19).** **P4: FRA-ENG 4-6** (90'+stoppage no ET, ×5
 > sources; Saka hat-trick, Mbappé 2 → **Boot 10 vs Messi 8**, **Olise +1 assist → 7, breaks Pelé's
