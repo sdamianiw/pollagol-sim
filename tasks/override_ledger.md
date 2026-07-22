@@ -408,3 +408,15 @@ Non-zero override rows (`override = pts_entered − points_actual`; all other du
 
 ## 2026-07-19 — 3rd-place recorded
 - FRA-ENG 4-6 (90'+stoppage, no ET; verified x5 ESPN/Fox/SkySports/AlJazeera/beIN): pick 2-1 (council track) = entered 2-1 = 0 pts -> classification NONE (entered==pick). Override stays +30 (tilt +17 / EV-UPD +9 / DRAW-EXC +4). n=103, Sigma 386, plenos 18. Greg also 0 (board unchanged) -> realized gap +24.
+
+## 2026-07-21 (late) — FINAL row CORRECTION (board-arbitrated)
+- Spain-Argentina fb30113e…: pick 1-0 (council track) / Sebas ENTERED **2-1** — NOT 1-0 as first
+  reported verbally ("pleno"). Sebas 2026-07-21: "I got confused and overwrote it without wanting to" —
+  an UNINTENDED entry slip, not a deliberate override. Classification: **ENTRY-ERROR −5**
+  (entered 4 pts vs model counterfactual 9 = pleno). Board arbitrated per L45: 410 = 390 match + 20
+  premiaciones (10/pick CONFIRMED: champion España 10 + Mbappé Boot 10) — the verbal report lost to
+  the cross-foot, again (BRA-NOR precedent).
+- Identity: TILT +17 · EV-UPD +9 · DRAW-EXC +4 · ENTRY-ERR −5 == cumulative override **+25** ✓
+- Counterfactual note (informational, I-3): pure-model track 365+20 = 385 vs Greg 386 → the frozen
+  engine alone would have finished 2nd by 1 pt. The +30 deliberate overrides won the pool; the one
+  accidental entry of the tournament cost −5 and, at a +24 margin, was absorbed.

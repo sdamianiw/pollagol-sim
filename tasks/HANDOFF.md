@@ -2,12 +2,14 @@
 
 > 🏆 **TOURNAMENT WON — CLOSE-OUT COMPLETE 2026-07-21 (branch `rho-fit`, engine FROZEN end-to-end, I-HITL
 > honored every node).** **FINAL: Spain 1-0 Argentina** (Ferran Torres 106' ET; ×5 ESPN/FIFA/NBC/VAVEL) —
-> pick 1-0 (council track) = **Sebas ENTERED 1-0 = PLENO +9**. Recorded: **n=104, Σ us_entered=395,
-> 19 plenos, override +30** (final row +0); model tracks close **us_model 365 / B1 341 / B2 321**
-> (+24 / +44 paired). **FINAL BOARD (standings/FINAL STANDINGS + standings/2026-07-21/): us 410 = 395
-> match + 15 premiaciones (champion España ✓ + Mbappé Boot ✓; per-award split 10+5 vs 5+10 UNVERIFIED
-> vs the Premiaciones config — rules.md's "10/pick" over-predicts by 5, L23-class note); RANK 1/27,
-> Greg 386 (+24), Gonzalo 366, podium cut 366, z 2.73, +94 over median. PRIZE = 60% of 810k CLP = 486k.**
+> pick 1-0 (council track) = **Sebas ENTERED 2-1 (unintended slip, corrected 07-21 late, L64) = 4 pts**.
+> Recorded: **n=104, Σ us_entered=390, 18 plenos, override +25** (final row ENTRY-ERR −5; deliberate
+> overrides +30); model tracks close **us_model 365 / B1 341 / B2 321** (+24 / +44 paired). **FINAL BOARD
+> (standings/FINAL STANDINGS + standings/2026-07-21/): us 410 = 390 match + 20 premiaciones (10/pick
+> CONFIRMED: champion España 10 ✓ + Mbappé Boot 10 ✓); RANK 1/27, Greg 386 = 362+4 (also entered 2-1,
+> as the role-play predicted) +20 common-mode → margin +24; Gonzalo 366 = podium cut, z 2.73, +94 over
+> median. COUNTERFACTUAL: pure model 365+20 = 385 → would have LOST to Greg by 1; the gated-override
+> layer won the pool. PRIZE = 60% of 810k CLP = 486k.**
 > Locked-50 settled: España ✓ · Mbappé ✓ · Kane MVP ✗ · Martínez GK ✗ · Bruno assister ✗.
 > Tournament over — no further cadence. Residual: LinkedIn case-study post (scratchpad, session 07-20/21)
 > finalized with these numbers.

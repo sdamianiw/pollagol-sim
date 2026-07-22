@@ -898,3 +898,22 @@ identity extends to Σ_CSV + awards_settled == board. Awards observed +15 (champ
 rules.md's "10/pick" prediction of +20 → the per-award point value was never verified against the
 Premiaciones admin config (L23-class: a perfectly-reconciled total can still hide an unverified constant;
 flagged, split 10+5 vs 5+10 undetermined, immaterial to rank).** Tournament final: 410, rank 1/27, +24.
+
+## L64 — The last entry of the tournament was the first mis-entry; verbal "pleno" lost to the board cross-foot (caught 2026-07-21)
+**Pattern:** Sebas intended 1-0 (the delivered rec) but typed/left 2-1 on the final — the tournament's ONLY
+unintended entry (n=104), on the highest-salience game. First report ("we plenoed the final") was memory,
+not the board; recording it produced a +5 phantom (Σ 395+15 "awards" — which also silently manufactured a
+false L23-class flag against rules.md's correct 10/pick). The closing board (410 = 390+20) arbitrated both
+errors at once. **Rule:** (1) The execution discipline needs a LAST-MILE gate: at lock time, read the
+in-app entry BACK from the screen and diff it against the delivered ENTER line — intent ≠ entry until
+visually confirmed. (2) A result/entry report from recall is a HYPOTHESIS; the cross-foot identity
+(Σ_CSV + awards == board) is the fact — when they disagree, re-derive the entry from the board BEFORE
+inventing a rubric discrepancy to absorb the residual (the phantom −5 hid as a fake award-split question).
+Extends L45/L60; supersedes the 2026-07-21 gate-log's "split UNVERIFIED" note (resolved: 10/pick exact).
+
+## Gate-log — 2026-07-21 (late) · close-out CORRECTION (entered 2-1 not 1-0)
+DATA-OPS. Retcon guard correctly refused `record` re-run → surgical 1-row CSV edit (board-arbitrated,
+CRLF-preserved, all other rows byte-identical). RED gates re-run: Σ us_entered=390, 18 plenos, override
++25 (identity ✓ incl. ENTRY-ERR −5) · cross-foot 390+20==410 ✓ 10/pick CONFIRMED · standings re-ingested
+(override 25; stale log row dropped) · frozen diff EMPTY · I-3 clean. Counterfactual: us_model 365+20=385
+< Greg 386 → model alone loses by 1; the gated-override layer (+30 deliberate) is what won. L64 logged.
