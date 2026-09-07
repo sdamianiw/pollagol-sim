@@ -17,7 +17,7 @@ Per-matchday picks vs. actual results (one of many logged rounds):
 
 ![Picks vs actual](docs/img/picks-vs-actual-2026-06-19.png)
 
-These screenshots currently live at repo root (`standings/FINAL STANDINGS/`, `PICKS VS ACTUAL RESULTS/`); see `claims.md` for a suggested move to `docs/img/`. Every recorded pick in `predictions/decisions.csv` is cross-checked against a dated screenshot of the platform's own picks-vs-actual view before being marked reviewed — the CSV is not just a local log, it is reconciled against an external, independently-timestamped source of truth.
+These screenshots currently live at repo root (`standings/FINAL STANDINGS/`, `PICKS VS ACTUAL RESULTS/`); see `claims.md` for a suggested move to `docs/img/`. Every recorded pick in `predictions/decisions.csv` is cross-checked against a dated screenshot of the platform's own picks-vs-actual view before being marked reviewed: the CSV is not just a local log, it is reconciled against an external, independently-timestamped source of truth.
 
 ## Architecture
 
@@ -45,7 +45,7 @@ These screenshots currently live at repo root (`standings/FINAL STANDINGS/`, `PI
                           src/decision_score.py  ───────────────┘
                           scores recorded picks vs. baselines
                           (I3: results feed the scorer only,
-                           never a model parameter — see below)
+                           never a model parameter, see below)
                                     |
                           council/run_council.py  (5 isolated lenses,
                           only for the 5 pre-tournament locked picks:
@@ -66,7 +66,7 @@ Repo layout: `src/` per-match engine, `pool/` E[prize] pool engine, `council/` l
 
 ```bash
 pip install numpy
-# .env (gitignored, no .env.example committed — see src/probe_oddssource.py):
+# .env (gitignored, no .env.example committed, see src/probe_oddssource.py):
 #   THE_ODDS_API_KEY=...   (or ODDS_API_KEY)
 #   API_FOOTBALL_KEY=...   (season-coverage probe only, see Limitations)
 
@@ -94,17 +94,17 @@ The test suite is self-contained (frozen snapshots + fixtures in `data/`); no ke
 
 ## Design decisions
 
-- **Deterministic optimizer over an ML model.** `src/optimizer.py` does exact expectation maximization over a closed-form score matrix instead of training a predictive model — the pool's scoring rubric is simple and known in advance, so the correct move is to optimize it directly, not approximate it.
+- **Deterministic optimizer over an ML model.** `src/optimizer.py` does exact expectation maximization over a closed-form score matrix instead of training a predictive model: the pool's scoring rubric is simple and known in advance, so the correct move is to optimize it directly, not approximate it.
 - **Odds as the only external prior.** `src/model.py` inverts de-vigged 1X2 + totals prices into Dixon-Coles Poisson rates (`fit_lambdas`); the engine never sees historical match results as a feature.
 - **Dixon-Coles low-score correction, with a frozen default and a gated fit.** `RHO = -0.05` is the frozen live default (`src/model.py`); this `rho-fit` branch adds `fit_dc()` to solve rho against the market's draw probability inside a clamped band (`RHO_LO=-0.20, RHO_HI=0.10`), built but gated behind an explicit `rho_fit` flag (BUILD-NOT-FIRE) rather than switched on unreviewed.
-- **Hard no-feedback invariant (I3).** `CLAUDE.md` and `src/decision_score.py` enforce a one-way pipeline: match results flow into the scorer only, never back into a model constant — structurally preventing the model from curve-fitting to its own tournament.
+- **Hard no-feedback invariant (I3).** `CLAUDE.md` and `src/decision_score.py` enforce a one-way pipeline: match results flow into the scorer only, never back into a model constant, structurally preventing the model from curve-fitting to its own tournament.
 - **Human-gated council for the 5 locked pre-tournament picks.** `council/run_council.py` triangulates champion/scorer/assister/MVP/GK picks across 5 independent lenses before a human locks them; the engine recommends, it never auto-locks (per-match picks stayed fully automated, these 5 did not).
-- **Common-random-numbers Monte Carlo for the pool-prize decision.** `pool/pool_montecarlo.py` and `pool/podium_montecarlo.py` estimate E[prize] per candidate pick by drawing each opponent's outcome once per simulation and replaying every candidate against the same draw (fixed seed `DEFAULT_SEED = 20260602`), trading a naive per-candidate Monte Carlo for a paired-comparison design with much lower variance — the difference between two candidates' E[prize] is what actually needs to be precise, not either estimate in isolation.
+- **Common-random-numbers Monte Carlo for the pool-prize decision.** `pool/pool_montecarlo.py` and `pool/podium_montecarlo.py` estimate E[prize] per candidate pick by drawing each opponent's outcome once per simulation and replaying every candidate against the same draw (fixed seed `DEFAULT_SEED = 20260602`), trading a naive per-candidate Monte Carlo for a paired-comparison design with much lower variance: the difference between two candidates' E[prize] is what actually needs to be precise, not either estimate in isolation.
 
 ## Limitations
 
 - Single tournament, single run: no cross-season validation: the backtest (`evals/backtest.py`) is the only out-of-domain check, and it predates the live World Cup entirely.
-- Small-N pool (27 participants): the final +24 margin is real but not statistically deep; the close-out ledger (`tasks/override_ledger.md`) shows the pure-model track alone would have finished 2nd by 1 point — the 5 human-gated overrides were what won it, not the automated engine alone.
+- Small-N pool (27 participants): the final +24 margin is real but not statistically deep; the close-out ledger (`tasks/override_ledger.md`) shows the pure-model track alone would have finished 2nd by 1 point: the 5 human-gated overrides were what won it, not the automated engine alone.
 - Project is closed and frozen (`CLAUDE.md`): no active development, no CI pipeline, no scheduled runs.
 - API-Football's free tier could not serve WC-2026 season data (`tasks/todo.md`, Step 0 finding); the live pipeline runs on The Odds API only, which is itself a rate-limited free tier.
 - `standings/player_panel.csv` is tracked in git and contains other participants' nicknames; treat it as private if reusing this repo (see `claims.md`).
