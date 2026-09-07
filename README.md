@@ -1,11 +1,11 @@
 # pollagol-sim
 
-Deterministic score predictor for a private 27-person FIFA World Cup 2026 prediction pool: for each match it picks the scoreline that maximizes *expected competition points* under the pool's own scoring rubric, not the most probable score.
+Deterministic score predictor for a private 27-person FIFA World Cup 2026 prediction pool: for each match it picks the scoreline that maximizes *expected competition points* under the pool's own scoring rubric, which is rarely the most probable score.
 
 ![status: closed](https://img.shields.io/badge/status-closed-lightgrey)
 ![tests: 269 passing (local)](https://img.shields.io/badge/tests-269%20passing%20(local)-brightgreen)
 
-Built and run solo for a private, invite-only pool on pollaya.com over the June-July 2026 World Cup. Closed and frozen since the tournament ended; this README documents the finished system, not an active project.
+Built and run solo for a private, invite-only pool on pollaya.com over the June-July 2026 World Cup. Closed and frozen since the tournament ended, so this README documents a finished system.
 
 ## Demo
 
@@ -17,7 +17,7 @@ Per-matchday picks vs. actual results (one of many logged rounds):
 
 ![Picks vs actual](docs/img/picks-vs-actual-2026-06-19.png)
 
-Full-resolution originals stay under `standings/FINAL STANDINGS/` and `PICKS VS ACTUAL RESULTS/`. Every recorded pick in `predictions/decisions.csv` is cross-checked against a dated screenshot of the platform's own picks-vs-actual view before being marked reviewed: the CSV is not just a local log, it is reconciled against an external, independently-timestamped source of truth.
+Full-resolution originals stay under `standings/FINAL STANDINGS/` and `PICKS VS ACTUAL RESULTS/`. Every recorded pick in `predictions/decisions.csv` is cross-checked against a dated screenshot of the platform's own picks-vs-actual view before being marked reviewed, so the CSV is reconciled against an external, independently timestamped record rather than standing on its own.
 
 ## Architecture
 
@@ -52,7 +52,7 @@ Full-resolution originals stay under `standings/FINAL STANDINGS/` and `PICKS VS 
                           champion, scorer, assister, MVP, GK)
                                     |
                           pool/*.py  (Monte-Carlo E[prize] over the
-                          27-person pool: ownership, leverage, podium)
+                          27-person pool: ownership, exposure, podium)
                                     |
                           standings/  (scraped rank/points snapshots,
                           cross-footed against decisions.csv)
@@ -77,7 +77,7 @@ python -m src.decision_score summary                      # cumulative us vs. ba
 python -m src.decision_score backfill --snapshot data/snapshots/<file>.json   # replay a frozen odds snapshot
 ```
 
-The test suite is self-contained (frozen snapshots + fixtures in `data/`); no key is needed to run it. A key is only needed to fetch fresh odds via `src/ingest.py` / `pool/fetch_outrights.py`.
+The test suite is self-contained (frozen snapshots and fixtures in `data/`), so it runs without a key. A key is only needed to fetch fresh odds via `src/ingest.py` / `pool/fetch_outrights.py`.
 
 ## Results
 
@@ -94,22 +94,22 @@ The test suite is self-contained (frozen snapshots + fixtures in `data/`); no ke
 
 ## Design decisions
 
-- **Deterministic optimizer over an ML model.** `src/optimizer.py` does exact expectation maximization over a closed-form score matrix instead of training a predictive model: the pool's scoring rubric is simple and known in advance, so the correct move is to optimize it directly, not approximate it.
+- **Deterministic optimizer over an ML model.** `src/optimizer.py` does exact expectation maximization over a closed-form score matrix instead of training a predictive model. The pool's scoring rubric is simple and known in advance, so I optimize it directly instead of approximating it.
 - **Odds as the only external prior.** `src/model.py` inverts de-vigged 1X2 + totals prices into Dixon-Coles Poisson rates (`fit_lambdas`); the engine never sees historical match results as a feature.
-- **Dixon-Coles low-score correction, with a frozen default and a gated fit.** `RHO = -0.05` is the frozen live default (`src/model.py`); `src/model.py` also ships `fit_dc()`, which solves rho against the market's draw probability inside a clamped band (`RHO_LO=-0.20, RHO_HI=0.10`), built but gated behind an explicit `rho_fit` flag (BUILD-NOT-FIRE) rather than switched on unreviewed.
+- **Dixon-Coles low-score correction, with a frozen default and a gated fit.** `RHO = -0.05` is the frozen live default (`src/model.py`); `src/model.py` also ships `fit_dc()`, which solves rho against the market's draw probability inside a clamped band (`RHO_LO=-0.20, RHO_HI=0.10`), built but gated behind an explicit `rho_fit` flag (BUILD-NOT-FIRE) instead of being switched on unreviewed.
 - **Hard no-feedback invariant (I3).** `CLAUDE.md` and `src/decision_score.py` enforce a one-way pipeline: match results flow into the scorer only, never back into a model constant, structurally preventing the model from curve-fitting to its own tournament.
 - **Human-gated council for the 5 locked pre-tournament picks.** `council/run_council.py` triangulates champion/scorer/assister/MVP/GK picks across 5 independent lenses before a human locks them; the engine recommends, it never auto-locks (per-match picks stayed fully automated, these 5 did not).
-- **Common-random-numbers Monte Carlo for the pool-prize decision.** `pool/pool_montecarlo.py` and `pool/podium_montecarlo.py` estimate E[prize] per candidate pick by drawing each opponent's outcome once per simulation and replaying every candidate against the same draw (fixed seed `DEFAULT_SEED = 20260602`), trading a naive per-candidate Monte Carlo for a paired-comparison design with much lower variance: the difference between two candidates' E[prize] is what actually needs to be precise, not either estimate in isolation.
+- **Common-random-numbers Monte Carlo for the pool-prize decision.** `pool/pool_montecarlo.py` and `pool/podium_montecarlo.py` estimate E[prize] per candidate pick by drawing each opponent's outcome once per simulation and replaying every candidate against the same draw (fixed seed `DEFAULT_SEED = 20260602`). That is a paired comparison with much lower variance than a naive per-candidate run. What has to be precise is the difference between two candidates' E[prize], not either estimate on its own.
 
 ## Limitations
 
-- Single tournament, single run: no cross-season validation: the backtest (`evals/backtest.py`) is the only out-of-domain check, and it predates the live World Cup entirely.
-- Small-N pool (27 participants): the final +24 margin is real but not statistically deep; the close-out ledger (`tasks/override_ledger.md`) shows the pure-model track alone would have finished 2nd by 1 point: the 5 human-gated overrides were what won it, not the automated engine alone.
+- Single tournament, single run, no cross-season validation. The backtest (`evals/backtest.py`) is the only out-of-domain check, and it predates the live World Cup entirely.
+- Small-N pool (27 participants). The final +24 margin is real but not statistically deep, and the close-out ledger (`tasks/override_ledger.md`) shows the pure-model track alone would have finished 2nd by 1 point. The 5 human-gated overrides are what won it, not the engine on its own.
 - Project is closed and frozen (`CLAUDE.md`): no active development, no CI pipeline, no scheduled runs.
 - API-Football's free tier could not serve WC-2026 season data (`tasks/todo.md`, Step 0 finding); the live pipeline runs on The Odds API only, which is itself a rate-limited free tier.
 - Participant data for the pool is not published.
 - No CI: correctness is enforced by 269 local unit tests plus a "rubric" gate (4 locked unit tests on the point-scoring function itself), not by an automated pipeline.
-- The rho-fit work is on `master`, the default branch this README describes; the older `rho-fit` branch is kept only as a checkpoint. The fitted-rho path was never enabled in play: `fit_dc()` ships gated behind an explicit flag, since the tournament ended before that decision was needed.
+- The rho-fit work is on `master`, the default branch this README describes; the older `rho-fit` branch is kept only as a checkpoint. The fitted-rho path was never enabled in play. `fit_dc()` ships gated behind an explicit flag because the tournament ended before that decision was needed.
 
 ## License
 
