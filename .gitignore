@@ -23,3 +23,5 @@ env/
 # --- OS / editor ---
 .DS_Store
 Thumbs.db
+standings/player_panel.csv
+standings/player_panel_analysis.md
