@@ -108,7 +108,7 @@ The test suite is self-contained (frozen snapshots and fixtures in `data/`), so 
 - Small-N pool (27 participants). The final +24 margin is real but not statistically deep. The engine alone finishes 2nd; the 5 human-gated overrides are the margin.
 - Project is closed and frozen (`CLAUDE.md`): no active development, no CI pipeline, no scheduled runs.
 - API-Football's free tier could not serve WC-2026 season data (`tasks/todo.md`, Step 0 finding); the live pipeline runs on The Odds API only, which is itself a rate-limited free tier.
-- Other participants appear only as pseudonyms (P01 to P026). The owner's row is the only identifiable one in the screenshots.
+- Other participants appear only as pseudonyms (P01 to P26). The owner's row is the only identifiable one in the screenshots.
 - No CI: correctness is enforced by 269 local unit tests plus a "rubric" gate (4 locked unit tests on the point-scoring function itself), not by an automated pipeline.
 - The rho-fit work is on `master`, the default branch this README describes; the older `rho-fit` branch is kept only as a checkpoint. The fitted-rho path was never enabled in play. `fit_dc()` ships gated behind an explicit flag because the tournament ended before that decision was needed.
 
