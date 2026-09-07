@@ -3,7 +3,7 @@ P(CHAMPION) (final pairwise ASSUMED): FRA=0.299  ENG=0.246  ESP=0.228  ARG=0.227
   sum=1.000000 (must be 1)
 
 BRANCH TABLE -- expected locked-50 delta (chaser MINUS us) by champion branch
-champ   P(branch)      P02   Gonzalo    P05     Lucas   Rodrigo
+champ   P(branch)      P02   P11    P05     P17   Rodrigo
   FRA    0.299        +6.70    +16.70     +5.70     +5.50    +18.70
   ESP    0.228        +0.70     -5.30    -13.30    -10.00    -12.60
   ENG    0.246        -2.10     +1.90     -3.80     -2.80     -4.90
@@ -11,15 +11,15 @@ champ   P(branch)      P02   Gonzalo    P05     Lucas   Rodrigo
 
 Gap coverage check: chaser closes the CURRENT gap only if locked50-delta + match-layer > gap
   P02: gap +28, worst branch FRA delta +6.70 -> needs +21.30 MORE from the match layer (4 games)
-  Gonzalo: gap +35, worst branch FRA delta +16.70 -> needs +18.30 MORE from the match layer (4 games)
+  P11: gap +35, worst branch FRA delta +16.70 -> needs +18.30 MORE from the match layer (4 games)
   P05: gap +39, worst branch FRA delta +5.70 -> needs +33.30 MORE from the match layer (4 games)
-  Lucas: gap +39, worst branch FRA delta +5.50 -> needs +33.50 MORE from the match layer (4 games)
+  P17: gap +39, worst branch FRA delta +5.50 -> needs +33.50 MORE from the match layer (4 games)
   Rodrigo: gap +50, worst branch FRA delta +18.70 -> needs +31.30 MORE from the match layer (4 games)
 
 MATCH-LAYER per-game swing vs mixture field: E=+0.265 sd=3.221 (proxy=SF2, ASSUMED)
 
 P(HOLD #1 vs each chaser) x champion branch  (MC 200000, seed 42, 4 games)
-champ       P02   Gonzalo    P05     Lucas   Rodrigo
+champ       P02   P11    P05     P17   Rodrigo
   FRA      0.999     0.998     1.000     1.000     1.000
   ESP      1.000     1.000     1.000     1.000     1.000
   ENG      1.000     1.000     1.000     1.000     1.000
@@ -32,8 +32,8 @@ OVERALL P(hold #1 vs ALL top-5) by branch (same MC draws, joint over chasers):
   ARG: 1.000
 
 SWEEPS (sensitive assumptions)
-  olise_else=0.30: Gonzalo-delta(ESP)=-7.30  Gonzalo-delta(ENG)=-0.10
-  olise_else=0.70: Gonzalo-delta(ESP)=-3.30  Gonzalo-delta(ENG)=+3.90
+  olise_else=0.30: P11-delta(ESP)=-7.30  P11-delta(ENG)=-0.10
+  olise_else=0.70: P11-delta(ESP)=-3.30  P11-delta(ENG)=+3.90
   kane_mvp_if_eng=0.15: P02-delta(ENG)=-0.60  P05-delta(ENG)=-2.30
   kane_mvp_if_eng=0.45: P02-delta(ENG)=-3.60  P05-delta(ENG)=-5.30
   dibu_gk_if_arg=0.30: P02-delta(ARG)=-2.00  P05-delta(ARG)=-2.30

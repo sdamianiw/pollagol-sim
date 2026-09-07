@@ -31,7 +31,7 @@ from src.optimizer import points
 SNAP = sys.argv[1] if len(sys.argv) > 1 else "data/snapshots/md6_2026-07-14T16-52-55Z.json"
 FID_FE = "f9aa13a662d1658e5a02cfc06d6a2d73"   # France vs Spain (home=FRA)
 FID_EA = "ced22494ae0bbb8cc4f7108bf6f493df"   # England vs Argentina (home=ENG)
-GAPS = {"P02": 28, "Gonzalo": 35, "P05": 39, "Lucas": 39, "Rodrigo": 50}
+GAPS = {"P02": 28, "P11": 35, "P05": 39, "P17": 39, "Rodrigo": 50}
 LOCK = 10.0
 SEED = 42
 N = 200_000
@@ -138,8 +138,8 @@ def main():
     pay = {
         "us":      LOCK * ((champ == "ESP") + (boot == "Mbappe") + (mvp == "Kane") + (gk == "Dibu")),
         "P02":    LOCK * ((champ == "ESP") + (boot == "Mbappe") + (ast == "Messi") + (mvp == "Yamal") + (gk == "Maignan")),
-        "Lucas":   LOCK * ((boot == "Mbappe") + (mvp == "Mbappe")),
-        "Gonzalo": LOCK * ((champ == "FRA") + (boot == "Mbappe") + (ast == "Olise") + (mvp == "Yamal")),
+        "P17":   LOCK * ((boot == "Mbappe") + (mvp == "Mbappe")),
+        "P11": LOCK * ((champ == "FRA") + (boot == "Mbappe") + (ast == "Olise") + (mvp == "Yamal")),
         "P05":  LOCK * ((champ == "FRA") + (boot == "Kane") + (mvp == "Yamal") + (gk == "Dibu")),
         "Rodrigo": LOCK * ((champ == "FRA") + (boot == "Dembele") + (ast == "MbappeA") + (mvp == "Mbappe") + (gk == "Maignan")),
     }
@@ -176,8 +176,8 @@ def main():
             print(f"  {c:8s} is (co-)passer in {float(passed.sum())/max(lost.sum(),1):.2f} of losses"
                   f"  | needs realized delta {float((pay[c]-pay['us'])[passed].mean() if passed.sum() else 0):+5.1f}"
                   f" + layer {float(layer[c][passed].mean() if passed.sum() else 0):+6.1f} vs gap +{GAPS[c]}")
-        both = lost & (margin["Gonzalo"] <= 0) & (margin["P02"] <= 0)
-        print(f"  (Gonzalo AND P02 both pass simultaneously in {float(both.sum())/max(lost.sum(),1):.2f} of losses)")
+        both = lost & (margin["P11"] <= 0) & (margin["P02"] <= 0)
+        print(f"  (P11 AND P02 both pass simultaneously in {float(both.sum())/max(lost.sum(),1):.2f} of losses)")
 
     print("\nSENSITIVITY")
     # SF2 entry 0-1 ARG instead (its council may flip tomorrow)
@@ -202,8 +202,8 @@ def main():
         pay2 = {
             "us":      LOCK * ((ch2 == "ESP") + (b2 == "Mbappe") + (m2 == "Kane") + (g2 == "Dibu")),
             "P02":    LOCK * ((ch2 == "ESP") + (b2 == "Mbappe") + (a2 == "Messi") + (m2 == "Yamal") + (g2 == "Maignan")),
-            "Lucas":   LOCK * ((b2 == "Mbappe") + (m2 == "Mbappe")),
-            "Gonzalo": LOCK * ((ch2 == "FRA") + (b2 == "Mbappe") + (a2 == "Olise") + (m2 == "Yamal")),
+            "P17":   LOCK * ((b2 == "Mbappe") + (m2 == "Mbappe")),
+            "P11": LOCK * ((ch2 == "FRA") + (b2 == "Mbappe") + (a2 == "Olise") + (m2 == "Yamal")),
             "P05":  LOCK * ((ch2 == "FRA") + (b2 == "Kane") + (m2 == "Yamal") + (g2 == "Dibu")),
             "Rodrigo": LOCK * ((ch2 == "FRA") + (b2 == "Dembele") + (a2 == "MbappeA") + (m2 == "Mbappe") + (g2 == "Maignan")),
         }

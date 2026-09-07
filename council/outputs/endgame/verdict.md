@@ -17,7 +17,7 @@ B4 ×3 identical, pytest 269/269.**
 SF2 ENG 1-2 ARG recorded (×6 sources, 90'+stoppage no ET): pick 1-0 (engine track) = 1, **entered 1-2 =
 PLENO +9** (P02 also plenoed) → **us 386 / P02 362, gap +24 UNCHANGED**, n=102, 18 plenos (P02 ~14-16
 → WE WIN TIES), override +30 (ledger reconciled: EV-UPD +3 cover-direction / TILT +5 exact-score), 3rd
-place P05/Gonzalo 342 (+44, deterministic floor ~0.0003 — dead).
+place P05/P11 342 (+44, deterministic floor ~0.0003 — dead).
 
 ## The structural fact that reshapes everything (vs SF2)
 **Max match-layer swing = 9+9 = 18 < 24 (< 25 counting our pleno tiebreak): P02 CANNOT pass on match
@@ -106,19 +106,19 @@ hash, MC cross-val 5/5 in 3×SE, hand-checks PASS. L62 grep clean; I-3 clean (re
 
 ## ADDENDUM (same day, ~15:3xZ) — TWO-FRONT P02: seed-2 defense vs #1 hunt (Sebas's follow-up angle)
 **Question:** does P02 "risk it" with England, and what does it cost him against HIS chasers (P05/
-Gonzalo 342 = −20, Lucas 339, Rodrigo 327 — ALL with dead champion legs)? **Harness:**
+P11 342 = −20, P17 339, Rodrigo 327 — ALL with dead champion legs)? **Harness:**
 `p02_two_front.py` (joint MC N=1M seed 42 over the top-6, REAL 2026-06-28 ownership slates, prize
 .60/.20/.10; pairwise cross-val vs the exact convolution 3/3 in 3×SE; B4; verified by a 2-agent
 metacognitive+adversarial panel — both SURVIVES — plus an independent seed-7 replication).
-**Slate structure (the analytical core):** Yamal-MVP is COMMON to P02+Gonzalo+P05 → useless for his
-seed-2 defense; the ASSISTER award is the two-front pivot (Messi→P02+10 vs everyone / OLISE→Gonzalo+10
+**Slate structure (the analytical core):** Yamal-MVP is COMMON to P02+P11+P05 → useless for his
+seed-2 defense; the ASSISTER award is the two-front pivot (Messi→P02+10 vs everyone / OLISE→P11+10
 vs P02); Dibu-GK (us+P05) fires only in ARG-title worlds → an Argentina title hurts P02 on BOTH
 fronts; and **his España champion lock walls off seed-2 in ALL Spain-title worlds** (V2's exact
 decomposition: chaser max bridge 9+9+10=28 < the 30-pt barrier → P(drop to 3rd)=0 there; his entire
 chaser risk lives in ARG-title worlds).
 **P02 strategy table (P1 / P02 / P3 / E[pot-share]; ties-to-chasers conservative):** chalk-chalk .009/
 99.43/0.55/.1995 · **ENG-gamble alone .110/98.42/1.44/.1989 = his WORST** (P3 triples: France wins ~.56
-and Gonzalo's Olise-AST path opens — V2 tail audit: 93% of those losses are FRA-win worlds, Gonzalo 73%
+and P11's Olise-AST path opens — V2 tail audit: 93% of those losses are FRA-win worlds, P11 73%
 of passers) · ARG-fandom .077/99.79/0.13/.2002 (the ARG-side final entry is a seed-2 HEDGE: harvests a
 pleno exactly in the Dibu-firing worlds, P3 ÷4, mechanism exactly derived + seed-stable) · **ENG+ARG
 double .393/99.27/0.33/.2012 = his E-max**. Whole spread = **23bp of pot = 1,863 CLP** — his choice is
@@ -137,7 +137,7 @@ economically near-irrelevant; the P02 fortress (~99%) dominates everything.
 3. Panel fixes applied post-audit: Olise-sweep sign inverted (V1) → fixed + re-run (orderings
    unchanged); unused boot key removed; S5 mechanism now exactly derived (V2), not just simulated.
 **P02 ROLE-PLAY #2 (two-front frame, independent):** concludes CHALK-CHALK from his own seat — "P(2nd)
-drives >90% of my E[prize]; the England gamble nets <2k CLP and accelerates Gonzalo's Olise path; ARG
+drives >90% of my E[prize]; the England gamble nets <2k CLP and accelerates P11's Olise path; ARG
 fandom is my WORST option (an ARG title fires Dibu for Sebas AND P05 against me in the same stroke)."
 His P(Olise-AST)=.82 (higher than our .53-.68 — strengthens his defensive motive; a sensitivity our
 sweep covered). His whisper: "France 2-1, Spain 1-0 — and I check Olise's assist column at halftime."

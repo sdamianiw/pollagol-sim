@@ -84,7 +84,7 @@
 > Per-game points reverse-engineered (L60) and confirmed == code `pts_entered`: POR-ESP 1-2/0-1 = outcome+3,
 > signed GD+1 = **4** · USA-BEL 1-2/1-4 = outcome+3, USA-goals+1 = **4** · ARG-EGI 2-0/3-2 = outcome only =
 > **3** · SUI-COL 0-1/0-0(pens) = SUI-goals = **1**. Σ +12 → **us_entered 340 → 352 == board (rank 1/27,
-> +24 P02 328 / +25 Lucas 327 / +31 Gonzalo 321)**; 92 prior rows byte-identical (git diff = 4 insertions).
+> +24 P02 328 / +25 P17 327 / +31 P11 321)**; 92 prior rows byte-identical (git diff = 4 insertions).
 >
 > | fixture | entered | actual | pts | deviation_flag | override |
 > |---|---|---|---|---|---|
@@ -107,7 +107,7 @@
 > no category hits (signed GD +1 ≠ −1) = **0** — the FIRST game to disambiguate signed-vs-absolute GD on the
 > live board (board pays 0 ⇒ GD is SIGNED, == frozen `points()`) · Mexico-England entered 0-1 / actual
 > **2-3** → outcome+3, GD+1 = **4** (the council REVERT 1-1→0-1 was worth +3 vs keeping 1-1).
-> Σ +4 → **us_entered 336 → 340 == board (rank 1/27, +17 Lucas 323 / +19 P02 321)**; 90 prior rows
+> Σ +4 → **us_entered 336 → 340 == board (rank 1/27, +17 P17 323 / +19 P02 321)**; 90 prior rows
 > byte-identical (md5 53057eac…).
 >
 > | fixture | entered | actual | pts | deviation_flag | override |

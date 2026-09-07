@@ -54,7 +54,7 @@
 - **Champion-node bias audit (FM5, POR-ESP precedent):** the España stake biases toward Spain
   ADVANCING — both candidates are Spain wins; no scoreline-bias vector. Hedge re-run NOT triggered
   (BEL .172 << the .45 coin-flip threshold); the Jul-9 locked-50 table already covers España-out
-  (≈neutral vs P02, negative vs Lucas) — posture unchanged either way tonight.
+  (≈neutral vs P02, negative vs P17) — posture unchanged either way tonight.
 
 ## VERDICT — **ENTER España 2-1** (deadline 18:50Z), with the T-15 conditional below.
 Every live axis agrees: EV argmax (razor +0.016), plenos-tiebreak P(exact) (+0.004), intraday drift

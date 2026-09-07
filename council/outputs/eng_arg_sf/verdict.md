@@ -46,7 +46,7 @@ Fixture `ced22494ae0bbb8cc4f7108bf6f493df`, snapshot `data/snapshots/md6_2026-07
 ## What changed (why this node is structurally new)
 Spain 2-0 France (Oyarzabal 22' pen, Porro 58'; VERIFIED ×5) → our France 2-1 = **0 pts**, P02 +4 →
 **gap +28 → +24** (us 377, P02 353). **España in the final = our champion leg alive but COMMON-MODE with
-P02.** Every France award leg (Maignan GK, Mbappé MVP) DEAD → Gonzalo/P05/Lucas/Rodrigo gutted, floor
+P02.** Every France award leg (Maignan GK, Mbappé MVP) DEAD → P11/P05/P17/Rodrigo gutted, floor
 P(pass) ≈ 0.0003. **P02 is the only live threat.** His differential legs vs us: **Messi-assist (live) +
 Yamal-MVP (now live, Spain in final)**; ours: Kane-MVP (needs ENG title) + Dibu-GK (needs ARG title) — our
 award slate is internally HEDGED on tonight, his leans Spain/Argentina. **Sebas's read: ~95% P02 enters an

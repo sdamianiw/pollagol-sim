@@ -40,10 +40,10 @@ ARG-SUI 3-1 +3; Σ CSV == board; 17 plenos; override +22 unchanged).
 - Advancement (FULL120, pens 50/50): **FRA .543 / ESP .457 · ENG .521 / ARG .479** — two coin-flips.
 - P(champion) (final pairwise ASSUMED ±10pp swept): **FRA .299 · ENG .246 · ESP .228 · ARG .227**.
 - Branch table (chaser-minus-us locked-50 delta): **France title stays the worst world**
-  (Gonzalo +16.7, Rodrigo +18.7, P02 +6.7) — but the gap-coverage line shows every chaser still needs
+  (P11 +16.7, Rodrigo +18.7, P02 +6.7) — but the gap-coverage line shows every chaser still needs
   **+18 to +34 MORE from a 4-game match layer** whose per-game drift is +0.27 in OUR favor (sd 3.2).
   **España title = best world** (every chaser ≤ +0.7, most strongly negative). England/Argentina titles
-  mildly favorable — sole exception Gonzalo (+1.9 ENG / +0.5 ARG; his Olise leg pays in any branch),
+  mildly favorable — sole exception P11 (+1.9 ENG / +0.5 ARG; his Olise leg pays in any branch),
   still ~3σ short and P(hold) = 1.000 in both.
 - **P(hold #1 vs ALL top-5): FRA-title .998 · ESP 1.000 · ENG 1.000 · ARG 1.000.** No sweep
   (olise_else .30–.70, kane_mvp .15–.45, dibu_gk .30–.60, mbappé-boot ±.10, PAIR ±.10) flips any sign.
@@ -52,7 +52,7 @@ ARG-SUI 3-1 +3; Σ CSV == board; 17 plenos; override +22 unchanged).
   ENG-branch delta stays negative at both ends, so this hurts pride, not the hold). **Mbappé 8 == Messi 8**
   Boot tie (our shared Mbappé leg fine; P05's Kane-boot leg cut to .20). **Maignan 4 CS vs Simón 5**
   (FRA-title Glove flip intact). **Olise 5 with every 4-assist chaser eliminated** → his no-France floor
-  raised to .50 (Gonzalo's best asset; swept, no sign flip).
+  raised to .50 (P11's best asset; swept, no sign flip).
 
 ## Convergence count (final judge)
 Seven independent layers, **zero divergences**: engine argmax (both SFs) == plenos-max == drift-grid

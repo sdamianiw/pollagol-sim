@@ -4,7 +4,7 @@ Pattern: council/outputs/esp_bel_qf/lead_protect_esp_bel.py extended to (a) a ri
 contrarian fraction q (trailing chasers variance-hunt; picks are HIDDEN so rivals cannot react to ours),
 (b) the joint two-fixture product grid (NOR-ENG x ARG-SUI), (c) CONTROL regression = the ESP-BEL single-
 fixture table reproduced from its committed snapshot (must match the committed verdict numbers).
-Objective per Sebas: MAXIMIZE THE LEAD (+29/+30 over P02/Lucas, 60/20/10, tiebreak = most plenos).
+Objective per Sebas: MAXIMIZE THE LEAD (+29/+30 over P02/P17, 60/20/10, tiebreak = most plenos).
 Exact enumeration over frozen FULL120 distributions -- no MC, no randomness, B4 = run twice."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))

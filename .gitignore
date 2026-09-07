@@ -25,3 +25,11 @@ env/
 Thumbs.db
 standings/player_panel.csv
 standings/player_panel_analysis.md
+
+# --- Screenshots containing third-party names (privacy) ---
+# docs/img/ is exempt: those two images are hand-masked before commit.
+/OWNERSHIP SCREENSHOTS/
+/PICKS VS ACTUAL RESULTS/
+/standings/FINAL STANDINGS/
+/standings/standings */
+/standings/stadings */

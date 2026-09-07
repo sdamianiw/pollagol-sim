@@ -20,7 +20,7 @@ from src.optimizer import points, expected_points
 SNAP = sys.argv[1] if len(sys.argv) > 1 else "data/snapshots/md6_2026-07-14T16-52-55Z.json"
 FID_FE = "f9aa13a662d1658e5a02cfc06d6a2d73"   # France vs Spain SF1 (home=FRA)
 FID_EA = "ced22494ae0bbb8cc4f7108bf6f493df"   # England vs Argentina SF2 (home=ENG)
-GAPS = {"P02": 28, "Gonzalo": 35, "P05": 39, "Lucas": 39, "Rodrigo": 50}
+GAPS = {"P02": 28, "P11": 35, "P05": 39, "P17": 39, "Rodrigo": 50}
 LOCK = 10.0
 SEED = 42
 N_MC = 200_000
@@ -29,14 +29,14 @@ N_GAMES_AFTER_TONIGHT = 3   # SF2, 3rd place, final (tonight handled conditional
 # W* settlement, hand-derived from the ownership table (each entry = legs that PAY in W*):
 #   us:      ESPx / Boot(A: Mbappe PAYS, B: x) / Bruno DEAD / Kane-MVP x (Mbappe) / Dibu x (Maignan)
 #   P02:    ESPx / Boot A pays (common w/ us) / Messi-AST x (Olise) / Yamal-MVP x / MAIGNAN PAYS
-#   Lucas:   POR DEAD / Boot A pays / Bruno DEAD / MBAPPE-MVP PAYS / Costa DEAD
-#   Gonzalo: FRA PAYS / Boot A pays / OLISE-AST PAYS / Yamal-MVP x / Alisson DEAD
+#   P17:   POR DEAD / Boot A pays / Bruno DEAD / MBAPPE-MVP PAYS / Costa DEAD
+#   P11: FRA PAYS / Boot A pays / OLISE-AST PAYS / Yamal-MVP x / Alisson DEAD
 #   P05:  FRA PAYS / Kane-scorer x (both cases; a Kane-Boot world is NOT W*) / Bruno DEAD /
 #            Yamal-MVP x / Dibu x (Maignan)
 #   Rodrigo: FRA PAYS / Dembele x / Mbappe-AST x (Olise) / MBAPPE-MVP PAYS / MAIGNAN PAYS
 SETTLE = {  # hits (count of paying legs) per player, per Boot case
-    "A": {"us": 1, "P02": 2, "Lucas": 2, "Gonzalo": 3, "P05": 1, "Rodrigo": 3},
-    "B": {"us": 0, "P02": 1, "Lucas": 1, "Gonzalo": 2, "P05": 1, "Rodrigo": 3},
+    "A": {"us": 1, "P02": 2, "P17": 2, "P11": 3, "P05": 1, "Rodrigo": 3},
+    "B": {"us": 0, "P02": 1, "P17": 1, "P11": 2, "P05": 1, "Rodrigo": 3},
 }
 
 

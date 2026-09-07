@@ -17,7 +17,7 @@ Per-matchday picks vs. actual results (one of many logged rounds):
 
 ![Picks vs actual](docs/img/picks-vs-actual-2026-06-19.png)
 
-Full-resolution originals stay under `standings/FINAL STANDINGS/` and `PICKS VS ACTUAL RESULTS/`. Every recorded pick in `predictions/decisions.csv` is cross-checked against a dated screenshot of the platform's own picks-vs-actual view before being marked reviewed, so the CSV is reconciled against an external, independently timestamped record rather than standing on its own.
+The two images above are the only screenshots in the repo; other participants' names are masked. Every recorded pick in `predictions/decisions.csv` is cross-checked against a dated screenshot of the platform's own picks-vs-actual view before being marked reviewed, so the CSV is reconciled against an external, independently timestamped record rather than standing on its own.
 
 ## Architecture
 
@@ -52,7 +52,8 @@ Full-resolution originals stay under `standings/FINAL STANDINGS/` and `PICKS VS 
                           champion, scorer, assister, MVP, GK)
                                     |
                           pool/*.py  (Monte-Carlo E[prize] over the
-                          27-person pool: ownership, exposure, podium)
+                          27-person pool; leverage.py screens
+                          P_true/ownership, podium_montecarlo.py the podium)
                                     |
                           standings/  (scraped rank/points snapshots,
                           cross-footed against decisions.csv)
@@ -70,7 +71,7 @@ pip install numpy
 #   THE_ODDS_API_KEY=...   (or ODDS_API_KEY)
 #   API_FOOTBALL_KEY=...   (season-coverage probe only, see Limitations)
 
-python -m pytest -q                                    # 269 tests, no network, ~50s
+python -m pytest -q                                    # 269 tests, no network, ~25s
 python evals/backtest.py                                # out-of-domain backtest vs football-data.co.uk
 python -m src.run_matchday --help                        # per-matchday odds -> pick pipeline
 python -m src.decision_score summary                      # cumulative us vs. baselines + Brier
@@ -104,13 +105,13 @@ The test suite is self-contained (frozen snapshots and fixtures in `data/`), so 
 ## Limitations
 
 - Single tournament, single run, no cross-season validation. The backtest (`evals/backtest.py`) is the only out-of-domain check, and it predates the live World Cup entirely.
-- Small-N pool (27 participants). The final +24 margin is real but not statistically deep, and the close-out ledger (`tasks/override_ledger.md`) shows the pure-model track alone would have finished 2nd by 1 point. The 5 human-gated overrides are what won it, not the engine on its own.
+- Small-N pool (27 participants). The final +24 margin is real but not statistically deep. The engine alone finishes 2nd; the 5 human-gated overrides are the margin.
 - Project is closed and frozen (`CLAUDE.md`): no active development, no CI pipeline, no scheduled runs.
 - API-Football's free tier could not serve WC-2026 season data (`tasks/todo.md`, Step 0 finding); the live pipeline runs on The Odds API only, which is itself a rate-limited free tier.
-- Participant data for the pool is not published.
+- Other participants appear only as pseudonyms (P01 to P026). The owner's row is the only identifiable one in the screenshots.
 - No CI: correctness is enforced by 269 local unit tests plus a "rubric" gate (4 locked unit tests on the point-scoring function itself), not by an automated pipeline.
 - The rho-fit work is on `master`, the default branch this README describes; the older `rho-fit` branch is kept only as a checkpoint. The fitted-rho path was never enabled in play. `fit_dc()` ships gated behind an explicit flag because the tournament ended before that decision was needed.
 
 ## License
 
-MIT
+MIT, see [LICENSE](LICENSE).

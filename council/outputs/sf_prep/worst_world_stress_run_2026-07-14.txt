@@ -3,17 +3,17 @@ W* = {champ FRA, MVP Mbappe, GK Maignan, AST Olise} -- ALL PAY (joint extreme, n
 PART 1 -- deterministic locked-50 settlement (LOCK=10/leg) + required match-layer margin
   case A [Boot=Mbappe (our leg PAYS)]:
     P02     settle=  20 vs us  10 -> delta   +10  | gap +28 -> chaser needs > +18 from the match layer to PASS us
-    Gonzalo  settle=  30 vs us  10 -> delta   +20  | gap +35 -> chaser needs > +15 from the match layer to PASS us
+    P11  settle=  30 vs us  10 -> delta   +20  | gap +35 -> chaser needs > +15 from the match layer to PASS us
     P05   settle=  10 vs us  10 -> delta    +0  | gap +39 -> chaser needs > +39 from the match layer to PASS us
-    Lucas    settle=  20 vs us  10 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
+    P17    settle=  20 vs us  10 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
     Rodrigo  settle=  30 vs us  10 -> delta   +20  | gap +50 -> chaser needs > +30 from the match layer to PASS us
   case B [Boot=other/Messi (our leg fails)]:
     P02     settle=  10 vs us   0 -> delta   +10  | gap +28 -> chaser needs > +18 from the match layer to PASS us
-    Gonzalo  settle=  20 vs us   0 -> delta   +20  | gap +35 -> chaser needs > +15 from the match layer to PASS us
+    P11  settle=  20 vs us   0 -> delta   +20  | gap +35 -> chaser needs > +15 from the match layer to PASS us
     P05   settle=  10 vs us   0 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
-    Lucas    settle=  10 vs us   0 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
+    P17    settle=  10 vs us   0 -> delta   +10  | gap +39 -> chaser needs > +29 from the match layer to PASS us
     Rodrigo  settle=  30 vs us   0 -> delta   +30  | gap +50 -> chaser needs > +20 from the match layer to PASS us
-  BINDING CHASER: Gonzalo (margin +15 after worst-case settlement)
+  BINDING CHASER: P11 (margin +15 after worst-case settlement)
 
 PART 2 -- does tonight's entry keep its logic INSIDE W*? (conditional harvest, deterministic)
   W* requires FRANCE TO WIN TONIGHT. E[our pts | 120' region] per candidate entry:
@@ -25,21 +25,21 @@ PART 2 -- does tonight's entry keep its logic INSIDE W*? (conditional harvest, d
 
 PART 3 -- P(hold #1) with W* FORCED (settlement deterministic, match layer MC seed 42)
   tonight|FRA-win swing: E=+1.865   rest-of-slate/game: E=+0.247
-  case A: P02=0.9983  Gonzalo=0.9953  P05=1.0000  Lucas=1.0000  Rodrigo=1.0000   JOINT(all 5)=0.9953
-  case B: P02=0.9983  Gonzalo=0.9953  P05=1.0000  Lucas=1.0000  Rodrigo=0.9994   JOINT(all 5)=0.9953
+  case A: P02=0.9983  P11=0.9953  P05=1.0000  P17=1.0000  Rodrigo=1.0000   JOINT(all 5)=0.9953
+  case B: P02=0.9983  P11=0.9953  P05=1.0000  P17=1.0000  Rodrigo=0.9994   JOINT(all 5)=0.9953
 
 PART 4 -- projected FINAL standings under W* (expected, tonight|FRA-win + 3-game proxy)
   case A: expected FINAL margin (us - chaser) =
     P02      +20.61
-    Gonzalo   +17.61
+    P11   +17.61
     P05    +41.61
-    Lucas     +31.61
+    P17     +31.61
     Rodrigo   +32.61
   case B: expected FINAL margin (us - chaser) =
     P02      +20.61
-    Gonzalo   +17.61
+    P11   +17.61
     P05    +31.61
-    Lucas     +31.61
+    P17     +31.61
     Rodrigo   +22.61
 
 HAND-CHECK cells: ours1-0 vs rival2-1 @2-1 diff=-5 (expect -5) | ours1-0 vs rival0-1 @1-0 diff=9 (expect +9)

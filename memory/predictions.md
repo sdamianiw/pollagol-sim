@@ -5,7 +5,7 @@ decisions and notable calls, newest first.
 
 ## Locked picks (50 pts) — NOT YET FINALIZED  (champion OPEN; lock Jun-10 evening, Jun-12 VOID)
 Visibility CONFIRMED 2026-06-02: picks ARE visible → `observed` ownership is REAL (`PICKS_VISIBLE=True`).
-Pollaya today: 2/12 locked (P21→Uruguay; Sebas→Brasil = PLACEHOLDER), 10 pending; self-excluded field
+Pollaya today: 2/12 locked (P021→Uruguay; Sebas→Brasil = PLACEHOLDER), 10 pending; self-excluded field
 = {Uruguay:1.0} (n=1, noise). Real decision run = **Jun 11 (late, buffer)** on FRESH odds + final ownership.
 A2 (E[prize]) pending. **Do NOT finalize.**
 

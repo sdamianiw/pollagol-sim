@@ -9,15 +9,15 @@ it numeric. Two layers:
   (2) SEEDED MC (numpy, seed=42): per-game match-layer swing vs a chalk/contrarian field mixture
       (exact per-game diff distribution from tonight's NOR-ENG dist reused as proxy for future games,
       ASSUMED) + locked-50 branch delta -> P(chaser closes the gap) per champion branch.
-Current gaps (board 2026-07-11, VERIFIED): P02 +29, Lucas +30, Gonzalo +36, P05 +37, Rodrigo +39.
+Current gaps (board 2026-07-11, VERIFIED): P02 +29, P17 +30, P11 +36, P05 +37, Rodrigo +39.
 Locked-50 ownership (pool/locked_ownership_2026-06-28.md, OBSERVED):
   us:     ESP champ / Mbappe scorer / Bruno assist / KANE MVP / Dibu GK
   P02:   ESP champ / Mbappe / Messi assist / Yamal MVP / Maignan GK
-  Lucas:  POR champ(DEAD) / Mbappe / Bruno assist / MBAPPE MVP / D.Costa(DEAD)
-  Gonzalo: FRA champ / Mbappe / OLISE assist (leader 5) / Yamal MVP / Alisson(DEAD)
+  P17:  POR champ(DEAD) / Mbappe / Bruno assist / MBAPPE MVP / D.Costa(DEAD)
+  P11: FRA champ / Mbappe / OLISE assist (leader 5) / Yamal MVP / Alisson(DEAD)
   P05: FRA champ / KANE scorer / Bruno assist / Yamal MVP / Dibu GK
   Rodrigo: FRA champ / Dembele scorer / Mbappe assist / MBAPPE MVP / Maignan GK
-Common-mode legs cancel in GAP terms (Mbappe scorer us==P02==Lucas==Gonzalo; Bruno us==Lucas==P05;
+Common-mode legs cancel in GAP terms (Mbappe scorer us==P02==P17==P11; Bruno us==P17==P05;
 Dibu us==P05). Only DIFFERENTIAL legs enter the deltas below."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
@@ -32,7 +32,7 @@ FID_NE = "e66e4478b739fa0657a7a11235e1fcee"
 FID_AS = "200d9cd5eda092c7eb778cc104cd2fd2"
 FID_FE = "f9aa13a662d1658e5a02cfc06d6a2d73"   # France vs Spain SF1 (home=FRA)
 
-GAPS = {"P02": 29, "Lucas": 30, "Gonzalo": 36, "P05": 37, "Rodrigo": 39}
+GAPS = {"P02": 29, "P17": 30, "P11": 36, "P05": 37, "Rodrigo": 39}
 LOCK = 10.0
 N_REMAINING_GAMES = 6   # NOR-ENG, ARG-SUI, SF1, SF2, 3rd-place, final (ASSUMED pool scores all KO games
                         # incl. 3rd place -- it has scored every KO game so far; if 3rd place is absent
@@ -50,14 +50,14 @@ PAIR = {("ENG", "ARG"): 0.50, ("ENG", "SUI"): 0.65, ("NOR", "ARG"): 0.40, ("NOR"
 AWARD = {
     "kane_mvp_if_eng":    0.55,  # us; Kane carrying England to title -> strong Ball case (he's #4 now)
     "kane_mvp_else":      0.02,
-    "mbappe_mvp_if_fra":  0.50,  # Lucas, Rodrigo
+    "mbappe_mvp_if_fra":  0.50,  # P17, Rodrigo
     "mbappe_mvp_else":    0.05,
-    "yamal_mvp_any":      0.02,  # P02, Gonzalo, P05 -- Yamal out of Ball top-10 (verified Jul-9)
+    "yamal_mvp_any":      0.02,  # P02, P11, P05 -- Yamal out of Ball top-10 (verified Jul-9)
     "maignan_gk_if_fra":  0.60,  # P02, Rodrigo -- Simon 5 CS is the Glove leader, but FRA title flips it
     "maignan_gk_else":    0.05,
     "dibu_gk_if_arg":     0.55,  # us (P05 common-mode)
     "dibu_gk_else":       0.03,
-    "olise_ast_if_fra":   0.65,  # Gonzalo -- current leader 5
+    "olise_ast_if_fra":   0.65,  # P11 -- current leader 5
     "olise_ast_else":     0.35,  # frozen-not-dead if FRA exits (Diaz 4 can pass) -- SWEPT
     "kane_scorer_if_eng": 0.35,  # P05 -- Kane 6 vs Messi 8 / Mbappe 7; needs a scoring title run
     "kane_scorer_else":   0.03,
@@ -113,10 +113,10 @@ def locked50_delta(chaser, champ):
         them = (LOCK if champ == "ESP" else 0.0) + LOCK * A["yamal_mvp_any"] + LOCK * A["messi_ast_any"] \
             + LOCK * (A["maignan_gk_if_fra"] if champ == "FRA" else A["maignan_gk_else"])
         usx = us  # Mbappe scorer common; Bruno-vs-Messi differential kept (Bruno dead = 0 for us)
-    elif chaser == "Lucas":
+    elif chaser == "P17":
         them = 0.0 + LOCK * (A["mbappe_mvp_if_fra"] if champ == "FRA" else A["mbappe_mvp_else"])
         usx = us  # champ POR dead, GK dead; Mbappe scorer + Bruno common-mode
-    elif chaser == "Gonzalo":
+    elif chaser == "P11":
         them = (LOCK if champ == "FRA" else 0.0) + LOCK * A["yamal_mvp_any"] \
             + LOCK * (A["olise_ast_if_fra"] if champ == "FRA" else A["olise_ast_else"])
         usx = us  # Mbappe scorer common; Alisson dead; our Bruno dead = 0 anyway
@@ -210,10 +210,10 @@ def main():
                            ("kane_mvp_if_eng", "kane_mvp_if_eng", 0.35, 0.75)):
         for v in (lo, hi):
             old = AWARD[k]; AWARD[k] = v
-            d_gon = locked50_delta("Gonzalo", "ESP")
+            d_gon = locked50_delta("P11", "ESP")
             d_p02 = locked50_delta("P02", "ENG")
             AWARD[k] = old
-            print(f"  {tag}={v:.2f}: Gonzalo-delta(ESP-branch)={d_gon:+.2f}  P02-delta(ENG-branch)={d_p02:+.2f}")
+            print(f"  {tag}={v:.2f}: P11-delta(ESP-branch)={d_gon:+.2f}  P02-delta(ENG-branch)={d_p02:+.2f}")
     for dp in (-0.10, +0.10):
         pair2 = {k: min(max(v + dp, 0.05), 0.95) for k, v in PAIR.items()}
         ch2 = champion_probs(adv, pair2)

@@ -1,7 +1,7 @@
 # -*- coding: ascii -*-
 """P02 TWO-FRONT -- his seed-2 defense vs #1 hunt, 2026-07-17 (ADVISORY; I-3 clean, imported by nothing).
 Question (Sebas): does P02 'risk it' (England gamble / off-market final) to chase our +24, and what does
-that cost him against HIS chasers (P05 342 / Gonzalo 342 / Lucas 339 / Rodrigo 327)? Prize 60/20/10.
+that cost him against HIS chasers (P05 342 / P11 342 / P17 339 / Rodrigo 327)? Prize 60/20/10.
 
 Model: joint MC (seed 42, N=1M, vectorized, every boolean .astype(float) -- L62) over the top-6 players:
   match layer (both games, frozen FULL120 dists) x entries (ours FIXED chalk; P02 = the STRATEGY variable;
@@ -9,10 +9,10 @@ Model: joint MC (seed 42, N=1M, vectorized, every boolean .astype(float) -- L62)
   REAL 2026-06-28 ownership slates -- pool/locked_ownership_2026-06-28.md -- with champion-conditional
   levels re-grounded from the Jul-16/17 market).
 Slate cancellation structure this encodes (the analytical point):
-  - Yamal-MVP: P02+Gonzalo+P05 all hold it -> cancels on his SEED-2 front, only works vs US.
-  - AST is the two-front pivot: Messi -> P02 +10 vs everyone; OLISE -> Gonzalo +10 vs P02.
+  - Yamal-MVP: P02+P11+P05 all hold it -> cancels on his SEED-2 front, only works vs US.
+  - AST is the two-front pivot: Messi -> P02 +10 vs everyone; OLISE -> P11 +10 vs P02.
   - Dibu-GK (us + P05): fires iff ARG champ -> an Argentina title hurts P02 on BOTH fronts.
-  - Boot: Mbappe common to us/P02/Gonzalo/Lucas but NOT P05(Kane)/Rodrigo(Dembele).
+  - Boot: Mbappe common to us/P02/P11/P17 but NOT P05(Kane)/Rodrigo(Dembele).
 Cutoff: players ranked 7+ (P14 323 = -39 vs P02) need >39 net vs P02 (match max 18 + no
   realistic award net > 20) -> excluded, documented.
 Cross-validation (L62 rule): the pairwise marginal P(P02 passes us | pure strategy) from THIS sim must

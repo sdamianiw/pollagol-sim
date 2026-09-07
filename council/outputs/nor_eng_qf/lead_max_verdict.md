@@ -9,11 +9,11 @@
    champion branch — including France title.** The chaser who closes 29+ needs a ~3.2σ six-game run ON
    TOP of the best locked-50 branch. The match layer is OUR weapon, not theirs (+0.24 to +0.75 E[gap]
    per game vs the field, growing if they variance-hunt).
-2. **France title is the single worst world, and it is 3-of-5 common-mode**: Gonzalo +16.2 and Rodrigo
-   +19.2 expected locked-50 recovery (champion + Olise/Maignan/Mbappé-MVP legs), P02 +6.2, Lucas +4.5,
+2. **France title is the single worst world, and it is 3-of-5 common-mode**: P11 +16.2 and Rodrigo
+   +19.2 expected locked-50 recovery (champion + Olise/Maignan/Mbappé-MVP legs), P02 +6.2, P17 +4.5,
    P05 +7.3. Even so, none closes the CURRENT gap on locked-50 alone (max +19.2 vs gap +39).
 3. **Best worlds ranked: England title (Kane MVP = ours alone) > Argentina (Dibu; P05 common-mode) >
-   España (+10 us, cancels P02, buries Lucas/P05/Rodrigo at −10 to −11) > NOR/SUI chaos > France.**
+   España (+10 us, cancels P02, buries P17/P05/Rodrigo at −10 to −11) > NOR/SUI chaos > France.**
    Extends the Jul-9 table (3 chasers) to 5: confirms England-title-best and France-title-worst, and adds
    that P05's Kane-SCORER leg makes an England title slightly less lopsided vs him (+0.35·10 Kane boot).
 4. **Tonight changes nothing you control and one thing you can't**: the entry (1-2) is lead-optimal vs
@@ -34,7 +34,7 @@
 P(champion) via chain (tonight VERIFIED, SF2/final pairwise ASSUMED ±10pp swept):
 **FRA .317 [.264–.371] > ESP .241 > ARG .180 > ENG .164 > NOR .064 > SUI .033.**
 Branch table + gap coverage + P(hold #1) tables: see `endgame_branches.py` output (committed run).
-Sweeps: Olise-frozen prob .15→.55 moves Gonzalo's ESP-branch delta −8.8→−4.8 (never sign-flips);
+Sweeps: Olise-frozen prob .15→.55 moves P11's ESP-branch delta −8.8→−4.8 (never sign-flips);
 Kane-MVP-if-ENG .35→.75 moves P02's ENG-branch delta −2.6→−6.6 (never sign-flips). Conclusions robust.
 
 ## Verified vs ASSUMED ledger

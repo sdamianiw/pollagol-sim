@@ -13,7 +13,7 @@ tie=loss; our 17-pleno tiebreak would win most ties -> also printed).
 CONTROL: E[tonight diff(e,g)] must equal expected_points(e) - expected_points(g) (identity) for
 3 pairs, and B4 = byte-identical re-run. Ownership: us = ESP/Mbappe-boot/Kane-MVP/Dibu-GK (Bruno dead);
 P02 = ESP/Mbappe-boot/Messi-AST/Yamal-MVP/Maignan-GK(dead, ~1%). Gap = +24 (377 vs 353, user verbal,
-cross-foot consistent). Others (Gonzalo/P05/Lucas/Rodrigo >= +30, award slates gutted by FRA-out)
+cross-foot consistent). Others (P11/P05/P17/Rodrigo >= +30, award slates gutted by FRA-out)
 floor-checked at the end."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))

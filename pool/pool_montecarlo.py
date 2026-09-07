@@ -193,9 +193,9 @@ def _demo(seed: int = DEFAULT_SEED, n_sims: int = DEFAULT_N_SIMS):
     data_path = os.path.join(ROOT, "data", "outrights.json")
     p_true, _own, overround, _rows, data = compute(data_path, ownership_source="prior")
 
-    # today's OBSERVED field (pollaya, 2026-06-02): P21->Uruguay; Sebas->Brasil = PLACEHOLDER
+    # today's OBSERVED field (pollaya, 2026-06-02): P021->Uruguay; Sebas->Brasil = PLACEHOLDER
     # (self-excluded). 1 locked / 10 pending of N=12. effective opponents = 11.
-    obs = load_observed({"P21": "Uruguay", "Sebas": "Brasil"}, n_total=12, exclude="Sebas",
+    obs = load_observed({"P021": "Uruguay", "Sebas": "Brasil"}, n_total=12, exclude="Sebas",
                         as_of_utc="2026-06-02", source="pollaya screenshot")
     # PENDING opponents ~ chalk prior over the named set (normalized). SIMULATION INPUT ONLY.
     pend_named = {t: OWNERSHIP_PRIOR_NAMED[t] for t in OWNERSHIP_PRIOR_NAMED if t in p_true}

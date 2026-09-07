@@ -10,10 +10,10 @@ imported by nothing). Supersedes council/outputs/nor_eng_qf/endgame_branches.py 
     Kane did NOT score (6; Bellingham braced -> 6 and is the surging England Ball narrative -> Kane MVP
     haircut); Mbappe 8 == Messi 8 Boot tie (Mbappe-boot legs up); Maignan 4 CS vs Simon 5; Olise 5 with
     every 4-assist chaser ELIMINATED -> his no-France floor rises. All still ASSUMED judgments -> swept.
-Current gaps (board 2026-07-12, VERIFIED): P02 +28, Gonzalo +35, P05 +39, Lucas +39, Rodrigo +50.
+Current gaps (board 2026-07-12, VERIFIED): P02 +28, P11 +35, P05 +39, P17 +39, Rodrigo +50.
 Locked-50 ownership (pool/locked_ownership_2026-06-28.md, OBSERVED) unchanged; live legs:
-  us 4 (ESP champ/Mbappe boot/Kane MVP/Dibu GK; Bruno DEAD) - P02 5 - Gonzalo 4 - P05 4 -
-  Lucas 2 - Rodrigo 5 (all-France)."""
+  us 4 (ESP champ/Mbappe boot/Kane MVP/Dibu GK; Bruno DEAD) - P02 5 - P11 4 - P05 4 -
+  P17 2 - Rodrigo 5 (all-France)."""
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 import numpy as np
@@ -26,7 +26,7 @@ SNAP = sys.argv[1] if len(sys.argv) > 1 else "data/snapshots/md6_2026-07-12T12-1
 FID_FE = "f9aa13a662d1658e5a02cfc06d6a2d73"   # France vs Spain SF1 (home=FRA)
 FID_EA = "ced22494ae0bbb8cc4f7108bf6f493df"   # England vs Argentina SF2 (home=ENG)
 
-GAPS = {"P02": 28, "Gonzalo": 35, "P05": 39, "Lucas": 39, "Rodrigo": 50}
+GAPS = {"P02": 28, "P11": 35, "P05": 39, "P17": 39, "Rodrigo": 50}
 LOCK = 10.0
 N_REMAINING_GAMES = 4   # SF1, SF2, 3rd-place, final (pool has scored every KO game so far)
 SEED = 42
@@ -40,15 +40,15 @@ AWARD = {
     "kane_mvp_if_eng":    0.30,  # us; HAIRCUT from 0.55: Kane no-goal in QF, Bellingham brace -> 6==6,
                                  # Bellingham is the surging Ball narrative (Goal/Oddschecker) -- SWEPT
     "kane_mvp_else":      0.02,
-    "mbappe_mvp_if_fra":  0.60,  # Lucas, Rodrigo -- Mbappe +125 Ball favorite (Fox Jul-11), 8 goals
+    "mbappe_mvp_if_fra":  0.60,  # P17, Rodrigo -- Mbappe +125 Ball favorite (Fox Jul-11), 8 goals
     "mbappe_mvp_else":    0.05,
-    "yamal_mvp_any":      0.02,  # P02, Gonzalo, P05 -- still no post-QF Yamal surge (UNVERIFIED)
+    "yamal_mvp_any":      0.02,  # P02, P11, P05 -- still no post-QF Yamal surge (UNVERIFIED)
     "maignan_gk_if_fra":  0.65,  # P02, Rodrigo -- Maignan 4 CS (was 3) vs Simon 5; FRA title flips it
     "maignan_gk_else":    0.05,
     "dibu_gk_if_arg":     0.45,  # us (P05 common-mode) -- HAIRCUT from 0.55: Dibu 2 CS vs Simon 5;
                                  # even an ARG title needs jury lean over the CS table -- SWEPT
     "dibu_gk_else":       0.03,
-    "olise_ast_if_fra":   0.70,  # Gonzalo -- leader 5; every 4-assist chaser ELIMINATED
+    "olise_ast_if_fra":   0.70,  # P11 -- leader 5; every 4-assist chaser ELIMINATED
     "olise_ast_else":     0.50,  # RAISED from 0.35: best surviving rivals are at 3 (Mbappe/Saka/Gordon);
                                  # frozen-5 needs someone to find +2 in <=3 games -- SWEPT
     "kane_scorer_if_eng": 0.20,  # P05 -- HAIRCUT from 0.35: Kane 6 now chases an 8-8 tie, no QF goal
@@ -98,15 +98,15 @@ def locked50_delta(chaser, champ):
     us = (LOCK if champ == "ESP" else 0.0) \
         + LOCK * (A["kane_mvp_if_eng"] if champ == "ENG" else A["kane_mvp_else"]) \
         + LOCK * (A["dibu_gk_if_arg"] if champ == "ARG" else A["dibu_gk_else"])
-    # common-mode legs excluded from BOTH sides (Mbappe boot vs P02/Lucas/Gonzalo; Bruno; Dibu-vs-P05)
+    # common-mode legs excluded from BOTH sides (Mbappe boot vs P02/P17/P11; Bruno; Dibu-vs-P05)
     if chaser == "P02":
         them = (LOCK if champ == "ESP" else 0.0) + LOCK * A["yamal_mvp_any"] + LOCK * A["messi_ast_any"] \
             + LOCK * (A["maignan_gk_if_fra"] if champ == "FRA" else A["maignan_gk_else"])
         usx = us
-    elif chaser == "Lucas":
+    elif chaser == "P17":
         them = 0.0 + LOCK * (A["mbappe_mvp_if_fra"] if champ == "FRA" else A["mbappe_mvp_else"])
         usx = us
-    elif chaser == "Gonzalo":
+    elif chaser == "P11":
         them = (LOCK if champ == "FRA" else 0.0) + LOCK * A["yamal_mvp_any"] \
             + LOCK * (A["olise_ast_if_fra"] if champ == "FRA" else A["olise_ast_else"])
         usx = us
@@ -194,7 +194,7 @@ def main():
     print("\nSWEEPS (sensitive assumptions)")
     # each sweep prints the chaser x branch cells where its key actually fires
     for tag, k, lo, hi, cells in (
-            ("olise_else", "olise_ast_else", 0.30, 0.70, (("Gonzalo", "ESP"), ("Gonzalo", "ENG"))),
+            ("olise_else", "olise_ast_else", 0.30, 0.70, (("P11", "ESP"), ("P11", "ENG"))),
             ("kane_mvp_if_eng", "kane_mvp_if_eng", 0.15, 0.45, (("P02", "ENG"), ("P05", "ENG"))),
             ("dibu_gk_if_arg", "dibu_gk_if_arg", 0.30, 0.60, (("P02", "ARG"), ("P05", "ARG")))):
         for v in (lo, hi):
